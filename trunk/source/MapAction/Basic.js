@@ -39,7 +39,7 @@ Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction, {
  */
 WebGIS.MapAction.ZoomOutBox = function(config) {
 	config.iconCls = 'webgis-mapaction-zoomoutbox';
-	config.olcontrol = new OpenLayers.Control.ZoomOutBox();
+	config.olcontrol = new OpenLayers.Control.ZoomBox({out:true});
 	
 	WebGIS.MapAction.ZoomOutBox.superclass.constructor.call(this, config);
 }
