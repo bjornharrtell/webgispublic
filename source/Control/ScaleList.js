@@ -25,7 +25,7 @@ WebGIS.Control.ScaleList = Ext.extend(Ext.form.ComboBox, {
 	store: new Ext.data.SimpleStore({
 		fields: ['res', 'scale']
 	}),
-	valueField: 'res',
+	valueField: 'zoomlevel',
 	displayField: 'scale',
 	mode: 'local',
 	triggerAction: 'all',
@@ -33,49 +33,31 @@ WebGIS.Control.ScaleList = Ext.extend(Ext.form.ComboBox, {
 	editable: false,
 	autoWidth: true,
 	autoHeight: true,
-	
-		
-	// constructor
+
 	initComponent: function() {
 		WebGIS.Control.ScaleList.superclass.initComponent.call(this);
 		
-		// check that map has defined resolutions
-		// TODO: calc this to make this requirement go away
-		if (typeof(this.map.resolutions) == 'undefined'){
-			Ext.MessageBox.show({
-				title: WebGIS.Locale.errorText,
-				msg: this.configErrorText,
-				buttons: Ext.MessageBox.OK,
-				icon: Ext.MessageBox.ERROR
-			});
-			
-			this.disable();
-			
-			return;
-		}
-
 		// load available scales from map
-		for (var i=0; i<this.map.resolutions.length; i++) {
-			var res = this.map.resolutions[i];
-			var scale = OpenLayers.Util.getScaleFromResolution(res, 'm');
+		for (var i=0; i<this.map.getNumZoomLevels(); i++) {
+			//var res = this.map.resolutions[i];
+			var scale = OpenLayers.Util.getScaleFromResolution(this.map.getResolutionForZoom(i), 'm');
 			
-			var row = new Ext.data.Record({res: res, scale: '1:' + Math.round(scale)});
+			var row = new Ext.data.Record({zoomlevel: i, scale: '1:' + Math.round(scale)});
 			this.store.add(row);
 		}
 		
 		// attach eventhandler for scale selection
 		this.on('select', function(combo, record, index) {
-			var zoomlevel = this.map.getZoomForResolution(record.get('res'));
-			this.map.zoomTo(zoomlevel);
+			this.map.zoomTo(record.get('zoomlevel'));
 		});
 		
 		// attach eventhandler for when map zoomlevel is changed
 		this.map.events.register('zoomend', this, function() {
-			this.setValue(this.map.getResolution());
+			this.setValue(this.map.getZoomForResolution(this.map.getResolution()));
 		});
 		
 		// set initial value
-		this.setValue(this.map.getResolution());
+		this.setValue(this.map.getZoomForResolution(this.map.getResolution()));
 	}
 
 });
