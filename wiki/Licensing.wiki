@@ -1,0 +1,10 @@
+#summary Licensing information
+
+= GPLv3=
+
+The standard license for this project is GPLv3. Read about it [http://www.gnu.org/licenses/gpl.html here].
+
+
+= Commercial license =
+
+If you would like to use WebGIS Public without the restrictions of GPL you can buy a commercial license. Contact us for more information.
