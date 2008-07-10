@@ -1,0 +1,7 @@
+#summary Building instructions
+
+= Building the WebGIS Public API JS library =
+
+Building the library is essentially a simple process combining the .js source files into one. The benefit is making it simplier to include WebGIS in a project and also some performance is gained since the browser doesn't have to download lots of individual files.
+
+You can use the included .jsb file to build automatically. This file is read by the tool [http://code.google.com/p/js-builder JSB Builder], which is a .NET application originated from the Ext JS project.
