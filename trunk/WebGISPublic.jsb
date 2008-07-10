@@ -3,10 +3,7 @@
   <directory name="WebGIS" />
   <file name="WebGIS\Control\Map.js" path="Control" />
   <target name="Everything" file="$output\WebGIS.js" debug="True" shorthand="False" shorthand-list="YAHOO.util.Dom.setStyle&#xD;&#xA;YAHOO.util.Dom.getStyle&#xD;&#xA;YAHOO.util.Dom.getRegion&#xD;&#xA;YAHOO.util.Dom.getViewportHeight&#xD;&#xA;YAHOO.util.Dom.getViewportWidth&#xD;&#xA;YAHOO.util.Dom.get&#xD;&#xA;YAHOO.util.Dom.getXY&#xD;&#xA;YAHOO.util.Dom.setXY&#xD;&#xA;YAHOO.util.CustomEvent&#xD;&#xA;YAHOO.util.Event.addListener&#xD;&#xA;YAHOO.util.Event.getEvent&#xD;&#xA;YAHOO.util.Event.getTarget&#xD;&#xA;YAHOO.util.Event.preventDefault&#xD;&#xA;YAHOO.util.Event.stopEvent&#xD;&#xA;YAHOO.util.Event.stopPropagation&#xD;&#xA;YAHOO.util.Event.stopEvent&#xD;&#xA;YAHOO.util.Anim&#xD;&#xA;YAHOO.util.Motion&#xD;&#xA;YAHOO.util.Connect.asyncRequest&#xD;&#xA;YAHOO.util.Connect.setForm&#xD;&#xA;YAHOO.util.Dom&#xD;&#xA;YAHOO.util.Event">
-    <include name="source\OpenLayers\Layer\Xepto.js" />
     <include name="source\OpenLayers\Control\Identify.js" />
-    <include name="source\OpenLayers\Control\ZoomOutBox.js" />
-    <include name="source\OpenLayers\Handler\Click.js" />
     <include name="source\Control\Map.js" />
     <include name="source\Control\Toc.js" />
     <include name="source\Control\ScaleList.js" />
@@ -15,7 +12,7 @@
     <include name="source\MapAction\Editor.js" />
     <include name="source\MapAction\Identify.js" />
     <include name="source\MapAction\Measure.js" />
-    <include name="source\resources\locale\sv.js" />
+    <include name="resources\locale\en.js" />
   </target>
   <file name="WebGIS\Map.js" path="" />
   <file name="WebGIS\OpenLayers\Control\IdentifyBox.js" path="OpenLayers\Control" />
@@ -38,4 +35,6 @@
   <file name="source\OpenLayers\Control\ZoomOutBox.js" path="OpenLayers\Control" />
   <file name="source\Control\ScaleList.js" path="Control" />
   <file name="source\resources\locale\sv.js" path="resources\locale" />
+  <directory name="resources\locale" />
+  <file name="resources\locale\en.js" path="" />
 </project>

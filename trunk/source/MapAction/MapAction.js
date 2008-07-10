@@ -1,4 +1,4 @@
-﻿/**
+/**
  * WebGIS JS Library
  * Copyright(c) 2007, Sweco Position
  *
