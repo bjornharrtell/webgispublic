@@ -8,6 +8,7 @@ The "layers" property is an array that can contain a number of predefined config
 
 
 Here is an example:
+{{{
 {
  "map": {
   "options": {
@@ -29,3 +30,4 @@ Here is an example:
    }
   }]
 }
+}}}
