@@ -26,16 +26,16 @@ WebGIS.Control.Map = function(div, config, handler) {
      */
     var parseMapConfig = function(config) {
         var options;
-		
+
         var options = config.map.options;
-		
+
         options.maxExtent = new OpenLayers.Bounds.fromArray(config.map.bounds);
         options.fallThrough = true;
         options.controls = [];
 
         return options;
     }
-	
+
     /**
      * Parses layers config
      * @private
@@ -47,39 +47,30 @@ WebGIS.Control.Map = function(div, config, handler) {
         {
             if (config.layers[i].type == 'WMS') {		
                 var layer = new OpenLayers.Layer.WMS(config.layers[i].title, config.layers[i].url, config.layers[i].params, config.layers[i].options);
-				
+
                 layer.capabilitiesUrl = config.layers[i].capabilitiesUrl;
-			
+
                 layers.push(layer);
             }
-			
+
             if (config.layers[i].type == 'TMS') {
                 var layer = new OpenLayers.Layer.TMS(config.layers[i].title, config.layers[i].url, config.layers[i].options);
-		
+
                 layers.push(layer);
             }
-			
-            if (config.layers[i].type == 'WebGISTileServer') {
 
-                // needed map overrides
-                this.zoomLevel = 1;
-                this.setCenter = function (lonlat, zoom, dragging) {
-                    this.zoomLevel = zoom;
-                    OpenLayers.Map.prototype.setCenter.apply(this, arguments);
-                };
-				
-                var provider = new WebGISTileServer.Provider.LMVSE();
-                var layer = new OpenLayers.Layer.XeptoTileServer("Xepto", WebGISTileServer.GetToken(), "http://cooper.xepto.com/WebGISTileServer/PublicServletProxy", {layername: 'basic', type:'png'}, provider);
+            if (config.layers[i].type == 'WebGISTileServer') {
+                var layer = new OpenLayers.Layer.WebGISTileServer('Xepto', 'http://cooper.xepto.com/WebGISTileServer/PublicServletProxy', config.layers[i].providerName);
 
                 if (layer != null) {
                     layers.push(layer);
                 }
             }
         }
-		
+
         return layers;
     }
-	
+
     // do ajax request for config file
     // if sucessful initalize ol with config
     // if it fails, display error dialog
@@ -93,7 +84,7 @@ WebGIS.Control.Map = function(div, config, handler) {
             WebGIS.Control.Map.superclass.constructor.call(this, div, parseMapConfig(config));
 
             this.addLayers(parseLayersConfig(config));
-			
+
             handler();
         },
         failure: function(response, options) {
@@ -109,5 +100,5 @@ WebGIS.Control.Map = function(div, config, handler) {
 };
 
 Ext.extend(WebGIS.Control.Map, OpenLayers.Map, {
-	
+
 });
