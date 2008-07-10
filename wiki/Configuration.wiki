@@ -1,6 +1,6 @@
 #summary Map configuration file format
 
-NOTE: The configuration might change to something using OpenLayers Object Notation instead in the near future.
+NOTE: The configuration might change to something using !OpenLayers Object Notation instead in the near future.
 
 WebGIS.Map uses a [http://www.json.org JSON]-based configuration format. The structure is a JSON-object with two properties, "map" and "layers".
 
