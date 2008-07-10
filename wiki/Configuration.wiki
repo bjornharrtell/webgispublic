@@ -1,7 +1,5 @@
 #summary Map configuration file format
 
-NOTE: The configuration might change to something using !OpenLayers Object Notation instead in the near future.
-
 WebGIS.Map uses a [http://www.json.org JSON]-based configuration format. The structure is a JSON-object with two properties, "map" and "layers".
 
 The "map" property configures !OpenLayers.Map, and has two properties. The first one is "options" which correspond to the !OpenLayers.Map.Properties that are integers or strings. !OpenLayers.Map.Properties that are objects of other types, like !OpenLayers.Bounds cannot be handled here. That is why a seconds property called "maxExtent" exists which take an rectangle array that is internally converted to an !OpenLayers.Bounds.
