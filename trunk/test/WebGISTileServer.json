@@ -9,6 +9,7 @@
     "layers": [{
             "type": "WebGISTileServer",
             "title": "WebGISTileServer",
+            "url": "http://cooper.xepto.com/WebGISTileServer/PublicServletProxy",
             "providerName": 'LMVSE'
         }]
 }

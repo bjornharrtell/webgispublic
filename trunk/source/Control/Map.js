@@ -60,7 +60,7 @@ WebGIS.Control.Map = function(div, config, handler) {
             }
 
             if (config.layers[i].type == 'WebGISTileServer') {
-                var layer = new OpenLayers.Layer.WebGISTileServer('Xepto', 'http://cooper.xepto.com/WebGISTileServer/PublicServletProxy', config.layers[i].providerName);
+                var layer = new OpenLayers.Layer.WebGISTileServer(config.layers[i].title, config.layers[i].url, config.layers[i].providerName);
 
                 if (layer != null) {
                     layers.push(layer);
