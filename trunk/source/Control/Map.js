@@ -29,7 +29,7 @@ WebGIS.Control.Map = function(div, config, handler) {
 
         var options = config.map.options;
 
-        options.maxExtent = new OpenLayers.Bounds.fromArray(config.map.bounds);
+        options.maxExtent = new OpenLayers.Bounds.fromArray(config.map.maxExtent);
         options.fallThrough = true;
         options.controls = [];
 
