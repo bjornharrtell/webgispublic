@@ -29,9 +29,6 @@ Simple.Application = function()
         toolbar.add(new WebGIS.MapAction.PreviousExtent({map: map}));
         toolbar.add(new WebGIS.MapAction.NextExtent({map: map}));
         toolbar.add(new WebGIS.MapAction.FullExtent({map: map}));
-        toolbar.add(new WebGIS.MapAction.MeasureLine({map: map}));
-        toolbar.add(new WebGIS.MapAction.MeasureArea({map: map}));
-        toolbar.add(new WebGIS.MapAction.Identify({map: map, toc: toc}));
 		
         var edittoolbar = new Ext.Toolbar();
         var editwindow = new Ext.Window({
