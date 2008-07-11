@@ -2,7 +2,7 @@
  * WebGIS JS Library
  * Copyright(c) 2007, Sweco Position
  * 
- * Author: Bj�rn Harrtell
+ * Author: Björn Harrtell
  *
  * @fileoverview OpenLayers.Layer.Xepto class
  */
