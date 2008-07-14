@@ -14,7 +14,7 @@ Here is an example:
 		"options": {
 				"maxResolution": 1.40625/2
 			},
-		"bounds": [-180, -90, 180, 90]
+		"maxExtent": [-180, -90, 180, 90]
 	},
 	"layers": [{
 		"type": "WMS",
