@@ -2,9 +2,9 @@
 
 == General information ==
 
-You need to know how AJAX and object oriented javascript works. You also need to learn Ext JS and !OpenLayers API, at least at a basic level. Ext JS has a great resource on the subject general [http://extjs.com/learn/Manual:Resources Web 2.0 developing] and also quite a few good tutorials on how to use the Ext JS framework itself.
+You need to know how AJAX and object oriented javascript works. You also need to learn [Ext Ext JS] and OpenLayers API, at least at a basic level. [Ext Ext JS] has a great resource on the subject general [http://extjs.com/learn/Manual:Resources Web 2.0 developing] and also quite a few good tutorials on how to use the [Ext Ext JS] framework itself.
 
-If you do not need to make new tools or !OpenLayers extensions aside from the included ones in WebGIS, I would suggest that you focus on learning basic usage of Ext JS to be able to do some GUI layouts using WebGIS controls.
+If you do not need to make new tools or OpenLayers extensions aside from the included ones in WebGIS, I would suggest that you focus on learning basic usage of [Ext Ext JS] to be able to do some GUI layouts using WebGIS controls.
 
 A test project is included with the source that should provide a basis for new projects and further development.
 
@@ -12,7 +12,7 @@ Comments in code are in JSDoc format and documentation can be built with a relea
 
 == Basic HTML page include example ==
 
-Inclusion of the API in a HTML page is similar to Ext JS. One CSS file and one Javascript file is referenced. Ext JS and OpenLayers should be included first. Example:
+Inclusion of the API in a HTML page is similar to [Ext Ext JS]. One CSS file and one Javascript file is referenced. Ext JS and OpenLayers should be included first. Example:
 
 {{{
 <link rel="stylesheet" type="text/css" href="ext-2.1/resources/css/ext-all.css" />
