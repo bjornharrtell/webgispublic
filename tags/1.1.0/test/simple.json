@@ -1,0 +1,21 @@
+{
+	"map": {
+		"options": {
+				"maxResolution": 1.40625/2
+			},
+		"maxExtent": [-180, -90, 180, 90]
+	},
+	"layers": [{
+		"type": "WMS",
+		"title": "Metacarta Tile Cache",
+		"url": "http://labs.metacarta.com/wms-c/Basic.py?",
+		"capabilitiesUrl": "http://labs.metacarta.com/wms-c/Basic.py?",
+		"params": { 
+			"layers": "basic",
+			"format": "image/jpeg"
+		},
+		"options": { 
+			"buffer": 0
+		}
+	}]
+}
