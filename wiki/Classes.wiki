@@ -1,0 +1,18 @@
+#summary Classes overview
+
+ * `WebGIS.Control.Map`
+  * Extended !OpenLayers.Map with configuration file support.
+
+ * `WebGIS.Control.Toc`
+  * Extended Ext.tree.!TreePanel that parses contents from an !OpenLayers.Map and can optionally parse WMS capabilities and control layer visiblity and selection.
+
+ * `WebGIS.Control.ScaleList`
+  * Extended Ext.form.!ComboBox that is directly related to map zoomlevels.
+
+ * `WebGIS.MapAction`
+  * Extended Ext.Action that "connects" Ext GUI components to openlayers functionality. Can directly be used as buttons or menu items in Ext JS. Generic tools are included for basic navigation and history, editing, identify and measure.
+
+ * `OpenLayers.Layer.Identify`
+  * Extension to support WMS !GetFeatureInfo identify in !OpenLayers.
+
+_NOTE: Refer to full API docs generated from source for more details._
