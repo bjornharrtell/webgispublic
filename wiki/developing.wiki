@@ -16,7 +16,7 @@ Inclusion of the API in a HTML page is similar to Ext JS. One CSS file and one J
 
 {{{
 <link rel="stylesheet" type="text/css" href="ext-2.1/resources/css/ext-all.css" />
-<script type="text/javascript" src="ext-2.1/ext-all-debug.js"></script>
+<script type="text/javascript" src="ext-2.1/ext-all.js"></script>
 
 <script type="text/javascript" src="OpenLayers-2.6/OpenLayers.js"></script>
 
