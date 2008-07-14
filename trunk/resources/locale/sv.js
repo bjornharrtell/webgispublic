@@ -28,7 +28,7 @@ Ext.apply(WebGIS.Control.ScaleList.prototype, {
 });
 
 // OpenLayers.Layer.Xepto
-Ext.apply(OpenLayers.Layer.Xepto.prototype, {
+Ext.apply(OpenLayers.Layer.WebGISTileServer.prototype, {
 	tokenFunctionErrorText: 'OpenLayers.Layer.Xepto.GetToken() är ej definierad'
 });
 
