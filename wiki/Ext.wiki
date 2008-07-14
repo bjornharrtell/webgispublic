@@ -1,0 +1,3 @@
+#summary Ext JS
+
+[http://www.extjs.com Ext JS] is Javascript GUI framework library. It also has data bindning capabilities to its GUI components.
