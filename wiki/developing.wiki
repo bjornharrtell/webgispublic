@@ -12,25 +12,14 @@ Comments in code are in JSDoc format and documentation can be built with a relea
 
 == Basic HTML page include example ==
 
-
+Inclusion of the API in a HTML page is similar to Ext JS. One CSS file and one Javascript file is referenced. Ext JS and OpenLayers should be included first. Example:
 
 {{{
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-		<title>Example</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="ext-2.1/resources/css/ext-all.css" />
+<script type="text/javascript" src="ext-2.1/ext-all-debug.js"></script>
 
-		<link rel="stylesheet" type="text/css" href="ext-2.1/resources/css/ext-all.css" />
-		<script type="text/javascript" src="ext-2.1/ext-all-debug.js"></script>
+<script type="text/javascript" src="OpenLayers-2.6/OpenLayers.js"></script>
 
-		<script type="text/javascript" src="OpenLayers-2.6/OpenLayers.js"></script>
-		
-		<link rel="stylesheet" type="text/css" href="webgis/resources/css/webgis.css" />
-		<script type="text/javascript" src="webgis/webgis.js"></script>
-	</head>
-  <body>
-
-  </body>
-</html>
+<link rel="stylesheet" type="text/css" href="webgis/resources/css/webgis.css" />
+<script type="text/javascript" src="webgis/webgis.js"></script>
 }}}
