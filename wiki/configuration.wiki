@@ -1,6 +1,6 @@
 #summary Map configuration file format
 
-NOTE: Configuration files are deprecated and isn't used in current trunk version, instead a normal OpenLayers.Map is used and configuration is declared in javascript.
+*NOTE: Configuration files are deprecated and isn't used in current trunk version, instead a normal OpenLayers.Map is used and configuration is declared in javascript.*
 
 WebGIS.Map uses a [http://www.json.org JSON]-based configuration format. The structure is a JSON-object with two properties, "map" and "layers".
 
