@@ -1,7 +1,7 @@
 #summary Classes overview
 
  * `WebGIS.Control.Map`
-  * Extended !OpenLayers.Map with configuration file support.
+  * Extended !OpenLayers.Map with configuration file support. *NOTE: obsolete and removed in current trunk version.*
 
  * `WebGIS.Control.Toc`
   * Extended Ext.tree.!TreePanel that parses contents from an !OpenLayers.Map and can optionally parse WMS capabilities and control layer visiblity and selection.
