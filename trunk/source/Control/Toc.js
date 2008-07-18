@@ -17,11 +17,11 @@ Ext.namespace('WebGIS', 'WebGIS.Control');
  * All nodes are extended with a property "layer" referencing OL.Layer
  * All nodes are also extended with a property "metadata" that is used to view dynamic metadata on context menu clicks
  * Childnodes on parsed WMS layers have added property "name" that is the short layer name in the WMS service
+ * WMS layers that has a valid capabilitiesUrl property will be parsed and expanded with subnodes representing the layers
  * 
  * @extends Ext.tree.TreePanel
  * @param {Object} config Ext.tree.TreePanel config options:<br>
  * {WebGIS.Map} [map] Required config option<br>
- * {boolean} [parseWMS] Optional config option, default is false
  */
 WebGIS.Control.Toc = function() {}; 
 
@@ -220,12 +220,14 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
             node.on("contextmenu", this.onContextmenu, this);
             node.on("checkchange", this.onLayerCheckChange, layer);
             this.getRootNode().appendChild(node);
-			
-            if (this.parseWMS)
-                if (layer.CLASS_NAME=="OpenLayers.Layer.WMS") {
-                    node.subLayers = [];
-                    this.parseWMSCapabilities(layer, node);
-                }
+ 
+			if (layer.CLASS_NAME=="OpenLayers.Layer.WMS") {
+				if (typeof(layer.capabilitiesUrl) != undefined)
+				{
+					node.subLayers = [];
+					this.parseWMSCapabilities(layer, node);
+				}
+			}
         }
     },
 	

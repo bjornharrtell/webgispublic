@@ -14,11 +14,6 @@
 WebGIS.Locale = {};
 WebGIS.Locale.errorText = "Error message";
 
-// WebGIS.Map
-Ext.apply(WebGIS.Control.Map.prototype, {
-	configErrorText: 'Could not load map configuration'
-});
-
 // WebGIS.Toc
 Ext.apply(WebGIS.Control.Toc.prototype, {
 	windowTitleMetadataText: 'Metadata for this layer',

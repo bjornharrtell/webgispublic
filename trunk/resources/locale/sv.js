@@ -11,11 +11,6 @@
 WebGIS.Locale = {};
 WebGIS.Locale.errorText = "Felmeddelande";
 
-// WebGIS.Map
-Ext.apply(WebGIS.Control.Map.prototype, {
-	configErrorText: 'Kunde ej ladda kartkonfiguration'
-});
-
 // WebGIS.Toc
 Ext.apply(WebGIS.Control.Toc.prototype, {
 	windowTitleMetadataText: 'Metadata för lagret',
@@ -27,7 +22,7 @@ Ext.apply(WebGIS.Control.ScaleList.prototype, {
 	configErrorText: 'Requires defined resolutions array in map configuration'
 });
 
-// OpenLayers.Layer.Xepto
+// OpenLayers.Layer.WebGISTileServer
 Ext.apply(OpenLayers.Layer.WebGISTileServer.prototype, {
 	tokenFunctionErrorText: 'OpenLayers.Layer.Xepto.GetToken() är ej definierad'
 });
