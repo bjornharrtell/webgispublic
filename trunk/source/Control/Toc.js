@@ -205,6 +205,11 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
         for (var i=0; i<this.map.layers.length; i++) {
             var layer = this.map.layers[this.map.layers.length-1-i];
 			
+            if (typeof(layer.visibleInToc) != undefined)
+            {
+                if (layer.visibleInToc == false) continue;
+            }
+            
             var node = new Ext.tree.TreeNode({
                 text: layer.name,
                 checked: layer.visible
@@ -269,12 +274,12 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 
         // callback function on failed request for GetCapabilities XML
         var error = function(response, options) {
-            Ext.MessageBox.show({
+            /*Ext.MessageBox.show({
                 title: 'Error',
                 msg: 'Could not get WMS GetCapabilities',
                 buttons: Ext.MessageBox.OK,
                 icon: Ext.MessageBox.ERROR
-            });
+            });*/
         }
 
         // make ajax request, report exceptions
