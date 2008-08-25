@@ -12,7 +12,7 @@
     <include name="source\MapAction\Identify.js" />
     <include name="source\MapAction\Measure.js" />
     <include name="source\OpenLayers\Layer\WebGISTileServer.js" />
-    <include name="resources\locale\sv.js" />
+    <include name="resources\locale\en.js" />
   </target>
   <file name="WebGIS\Map.js" path="" />
   <file name="WebGIS\OpenLayers\Control\IdentifyBox.js" path="OpenLayers\Control" />
@@ -37,5 +37,5 @@
   <file name="source\resources\locale\sv.js" path="resources\locale" />
   <directory name="resources\locale" />
   <file name="source\OpenLayers\Layer\WebGISTileServer.js" path="OpenLayers\Layer" />
-  <file name="resources\locale\sv.js" path="" />
+  <file name="resources\locale\en.js" path="" />
 </project>
