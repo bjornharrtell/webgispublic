@@ -15,21 +15,27 @@ Ext.namespace('WebGIS');
 Ext.QuickTips.init();
 
 /**
- * @class Abstract baseclass for MapActions. MapActions are extended from
- * Ext.Action to handle interaction with OpenLayers and can be used as buttons,
- * menu items and more in an Ext Js GUI. This class also have global handling of
- * OpenLayers.Control activation and manages navigation history
+ * @class Abstract baseclass extended from Ext.Action to handle interaction with 
+ * OpenLayers and can be used as buttons, menu items and more in an Ext Js GUI.
+ *
+ * This class also handles OpenLayers.Control activation and manages navigation history.
+ * 
+ * OpenLayers can have several controls active, but MapAction restricts to one
+ * MapAction active at one time.
+ *
  * @extends Ext.Action
  * @param {Object} config Ext.Action config options<br>
  {OpenLayers.Map} [map] Required config option
  */
 WebGIS.MapAction = function(config) {
-	// default config options
-	config.cls = 'x-btn-text-icon';
-	
+
+    // if locale is defined and css is button with icon and text, then set text to locale string for title
 	if (typeof(this.titleText) != 'undefined') {
-		config.text = this.titleText;
+        if (config.cls == 'x-btn-text-icon'){
+            config.text = this.titleText;
+        }
 	}
+    
 	if (typeof(this.tooltipText) != 'undefined') {
 		config.tooltip = this.tooltipText;
 	}
