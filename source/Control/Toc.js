@@ -212,7 +212,7 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
             
             var node = new Ext.tree.TreeNode({
                 text: layer.name,
-                checked: layer.visible
+                checked: layer.getVisibility()
             });
             node.layer = layer;
 	
