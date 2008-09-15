@@ -20,11 +20,6 @@ Ext.namespace('WebGIS', 'WebGIS.Control');
  */
 WebGIS.Control.ScaleList = function() {}; // to fool jsdoc into thinking this is a class (which it is)
 WebGIS.Control.ScaleList = Ext.extend(Ext.form.ComboBox, {
-	
-    // default config options
-    store: new Ext.data.SimpleStore({
-        fields: ['res', 'scale']
-    }),
     valueField: 'zoomlevel',
     displayField: 'scale',
     mode: 'local',
@@ -33,18 +28,21 @@ WebGIS.Control.ScaleList = Ext.extend(Ext.form.ComboBox, {
     editable: false,
     autoWidth: true,
     autoHeight: true,
+    
+    initialized: false,
 
     initComponent: function() {
+        
+        // create default store
+        this.store = new Ext.data.SimpleStore({
+            fields: ['res', 'scale']
+        }),
+        
         WebGIS.Control.ScaleList.superclass.initComponent.call(this);
 		
-        // load available scales from map
-        for (var i=0; i<this.map.getNumZoomLevels(); i++) {
-            //var res = this.map.resolutions[i];
-            var scale = OpenLayers.Util.getScaleFromResolution(this.map.getResolutionForZoom(i), 'm');
-			
-            var row = new Ext.data.Record({zoomlevel: i, scale: '1:' + Math.round(scale)});
-            this.store.add(row);
-        }
+        if (this.intialized) return;
+        
+        this.update();
 		
         // attach eventhandler for scale selection
         this.on('select', function(combo, record, index) {
@@ -55,7 +53,19 @@ WebGIS.Control.ScaleList = Ext.extend(Ext.form.ComboBox, {
         this.map.events.register('zoomend', this, function() {
             this.setValue(this.map.getZoomForResolution(this.map.getResolution()));
         });
-		
+        
+        this.intialized = true;
+    },
+    
+    update: function() {
+        // load available scales from map
+        for (var i=0; i<this.map.getNumZoomLevels(); i++) {
+            var scale = OpenLayers.Util.getScaleFromResolution(this.map.getResolutionForZoom(i), 'm');
+			
+            var row = new Ext.data.Record({zoomlevel: i, scale: '1:' + Math.round(scale)});
+            this.store.add(row);
+        };
+        
         // set initial value
         this.setValue(this.map.getZoomForResolution(this.map.getResolution()));
     }
