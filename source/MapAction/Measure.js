@@ -45,7 +45,7 @@ WebGIS.MapAction.MeasureLine = function(config) {
 					
                     var p = this.map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x,point.y))
                     var el = Ext.Element(this.map.div);
-                    tip.showAt([p.x+2+el.getLeft(),p.y+2+el.getTop()]);
+                    tip.showAt([p.x+5+el.getLeft(),p.y+5+el.getTop()]);
                 } 
             },
             cancel: function(line) 
@@ -103,7 +103,7 @@ WebGIS.MapAction.MeasureArea = function(config) {
 					
                     var p = this.map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x,point.y))
                     var el = Ext.Element(this.map.div);
-                    tip.showAt([p.x+2+el.getLeft(),p.y+2+el.getTop()]);	
+                    tip.showAt([p.x+5+el.getLeft(),p.y+5+el.getTop()]);	
                 } 
             },
             cancel: function(line) 
