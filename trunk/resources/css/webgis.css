@@ -46,8 +46,8 @@
 .webgis-mapaction-selectfeature {
 	background-image: url(../images/icons/selectfeature.png) !important;
 }
-.webgis-mapaction-deletefeature {
-	background-image: url(../images/icons/deletefeature.png) !important;
+.webgis-mapaction-removefeature {
+	background-image: url(../images/icons/removefeature.png) !important;
 }
 
 /* icons for Measure map actions */

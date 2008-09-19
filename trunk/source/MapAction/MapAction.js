@@ -12,8 +12,6 @@
  
 Ext.namespace('WebGIS');
 
-Ext.QuickTips.init();
-
 /**
  * @class Abstract baseclass extended from Ext.Action to handle interaction with 
  * OpenLayers and can be used as buttons, menu items and more in an Ext Js GUI.
@@ -33,7 +31,7 @@ WebGIS.MapAction = Ext.extend(Ext.Action, {
     
         // if locale is defined and css is button with icon and text, then set text to locale string for title
         if (this.titleText) {
-            if (config.cls == 'x-btn-text-icon'){
+            if (config.cls === 'x-btn-text-icon'){
                 config.text = this.titleText;
             }
         }
@@ -44,12 +42,15 @@ WebGIS.MapAction = Ext.extend(Ext.Action, {
         // if a olcontrol is specified, handle it globally
         if (config.olcontrol)
         {
+            // handler to handle activation of an OpenLayers control (need to deactivate other controls)
+            // scope is assumed to be the OpenLayers control itself
             var mapActionHandler = function(object, event) {
-            	// deactivate other openlayers controls
-            	//for (i=0; i<this.map.controls.length; i++) this.map.controls[i].deactivate();
-            	for (i=0; i<WebGIS.MapAction.openLayersControls.length; i++) WebGIS.MapAction.openLayersControls[i].deactivate();
-            	
-            	// activate this openlayers control
+                for (index in WebGIS.MapAction.openLayersControls) {
+                    var control = WebGIS.MapAction.openLayersControls[index];
+                    
+                    if (control.deactivate) control.deactivate();
+                }
+
             	this.activate();
             	
             	// if this action is connected to a button, make sure it's toggled if pressed twice

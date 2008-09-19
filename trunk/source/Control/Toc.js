@@ -236,8 +236,9 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
         }
     },
 	
-    parseWMSCapabilities: function(layer, node) {
-		
+    parseWMSCapabilities: function(layer, node) {     
+        if (!layer.capabilitiesUrl) return;
+        
         // callback function on successful request for GetCapabilities XML
         var success = function(response, options) {	
 			
@@ -282,6 +283,8 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
             });*/
         }
 
+
+        
         // make ajax request, report exceptions
         // NOTE: most probable cause for client exception is same origin restriction
         try {
