@@ -45,7 +45,7 @@ Ext.apply(WebGIS.MapAction.ZoomOut.prototype, {
 	tooltipText: 'Zooma ut ett steg'
 });
 Ext.apply(WebGIS.MapAction.FullExtent.prototype, {
-	titleText: 'Visa hela kartan',
+	titleText: 'Hela kartan',
 	tooltipText: 'Visa hela kartan'
 });
 Ext.apply(WebGIS.MapAction.DragPan.prototype, {
@@ -67,33 +67,37 @@ Ext.apply(WebGIS.MapAction.NextExtent.prototype, {
 
 // Editor tools
 Ext.apply(WebGIS.MapAction.DrawFeature.prototype, {
-	titlePointText:			'Rita punkt',
-	tooltipPointText:		'Rita punkt',
-	titleCurveText:			'Rita linje',
-	tooltipCurveText:		'Rita linje',
-	titlePolygonText:		'Rita yta',
+	titlePointText:		'Rita',
+	tooltipPointText:	'Rita punkt',
+	titleCurveText:		'Rita',
+	tooltipCurveText:	'Rita linje',
+	titlePolygonText:	'Rita',
 	tooltipPolygonText:	'Rita yta'
 });
 Ext.apply(WebGIS.MapAction.SelectFeature.prototype, {
-	titleText: 'Markera geometri',
+	titleText: 'Markera',
 	tooltipText: 'Markera geometri'
 });
+Ext.apply(WebGIS.MapAction.RemoveFeature.prototype, {
+	titleText: 'Ta bort',
+	tooltipText: 'Ta bort geometri'
+});
 Ext.apply(WebGIS.MapAction.ModifyFeature.prototype, {
-	titleText: 'Modifiera geometri',
-	tooltipText: 'Modifiera geometri'
+	titleText: 'Ändra',
+	tooltipText: 'Ändra geometri'
 });
 Ext.apply(WebGIS.MapAction.DragFeature.prototype, {
-	titleText: 'Flytta geometri',
+	titleText: 'Flytta',
 	tooltipText: 'Flytta geometri'
 });
 
 // Measure tools
 Ext.apply(WebGIS.MapAction.MeasureLine.prototype, {
-	titleText: 'Mät avstånd',
+	titleText: 'Avståndsmätning',
 	tooltipText: 'Mät avstånd genom att rita en linje'
 });
 Ext.apply(WebGIS.MapAction.MeasureArea.prototype, {
-	titleText: 'Mät area',
+	titleText: 'Areamätning',
 	tooltipText: 'Mät area genom att rita en polygon'
 });
 

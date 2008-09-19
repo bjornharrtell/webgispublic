@@ -32,19 +32,19 @@ Ext.apply(WebGIS.MapAction.ZoomInBox.prototype, {
 });
 Ext.apply(WebGIS.MapAction.ZoomOutBox.prototype, {
 	titleText: 'Zoom out',
-	tooltipText: 'Zooma out by drawing a rectangle'
+	tooltipText: 'Zoom out by drawing a rectangle'
 });
 Ext.apply(WebGIS.MapAction.ZoomIn.prototype, {
 	titleText: 'Zoom in',
-	tooltipText: 'Zooma in one step'
+	tooltipText: 'Zoom in one step'
 });
 Ext.apply(WebGIS.MapAction.ZoomOut.prototype, {
 	titleText: 'Zoom out',
-	tooltipText: 'Zooma out one step'
+	tooltipText: 'Zoom out one step'
 });
 Ext.apply(WebGIS.MapAction.FullExtent.prototype, {
 	titleText: 'Full extent',
-	tooltipText: 'Zoom to the the full map extent'
+	tooltipText: 'Zoom to the full map extent'
 });
 Ext.apply(WebGIS.MapAction.DragPan.prototype, {
 	titleText: 'Pan',
@@ -61,23 +61,27 @@ Ext.apply(WebGIS.MapAction.NextExtent.prototype, {
 
 // Editor tools
 Ext.apply(WebGIS.MapAction.DrawFeature.prototype, {
-	titlePointText:			'Draw point',
-	tooltipPointText:		'Draw point',
-	titleCurveText:			'Draw line',
-	tooltipCurveText:		'Draw line',
-	titlePolygonText:		'Draw polygon',
+	titlePointText:		'Draw',
+	tooltipPointText:	'Draw point',
+	titleCurveText:		'Draw',
+	tooltipCurveText:	'Draw line',
+	titlePolygonText:	'Draw',
 	tooltipPolygonText:	'Draw polygon'
 });
 Ext.apply(WebGIS.MapAction.SelectFeature.prototype, {
-	titleText: 'Select geometry',
+	titleText: 'Select',
 	tooltipText: 'Select geometry'
 });
+Ext.apply(WebGIS.MapAction.RemoveFeature.prototype, {
+	titleText: 'Remove',
+	tooltipText: 'Remove geometry'
+});
 Ext.apply(WebGIS.MapAction.ModifyFeature.prototype, {
-	titleText: 'Modify geometry',
+	titleText: 'Modify',
 	tooltipText: 'Modify geometry'
 });
 Ext.apply(WebGIS.MapAction.DragFeature.prototype, {
-	titleText: 'Move geometry',
+	titleText: 'Move',
 	tooltipText: 'Move geometry'
 });
 
