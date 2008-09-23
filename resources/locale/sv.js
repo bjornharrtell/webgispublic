@@ -2,6 +2,9 @@
  * WebGIS JS Library
  * Copyright(c) 2007, Sweco Position
  * 
+ * Licensed under GPLv3
+ * http://www.gnu.org/licenses/gpl.html
+ *
  * Author: Björn Harrtell
  *
  * @fileoverview Swedish locale for all WebGIS public classes
@@ -20,11 +23,6 @@ Ext.apply(WebGIS.Control.Toc.prototype, {
 // WebGIS.Control.ScaleList
 Ext.apply(WebGIS.Control.ScaleList.prototype, {
 	configErrorText: 'Requires defined resolutions array in map configuration'
-});
-
-// OpenLayers.Layer.WebGISTileServer
-Ext.apply(OpenLayers.Layer.WebGISTileServer.prototype, {
-	tokenFunctionErrorText: 'OpenLayers.Layer.Xepto.GetToken() är ej definierad'
 });
 
 // Basic tools

@@ -1,45 +1,27 @@
 /**
  * WebGIS JS Library
- * Copyright(c) 2007, Sweco Position
+ * Copyright(c) 2008, Sweco Position
  * 
+ * Licensed under GPLv3
+ * http://www.gnu.org/licenses/gpl.html
+ *
  * Author: Björn Harrtell
  *
- * @fileoverview OpenLayers.Layer.Xepto class
+ * @fileoverview OpenLayers.Layer.WebGISTileServer class
  */
 
+// need to define WebGISTileServer.Provider class since the code at serverside doesn't do it
+WebGISTileServer = new Object();
+WebGISTileServer.Provider = OpenLayers.Class.create();
+ 
 /**
- * @class WebGISTileServer
+ * @class Layer that supports WebGISTileServer sources
  * @extends OpenLayers.Layer.Grid
  * @requires OpenLayers/Layer/Grid.js
  */
 OpenLayers.Layer.WebGISTileServer = function() {}; // jsdoc parser workaround
 
-WebGISTileServer = new Object();
-WebGISTileServer.Provider = OpenLayers.Class.create();
-/*WebGISTileServer.Provider.prototype = {
-    SCALES: [20,40,120,360,2500,4200,22000,46000,108000],
-    MINX: [-1336,-1336,-7336,16664,-950488,-1160488,-3200488,-200488,-14710625],
-    MINY: [-378714,-19257714,-19263714,-4299714,-175193,-520193,-2050193,-3250193,-9446908],
-    MAXX: [5641664,11404664,11404664,7792664,5049512,5139512,6699512,6699512,17689375],
-    MAXY: [5984286,4718286,4748286,4826286,5074807,5149807,7849807,10549807,6753092],
-    SIZES: [500,1000,3000,9000,62500,105000,550000,1150000,2700000],
-     
-    map_options: {
-        resolutions: [500/250,1000/250,3000/250,9000/250,62500/250,105000/250,550000/250,1150000/250,2700000/250],
-        maxExtent: new OpenLayers.Bounds(-14710625, -9446908, 17689375,6753092),
-        units: "meters"
-    },
 
-    defaultLatitude: 6404510, defaultLongitude: 1271140,
-    providerId: 1,
-    
-    initialize: function()
-    {
-        
-    },
-    
-    CLASS_NAME: "WebGISTileServer.Provider"
-};*/
 
 OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
 		
@@ -47,46 +29,28 @@ OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
     isBaseLayer: true,
     tileSize: new OpenLayers.Size(250, 250),
     
+	// TODO: use values from provider instead
     MIN_ZOOM_LEVEL: 0,
     MAX_ZOOM_LEVEL: 8,
 
-    	
     /**
      * @constructor
      *
      * @param {String} name Name of layer
-     * @param {String} token authenticated WebGISTileServer service token
      * @param {String} url URL to WebGISTileServer service
-     * @param {String} providerName WebGISTileServer service specific provider name
+     * @param {WebGISTileServer.Provider} provider WebGISTileServer service 
+	 * @param {String} token Valid token from WebGISTileServer
+	 specific provider instance. The server exposes the providers as
+	 external js files.
      */
-    initialize: function(name, url, providerName) {
+    initialize: function(name, url, provider, token) {
         var newArguments = new Array();
-        newArguments.push(name, url, {}, providerName);
+        newArguments.push(name, url, {}, provider);
 		
         OpenLayers.Layer.Grid.prototype.initialize.apply(this, newArguments);
 
-        // TODO: add all supported providers
-        if (providerName == "LMVSE")
-        {
-            if (typeof(WebGISTileServer.Provider.LMVSE) == 'undefined')
-            {
-                throw this.providerErrorText;
-            }
-			
-            this.provider = new WebGISTileServer.Provider.LMVSE();
-        }
-        else {
-            throw this.providerNameErrorText;
-        }
-
-        if (typeof(OpenLayers.Layer.WebGISTileServer.GetToken) != 'undefined') {
-            this.token = OpenLayers.Layer.WebGISTileServer.GetToken();
-        }
-        else {
-            throw this.tokenFunctionErrorText;
-        }
-		
-
+        this.provider = provider;
+        this.token = token;
     },
 
     // overridden to set maxextent and tileorigin for each zoomlevel
@@ -105,7 +69,7 @@ OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
         var x = Math.floor((bounds.left - this.tileOrigin.lon) / (res * this.tileSize.w));
         var y = Math.floor((bounds.bottom - this.tileOrigin.lat) / (res * this.tileSize.h));
 			
-        // xepto seem to have reverse y tile ordering
+        // WebGISTileServer seem to have reverse y tile ordering
         var tilemax = (this.provider.MAXY[z]-this.provider.MINY[z])/(this.provider.SIZES[z]);
         y = tilemax-1-y;
 
