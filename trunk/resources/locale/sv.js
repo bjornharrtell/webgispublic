@@ -76,7 +76,7 @@ Ext.apply(WebGIS.MapAction.SelectFeature.prototype, {
 	titleText: 'Markera',
 	tooltipText: 'Markera geometri'
 });
-Ext.apply(WebGIS.MapAction.RemoveFeature.prototype, {
+Ext.apply(WebGIS.MapAction.RemoveSelectedFeatures.prototype, {
 	titleText: 'Ta bort',
 	tooltipText: 'Ta bort geometri'
 });

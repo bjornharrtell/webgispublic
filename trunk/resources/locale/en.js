@@ -72,7 +72,7 @@ Ext.apply(WebGIS.MapAction.SelectFeature.prototype, {
 	titleText: 'Select',
 	tooltipText: 'Select geometry'
 });
-Ext.apply(WebGIS.MapAction.RemoveFeature.prototype, {
+Ext.apply(WebGIS.MapAction.RemoveSelectedFeatures.prototype, {
 	titleText: 'Remove',
 	tooltipText: 'Remove geometry'
 });

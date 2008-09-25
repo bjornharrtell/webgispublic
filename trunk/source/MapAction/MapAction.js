@@ -115,6 +115,12 @@ WebGIS.MapAction.initNavigationHistory = function(map) {
 WebGIS.MapAction.openLayersControls = [];
 
 /**
+ * Static array to manage instances of all instant selection related MapActions
+ * @private
+ */
+WebGIS.MapAction.selectionActions = [];
+
+/**
  * Static array to manage instances of all instant navigation related MapActions
  * @private
  */
