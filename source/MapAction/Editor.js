@@ -60,6 +60,26 @@ Ext.extend(WebGIS.MapAction.DrawFeature, WebGIS.MapAction, {
 WebGIS.MapAction.SelectFeature = function(config, options) {
     config.iconCls = 'webgis-mapaction-selectfeature';
     config.olcontrol = new OpenLayers.Control.SelectFeature(config.layer, options);
+    
+    var onFeatureselected = function() {
+        for (i=0; i<WebGIS.MapAction.selectionActions.length; i++) WebGIS.MapAction.selectionActions[i].enable();
+    }
+    
+    var onFeatureunselected = function() {
+        if (!this.layer.selectedFeatures) {
+            for (i=0; i<WebGIS.MapAction.selectionActions.length; i++) WebGIS.MapAction.selectionActions[i].disabled();
+        }
+        
+        if (this.layer.selectedFeatures) {
+            if (this.layer.selectedFeatures.length===0) {
+                for (i=0; i<WebGIS.MapAction.selectionActions.length; i++) WebGIS.MapAction.selectionActions[i].disabled();
+            }
+        }
+    }
+    
+    config.layer.events.register('featureselected', onFeatureselected, this);
+    config.layer.events.register('featureunselected', onFeatureselected, this);
+    config.layer.events.register('featureunselected', onFeatureselected, this);
 
     WebGIS.MapAction.SelectFeature.superclass.constructor.call(this, config);
 }
@@ -72,18 +92,24 @@ Ext.extend(WebGIS.MapAction.SelectFeature, WebGIS.MapAction, {
  * @param {String} config WebGIS.MapAction config options<br>
  {OpenLayers.Layer.Vector} [layer] Required config option<br>
  */
-WebGIS.MapAction.RemoveFeature = function(config) {
+WebGIS.MapAction.RemoveSelectedFeatures = function(config) {
     config.iconCls = 'webgis-mapaction-removefeature';
-    config.olcontrol = new OpenLayers.Control.SelectFeature(config.layer);
     
-    // override clickFeature handler on SelectFeature to make it behave like 
-    config.olcontrol.clickFeature = function(feature) {
-        this.layer.removeFeatures([feature]);
-    },
+    config.handler = function() {
+        var layer = this.selectFeatures.layer;
+    
+        for (index in layer.selectedFeatures) {
+            var feature = layer.selectedFeatures[index];
+            
+            layer.removeFeature(feature);
+        }
+    }
+    
+    WebGIS.MapAction.selectionActions.push(this);
 
-    WebGIS.MapAction.RemoveFeature.superclass.constructor.call(this, config);
+    WebGIS.MapAction.RemoveSelectedFeatures.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.RemoveFeature, WebGIS.MapAction, {
+Ext.extend(WebGIS.MapAction.RemoveSelectedFeatures, WebGIS.MapAction, {
 });
 
 /**
