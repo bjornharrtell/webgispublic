@@ -16,7 +16,7 @@ Simple.Application = function()
 			"layers": "basic",
 			"format": "image/jpeg"
 		}, {
-			"buffer": 0
+			buffer: 0
 		})
 	];
 
@@ -39,7 +39,7 @@ Simple.Application = function()
 			map.addLayers(layers);
 			map.zoomToMaxExtent();
 
-			var toc = new WebGIS.Control.Toc({map: map, parseWMS: false, autoScroll: true});
+			var toc = new WebGIS.Control.Toc({map: map, parseWMS: true, autoScroll: true});
 
 			// standard Open Layers
 			map.addControl(new OpenLayers.Control.MousePosition());

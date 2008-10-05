@@ -1,6 +1,6 @@
 /**
  * WebGIS JS Library
- * Copyright(c) 2007, Sweco Position
+ * Copyright(c) 2008, Sweco Position
  *
  * Licensed under GPLv3
  * http://www.gnu.org/licenses/gpl.html
@@ -22,6 +22,7 @@ Ext.namespace('WebGIS', 'WebGIS.Control');
  * @extends Ext.tree.TreePanel
  * @param {Object} config Ext.tree.TreePanel config options:<br>
  * {WebGIS.Map} [map] Required config option<br>
+ * {useMetadata} [boolean] Set to true to enable parsing of metadata and context menu
  */
 WebGIS.Control.Toc = function() {}; 
 
@@ -33,273 +34,248 @@ WebGIS.Control.Toc.prototype.update = function() {};
 // actual code
 WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 	
-    // default config options
-    rootVisible: false,
-    parseWMS: false,
-    root: new Ext.tree.TreeNode({draggable:false}),
+	// default config options
+	rootVisible: false,
+	useMetadata: false,
+	root: new Ext.tree.TreeNode({draggable:false}),
 	
-    // constructor
-    initComponent: function() {
-        WebGIS.Control.Toc.superclass.initComponent.call(this);
-    },
+	// constructor
+	initComponent: function() {
+		WebGIS.Control.Toc.superclass.initComponent.call(this);
+	},
 	
-    // recursive function to fill an Ext.tree.TreeNode with WMS layer information in XML document array form
-    // node is an Ext.tree.TreeNode
-    // layerinfos is a XML document array with WMS <Layer> tags to parse
-    // onContextmenu is a function that handles contextmenu events on the nodes
-    fillTree: function(node, layerinfos, layer, root) {
+	// recursive function to fill an Ext.tree.TreeNode with WMS layer information in XML document array form
+	// node is an Ext.tree.TreeNode
+	// layerinfos is a XML document array with WMS <Layer> tags to parse
+	// onContextmenu is a function that handles contextmenu events on the nodes
+	fillTree: function(node, layerinfos, layer, root) {
 
-        for (var i = 0; i<layerinfos.length; i++)
-        {
-            var layerinfo = jQuery(layerinfos[i]);
+		for (var i = 0; i<layerinfos.length; i++)
+		{
+			var layerinfo = layerinfos[i];
 			
-            // use jquery selector function to get the Name-tag text for each layer
-            var name = layerinfo.children('Name').text();
-            var title = layerinfo.children('Title').text();
+			var name = Ext.DomQuery.selectNode('Name', layerinfo).textContent;
+			var title = Ext.DomQuery.selectNode('Title', layerinfo).textContent;
 			
-            var checked = false;
+			var checked = false;
 			
-            if (layer.params.LAYERS.indexOf(name) != -1) checked = true;
+			if (layer.params.LAYERS.indexOf(name) != -1) checked = true;
 			
-            if (root == null) root = node;
-            var childNode = new Ext.tree.TreeNode({
-                text: title,
-                checked: checked
-            })
-            childNode.name = name;
-            childNode.layer = layer;
-            childNode.layerIndex = i;
+			if (root == null) root = node;
+			var childNode = new Ext.tree.TreeNode({
+				text: title,
+				checked: checked
+			})
+			childNode.name = name;
+			childNode.layer = layer;
+			childNode.layerIndex = i;
+
+			if (this.useMetadata) {
+				// parse metadata
+				childNode.metadata = {};
+				childNode.metadata.wms = {};
+				childNode.metadata.wms.layer = {};
+				childNode.metadata.wms.layer.name = name;
+				childNode.metadata.wms.layer.title = title;
+				childNode.metadata.wms.layer.srs = Ext.DomQuery.selectNode('SRS', layerinfo).textContent;
 			
-            // parse metadata
-            childNode.metadata = {};
-            childNode.metadata.wms = {};
-            childNode.metadata.wms.layer = {};
-            childNode.metadata.wms.layer.name = layerinfo.children('Name').text();
-            childNode.metadata.wms.layer.title = layerinfo.children('Title').text();
-            childNode.metadata.wms.layer.srs = layerinfo.children('SRS').text();
+				childNode.on("contextmenu", this.onContextmenu, this);
+			}
 			
-            node.appendChild(childNode);
+			childNode.on("checkchange", this.onWmsSubLayerCheckChange, root);
 			
-            root.subLayers.push({name: name, visibility: checked});
+			node.appendChild(childNode);
+			root.subLayers.push({name: name, visibility: checked});
 			
-            childNode.on("contextmenu", this.onContextmenu, this);
-            childNode.on("checkchange", this.onWmsSubLayerCheckChange, root);
-			
-            // recurse layers child layers
-            this.fillTree(node, jQuery(layerinfos[i]).children('Layer'), layer, root);
-        }
-    },
+			// recurse layers child layers
+			this.fillTree(node, Ext.DomQuery.select('Layer', layerinfo), layer, root);
+		}
+	},
 	
-    // generic contextmenu handler
-    onContextmenu: function(node, event) {
+	// generic contextmenu handler
+	onContextmenu: function(node, event) {
 		
-        var showProperties = function(baseitem, event) {
-            var layer = baseitem.node;
-            var metadata = baseitem.node.metadata;
+		var showProperties = function(baseitem, event) {
+			var layer = baseitem.node;
+			var metadata = baseitem.node.metadata;
 
-            var html = "";
+			var html = "";
 
-            if (typeof(metadata)!='undefined') {
+			if (metadata) {
+				if (metadata.openlayers) {
+					html += '<h3 class="webgis-metadatalist">' + 'OpenLayers' + '</h3>';
+					html += '<dl class="webgis-metadatalist">'
+					html += '<dt>' + 'Type' + '</dt>';
+					html += '<dd>' + metadata.openlayers.type + '</dd>';
+					html += '<dt>' + 'Source' + '</dt>';
+					html += '<dd>' + metadata.openlayers.source + '</dd>';
+					html += '</dl><br>'
+				}
 				
-                if (typeof(metadata.openlayers)!='undefined') {
-                    html += '<h3 class="webgis-metadatalist">' + 'OpenLayers' + '</h3>';
-                    html += '<dl class="webgis-metadatalist">'
-                    html += '<dt>' + 'Type' + '</dt>';
-                    html += '<dd>' + metadata.openlayers.type + '</dd>';
-                    html += '<dt>' + 'Source' + '</dt>';
-                    html += '<dd>' + metadata.openlayers.source + '</dd>';
-                    html += '</dl><br>'
-                }
-				
-                if (typeof(metadata.wms)!='undefined') {
-                    if (typeof(metadata.wms.service)!='undefined') {
-                        html += '<h3>' + 'WMS Service' + '</h3>';
-                        html += '<dl>'
-                        html += '<dt>' + 'Name' + '</dt>';
-                        html += '<dd>' + metadata.wms.service.name + '</dd>';
-                        html += '<dt>' + 'Title' + '</dt>';
-                        html += '<dd>' + metadata.wms.service.title + '</dd>';
-                        html += '<dt>' + 'Abstract' + '</dt>';
-                        html += '<dd>' + metadata.wms.service.abstact + '</dd>';
-                        html += '</dl><br>'
-                    }
+				if (metadata.wms) {
+					if (metadata.wms.service) {
+						html += '<h3>' + 'WMS Service' + '</h3>';
+						html += '<dl>'
+						html += '<dt>' + 'Name' + '</dt>';
+						html += '<dd>' + metadata.wms.service.name + '</dd>';
+						html += '<dt>' + 'Title' + '</dt>';
+						html += '<dd>' + metadata.wms.service.title + '</dd>';
+						html += '<dt>' + 'Abstract' + '</dt>';
+						html += '<dd>' + metadata.wms.service.abstact + '</dd>';
+						html += '</dl><br>'
+					}
 					
-                    if (typeof(metadata.wms.layer)!='undefined') {
-                        html += '<h3>' + 'WMS Layer' + '</h3>';
-                        html += '<dl>'
-                        html += '<dt>' + 'Name' + '</dt>';
-                        html += '<dd>' + metadata.wms.layer.name + '</dd>';
-                        html += '<dt>' + 'Title' + '</dt>';
-                        html += '<dd>' + metadata.wms.layer.title + '</dd>';
-                        html += '<dt>' + 'SRS' + '</dt>';
-                        html += '<dd>' + metadata.wms.layer.srs + '</dd>';
-                        html += '</dl><br>'
-                    }
-                }
-            }
+					if (metadata.wms.layer) {
+						html += '<h3>' + 'WMS Layer' + '</h3>';
+						html += '<dl>'
+						html += '<dt>' + 'Name' + '</dt>';
+						html += '<dd>' + metadata.wms.layer.name + '</dd>';
+						html += '<dt>' + 'Title' + '</dt>';
+						html += '<dd>' + metadata.wms.layer.title + '</dd>';
+						html += '<dt>' + 'SRS' + '</dt>';
+						html += '<dd>' + metadata.wms.layer.srs + '</dd>';
+						html += '</dl><br>'
+					}
+				}
+			}
 		
-            var window = new Ext.Window({
-                title: this.windowTitleMetadataText,
-                border: false,
-                width: 400,
-                autoHeight: true,
-                resizable: false,
-                layout: 'fit',
-                items: [{
-                        cls: 'webgis-metadatalist',
-                        border: false,
-                        bodyStyle: 'padding:5px',
-                        autoWidth: true,
-                        autoHeight: true,
-                        html: html
-                    }]
-            });
+			var window = new Ext.Window({
+				title: this.windowTitleMetadataText,
+				border: false,
+				width: 400,
+				autoHeight: true,
+				resizable: false,
+				layout: 'fit',
+				items: [{
+					cls: 'webgis-metadatalist',
+					border: false,
+					bodyStyle: 'padding:5px',
+					autoWidth: true,
+					autoHeight: true,
+					html: html
+				}]
+			});
 			
-            window.show();
-        };
+			window.show();
+		};
 
-        var menu = new Ext.menu.Menu();
+		var menu = new Ext.menu.Menu();
 		
-        menu.add({
-            text: this.contextMenuMetadataText,
-            handler: showProperties,
-            node: node
-        });
+		menu.add({
+			text: this.contextMenuMetadataText,
+			handler: showProperties,
+			node: node
+		});
 		
-        menu.showAt(event.getXY());
-    },
+		menu.showAt(event.getXY());
+	},
 	
-    // standard handler for OL.Layer visibility
-    onLayerCheckChange: function(node, checked) {
-        this.setVisibility(checked);
-    },
+	// standard handler for OL.Layer visibility
+	onLayerCheckChange: function(node, checked) {
+		this.setVisibility(checked);
+	},
 	
-    // special handler for WMS sublayers visibility
-    // creates new params for WMS layer and refreshes it
-    onWmsSubLayerCheckChange: function(node, checked) {
-        var layers = "";
+	// special handler for WMS sublayers visibility
+	// creates new params for WMS layer and refreshes it
+	onWmsSubLayerCheckChange: function(node, checked) {
+		var layers = "";
 		
-        this.subLayers[node.layerIndex].visibility = checked;
+		this.subLayers[node.layerIndex].visibility = checked;
 		
-        for (var i = 0; i<this.subLayers.length; i++)
-        {			
-            if (this.subLayers[i].visibility) layers += this.subLayers[i].name + ",";
-        }
+		for (var i = 0; i<this.subLayers.length; i++) {			
+			if (this.subLayers[i].visibility) layers += this.subLayers[i].name + ",";
+		}
 		
-        if (layers == "") {
-            this.layer.setVisibility(false);
-        }
-        else {
-            layers = layers.slice(0, -1);
-            this.layer.params.LAYERS = layers;
-            this.layer.setVisibility(true);
-            this.layer.redraw();
-        }
+		if (layers == "") {
+			this.layer.setVisibility(false);
+		}
+		else {
+			layers = layers.slice(0, -1);
+			this.layer.params.LAYERS = layers;
+			this.layer.setVisibility(true);
+			this.layer.redraw();
+		}
 		
-    },
+	},
 
-    // updates the Toc from current associated map layer contents
-    // attaches event handling for visibility checkboxes
-    update: function() {
-        // loop all layers in map and add them to tree as separate nodes on the root
-        for (var i=0; i<this.map.layers.length; i++) {
-            var layer = this.map.layers[this.map.layers.length-1-i];
+	// updates the Toc from current associated map layer contents
+	// attaches event handling for visibility checkboxes
+	update: function() {
+		// loop all layers in map and add them to tree as separate nodes on the root
+		for (var i=0; i<this.map.layers.length; i++) {
+			var layer = this.map.layers[this.map.layers.length-1-i];
 			
-            if (typeof(layer.visibleInToc) != undefined)
-            {
-                if (layer.visibleInToc == false) continue;
-            }
-            
-            var node = new Ext.tree.TreeNode({
-                text: layer.name,
-                checked: layer.getVisibility()
-            });
-            node.layer = layer;
+			if (layer.visibleInToc === false) {
+				continue;
+			}
+			
+			var node = new Ext.tree.TreeNode({
+				text: layer.name,
+				checked: layer.getVisibility()
+			});
+			node.layer = layer;
 	
-            // parse metadata
-            node.metadata = {};
-            node.metadata.openlayers = {};
-            node.metadata.openlayers.type = layer.CLASS_NAME;
-            node.metadata.openlayers.source = layer.url;
+			// parse metadata
+			node.metadata = {};
+			node.metadata.openlayers = {};
+			node.metadata.openlayers.type = layer.CLASS_NAME;
+			node.metadata.openlayers.source = layer.url;
 			
-            node.on("contextmenu", this.onContextmenu, this);
-            node.on("checkchange", this.onLayerCheckChange, layer);
-            this.getRootNode().appendChild(node);
+			node.on("contextmenu", this.onContextmenu, this);
+			node.on("checkchange", this.onLayerCheckChange, layer);
+			this.getRootNode().appendChild(node);
  
 			if (layer.CLASS_NAME=="OpenLayers.Layer.WMS") {
-				if (typeof(layer.capabilitiesUrl) != undefined)
-				{
+				if (layer.capabilitiesUrl) {
 					node.subLayers = [];
 					this.parseWMSCapabilities(layer, node);
 				}
 			}
-        }
-    },
+		}
+	},
 	
-    parseWMSCapabilities: function(layer, node) {     
-        if (!layer.capabilitiesUrl) return;
-        
-        // callback function on successful request for GetCapabilities XML
-        var success = function(response, options) {	
+	parseWMSCapabilities: function(layer, node) {	 
+		
+		// callback function on successful request for GetCapabilities XML
+		var success = function(response, options) {	
+			var wmslayer = Ext.DomQuery.selectNode('Layer:first', response.responseXML);
+			var wmsservice = Ext.DomQuery.selectNode('Service:first', response.responseXML);
 			
-            // run as task (multithreaded)
-            var task = {
-                run: function(response, tree, node, layers, layer){
-                    // get first Layer tag in XML and jquerify it (this is the WMS service layer)
-                    var wmslayer = jQuery('Layer:first', response.responseXML);
-                    var wmsservice = jQuery('Service:first', response.responseXML);
-					
-                    // parse name and title for top layer (the WMS service) and set the title as the text on the node
-                    options.node.name = wmslayer.children('Name').text();
-                    options.node.setText(wmslayer.children('Title').text());
-					
-                    // parse metadata
-                    options.node.metadata.wms = {};
-                    options.node.metadata.wms.service = {};
-                    options.node.metadata.wms.service.name = wmsservice.children('Name').text();
-                    options.node.metadata.wms.service.title = wmsservice.children('Title').text();
-                    options.node.metadata.wms.service.abstract = wmsservice.children('Abstract').text();
-					
-                    // get XML nodes for layers under the top layer
-                    var wmssublayers = wmslayer.children('Layer');
-					
-                    this.fillTree(options.node, wmssublayers, options.layer, null);
-                },
-                args: [response, options],
-                interval: 1,
-                repeat: 0,
-                scope: this
-            }
-            Ext.TaskMgr.start(task);
-        };
+			// parse name and title for top layer (the WMS service) and set the title as the text on the node
+			options.node.name = Ext.DomQuery.selectNode('Name', wmslayer).textContent;
+			options.node.setText(Ext.DomQuery.selectNode('Title', wmslayer).textContent);
+			 
+			// parse metadata
+			options.node.metadata.wms = {};
+			options.node.metadata.wms.service = {};
+			options.node.metadata.wms.service.name = Ext.DomQuery.selectNode('Name', wmsservice).textContent
+			options.node.metadata.wms.service.title = Ext.DomQuery.selectNode('Title', wmsservice).textContent
+			options.node.metadata.wms.service.abstract = Ext.DomQuery.selectNode('Abstract', wmsservice).textContent
+			
+			// get XML nodes for layers under the top layer
+			var wmssublayers = Ext.DomQuery.select('Layer', wmslayer);
+			
+			this.fillTree(options.node, wmssublayers, options.layer, null);
+		};
 
-        // callback function on failed request for GetCapabilities XML
-        var error = function(response, options) {
-            /*Ext.MessageBox.show({
-                title: 'Error',
-                msg: 'Could not get WMS GetCapabilities',
-                buttons: Ext.MessageBox.OK,
-                icon: Ext.MessageBox.ERROR
-            });*/
-        }
+		// callback function on failed request for GetCapabilities XML
+		var error = function(response, options) {
+			Ext.MessageBox.show({
+				title: 'Error',
+				msg: 'Could not get WMS GetCapabilities',
+				buttons: Ext.MessageBox.OK,
+				icon: Ext.MessageBox.ERROR
+			});
+		}
 
+		Ext.Ajax.request({
+			url: layer.capabilitiesUrl + '?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1',
+			scope: this,
+			layer: layer,
+			node: node,
+			success: success,
+			failure: error
+		});
 
-        
-        // make ajax request, report exceptions
-        // NOTE: most probable cause for client exception is same origin restriction
-        try {
-            Ext.Ajax.request({
-                url: layer.capabilitiesUrl + '?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1',
-                scope: this,
-                layer: layer,
-                node: node,
-                disableCaching: false,
-                success: success,
-                failure: error
-            });
-        }
-        catch (ex) {
-            error();
-        }
-    }
+	}
 });
