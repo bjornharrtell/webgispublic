@@ -31,7 +31,7 @@ Simple.Application = function()
 				tbar: toolbar
 			});
 			var viewport = new Ext.Viewport({
-				layout:'fit',
+				layout: 'fit',
 				items: [panel]
 			});
 
@@ -39,13 +39,7 @@ Simple.Application = function()
 			map.addLayers(layers);
 			map.zoomToMaxExtent();
 
-			var toc = new WebGIS.Control.Toc({map: map, parseWMS: true, autoScroll: true});
-
-			// standard Open Layers
-			map.addControl(new OpenLayers.Control.MousePosition());
-			map.addControl(new OpenLayers.Control.MouseDefaults());
-			map.addControl(new OpenLayers.Control.KeyboardDefaults());
-			map.addControl(new OpenLayers.Control.LayerSwitcher());
+			var toc = new WebGIS.Control.Toc({map: map, autoScroll: true});
 
 			// map action is an extended Ext.Action that can be used as a button or menu item
 			toolbar.add(new WebGIS.MapAction.DragPan({map: map}));

@@ -1,6 +1,6 @@
 /**
  * WebGIS JS Library
- * Copyright(c) 2007, Sweco Position
+ * Copyright(c) 2008, Sweco Position
  *
  * Licensed under GPLv3
  * http://www.gnu.org/licenses/gpl.html
@@ -18,16 +18,16 @@ Ext.namespace('WebGIS', 'WebGIS.MapAction');
  * @param {String} config WebGIS.MapAction config options
  */
 WebGIS.MapAction.ZoomInBox = function(config) {
-    // default config for this action, also used by button to make it toggle correctly
-    config.iconCls = 'webgis-mapaction-zoominbox';
-    config.enableToggle = true;
-    config.toggleGroup = 'WebGIS.MapAction';
+	// default config for this action, also used by button to make it toggle correctly
+	config.iconCls = 'webgis-mapaction-zoominbox';
+	config.enableToggle = true;
+	config.toggleGroup = 'WebGIS.MapAction';
 	
-    // define an OpenLayers control for this MapAction (is handled by MapAction constructor)
-    config.olcontrol = new OpenLayers.Control.ZoomBox();
+	// define an OpenLayers control for this MapAction (is handled by MapAction constructor)
+	config.olcontrol = new OpenLayers.Control.ZoomBox();
 	
-    // call Ext.Action constructor
-    WebGIS.MapAction.ZoomInBox.superclass.constructor.call(this, config);
+	// call Ext.Action constructor
+	WebGIS.MapAction.ZoomInBox.superclass.constructor.call(this, config);
 }
 Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction, {
 });
@@ -38,10 +38,10 @@ Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction, {
  * @param {String} config WebGIS.MapAction config options
  */
 WebGIS.MapAction.ZoomOutBox = function(config) {
-    config.iconCls = 'webgis-mapaction-zoomoutbox';
-    config.olcontrol = new OpenLayers.Control.ZoomBox({out:true});
+	config.iconCls = 'webgis-mapaction-zoomoutbox';
+	config.olcontrol = new OpenLayers.Control.ZoomBox({out:true});
 	
-    WebGIS.MapAction.ZoomOutBox.superclass.constructor.call(this, config);
+	WebGIS.MapAction.ZoomOutBox.superclass.constructor.call(this, config);
 }
 Ext.extend(WebGIS.MapAction.ZoomOutBox, WebGIS.MapAction, { });
 
@@ -51,15 +51,15 @@ Ext.extend(WebGIS.MapAction.ZoomOutBox, WebGIS.MapAction, { });
  * @param {String} config WebGIS.MapAction config options
  */
 WebGIS.MapAction.ZoomIn = function(config) {
-    config.iconCls = 'webgis-mapaction-zoomin';
-    config.handler = function() {
-        for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
-        this.map.zoomIn();
-    }
+	config.iconCls = 'webgis-mapaction-zoomin';
+	config.handler = function() {
+		for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
+		this.map.zoomIn();
+	}
 	
-    WebGIS.MapAction.navigationActions.push(this);
+	WebGIS.MapAction.navigationActions.push(this);
 	
-    WebGIS.MapAction.ZoomIn.superclass.constructor.call(this, config);
+	WebGIS.MapAction.ZoomIn.superclass.constructor.call(this, config);
 }
 Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction, { });
 
@@ -69,15 +69,15 @@ Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction, { });
  * @param {String} config WebGIS.MapAction config options
  */
 WebGIS.MapAction.ZoomOut = function(config) {
-    config.iconCls = 'webgis-mapaction-zoomout';
-    config.handler = function() {
-        for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
-        this.map.zoomOut();
-    }
+	config.iconCls = 'webgis-mapaction-zoomout';
+	config.handler = function() {
+		for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
+		this.map.zoomOut();
+	}
 	
-    WebGIS.MapAction.navigationActions.push(this);
+	WebGIS.MapAction.navigationActions.push(this);
 	
-    WebGIS.MapAction.ZoomOut.superclass.constructor.call(this, config);
+	WebGIS.MapAction.ZoomOut.superclass.constructor.call(this, config);
 }
 Ext.extend(WebGIS.MapAction.ZoomOut, WebGIS.MapAction, { });
 
@@ -87,15 +87,15 @@ Ext.extend(WebGIS.MapAction.ZoomOut, WebGIS.MapAction, { });
  * @param {Object} config WebGIS.MapAction config options
  */
 WebGIS.MapAction.FullExtent = function(config) {
-    config.iconCls = 'webgis-mapaction-fullextent';
-    config.handler = function() {
-        for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
-        this.map.zoomToMaxExtent();
-    }
+	config.iconCls = 'webgis-mapaction-fullextent';
+	config.handler = function() {
+		for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
+		this.map.zoomToMaxExtent();
+	}
 	
-    WebGIS.MapAction.navigationActions.push(this);
+	WebGIS.MapAction.navigationActions.push(this);
 	
-    WebGIS.MapAction.FullExtent.superclass.constructor.call(this, config);
+	WebGIS.MapAction.FullExtent.superclass.constructor.call(this, config);
 }
 Ext.extend(WebGIS.MapAction.FullExtent, WebGIS.MapAction, { });
 
@@ -105,12 +105,12 @@ Ext.extend(WebGIS.MapAction.FullExtent, WebGIS.MapAction, { });
  * @param {Object} config WebGIS.MapAction config options
  */
 WebGIS.MapAction.DragPan = function(config) {
-    config.iconCls = 'webgis-mapaction-dragpan';
-    config.enableToggle = true;
-    config.toggleGroup = 'WebGIS.MapAction';
-    config.olcontrol = new OpenLayers.Control.DragPan();
+	config.iconCls = 'webgis-mapaction-dragpan';
+	config.enableToggle = true;
+	config.toggleGroup = 'WebGIS.MapAction';
+	config.olcontrol = new OpenLayers.Control.DragPan();
 	
-    WebGIS.MapAction.DragPan.superclass.constructor.call(this, config);
+	WebGIS.MapAction.DragPan.superclass.constructor.call(this, config);
 }
 Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction, { });
 
@@ -120,20 +120,20 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction, { });
  * @param {Object} config WebGIS.MapAction config options
  */
 WebGIS.MapAction.PreviousExtent = function(config) {
-    config.iconCls = 'webgis-mapaction-previousextent';
-    config.disabled = true;
-    config.handler = function() {
-        if (WebGIS.MapAction.currentHistoryPosition<(WebGIS.MapAction.navigationHistory.length-1)) {
-            for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
-            WebGIS.MapAction.currentHistoryPosition++;
-            this.map.zoomToExtent(WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition]);
-        }
-    }
+	config.iconCls = 'webgis-mapaction-previousextent';
+	config.disabled = true;
+	config.handler = function() {
+		if (WebGIS.MapAction.currentHistoryPosition<(WebGIS.MapAction.navigationHistory.length-1)) {
+			for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
+			WebGIS.MapAction.currentHistoryPosition++;
+			this.map.zoomToExtent(WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition]);
+		}
+	}
 	
-    WebGIS.MapAction.navigationActions.push(this);
-    WebGIS.MapAction.previousExtentActions.push(this);
+	WebGIS.MapAction.navigationActions.push(this);
+	WebGIS.MapAction.previousExtentActions.push(this);
 	
-    WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this, config);
+	WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this, config);
 }
 Ext.extend(WebGIS.MapAction.PreviousExtent, WebGIS.MapAction, { });
 
@@ -143,19 +143,19 @@ Ext.extend(WebGIS.MapAction.PreviousExtent, WebGIS.MapAction, { });
  * @param {Object} config WebGIS.MapAction config options
  */
 WebGIS.MapAction.NextExtent = function(config) {
-    config.iconCls = 'webgis-mapaction-nextextent';
-    config.disabled = true;
-    config.handler = function() {
-        if (WebGIS.MapAction.currentHistoryPosition>0) {
-            for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
-            WebGIS.MapAction.currentHistoryPosition--;
-            this.map.zoomToExtent(WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition]);
-        }
-    }
+	config.iconCls = 'webgis-mapaction-nextextent';
+	config.disabled = true;
+	config.handler = function() {
+		if (WebGIS.MapAction.currentHistoryPosition>0) {
+			for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
+			WebGIS.MapAction.currentHistoryPosition--;
+			this.map.zoomToExtent(WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition]);
+		}
+	}
 	
-    WebGIS.MapAction.navigationActions.push(this);
-    WebGIS.MapAction.nextExtentActions.push(this);
+	WebGIS.MapAction.navigationActions.push(this);
+	WebGIS.MapAction.nextExtentActions.push(this);
 	
-    WebGIS.MapAction.NextExtent.superclass.constructor.call(this, config);
+	WebGIS.MapAction.NextExtent.superclass.constructor.call(this, config);
 }
 Ext.extend(WebGIS.MapAction.NextExtent, WebGIS.MapAction, { });
