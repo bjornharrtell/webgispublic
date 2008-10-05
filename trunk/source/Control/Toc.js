@@ -183,7 +183,7 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 		this.subLayers[node.layerIndex].visibility = checked;
 		
 		for (var i = 0; i<this.subLayers.length; i++) {			
-			if (this.subLayers[i].visibility) layers += this.subLayers[i].name + ",";
+			if (this.subLayers[i].visibility) layers = this.subLayers[i].name + "," + layers;
 		}
 		
 		if (layers == "") {
