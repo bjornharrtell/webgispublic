@@ -10,6 +10,12 @@ A test project is included with the source that should provide a basis for new p
 
 Comments in code are in JSDoc format and documentation can be built with a release.
 
+== Development environment ==
+
+Using a good development environment is very important to be successful in javascript coding. The alternatives are much better now than some years ago and we recommend the latest version of Eclipse. Actually, the trunk source code base is an eclipse project. A good comparison and explanation of the alternatives are at the Ext JS website [http://extjs.com/learn/Manual:Resources#IDEs here].
+
+Using Firefox with Firebug as the main browser/debugger for development is also strongly recommended, even if developing for usage in Internet Explorer.
+
 == Basic HTML page include example ==
 
 Inclusion of the API in a HTML page is similar to [Ext Ext JS]. One CSS file and one Javascript file is referenced. Ext JS and OpenLayers should be included first. Example:
