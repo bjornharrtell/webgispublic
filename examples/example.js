@@ -1,9 +1,8 @@
-// WebGIS Simple test application
+// WebGIS Public Example application
 
-Ext.namespace('Simple');
+Ext.namespace('Example');
 
-Simple.Application = function()
-{
+Example.Application = function() {
 	var map;
 	var toolbar;
 
@@ -111,4 +110,4 @@ Simple.Application = function()
 }();
 
 // Run the application when browser is ready
-Ext.onReady(Simple.Application.init, Simple.Application);
+Ext.onReady(Example.Application.init, Example.Application);

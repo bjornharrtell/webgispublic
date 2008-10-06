@@ -24,14 +24,6 @@ Ext.namespace('WebGIS', 'WebGIS.Control');
  * {WebGIS.Map} [map] Required config option<br>
  * {useMetadata} [boolean] Set to true to enable parsing of metadata and context menu
  */
-WebGIS.Control.Toc = function() {}; 
-
-/**
- * updates the Toc from current associated map layer contents
- */
-WebGIS.Control.Toc.prototype.update = function() {};
-
-// actual code
 WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 	
 	// default config options

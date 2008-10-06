@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="WebGIS Public debug deployment" default="debug" basedir=".">
+    <target name="debug">
+		<!--delete failonerror="false">
+			<fileset dir="./WebContent/source"/>
+			<fileset dir="./WebContent/test"/>
+		</delete-->
+    	<copy todir="./WebContent/source">
+			<fileset dir="./source"/>
+		</copy>
+    	<copy todir="./WebContent/resources">
+			<fileset dir="./resources"/>
+		</copy>
+    	<copy todir="./WebContent">
+			<fileset dir="./examples"/>
+		</copy>
+    </target>
+</project> 

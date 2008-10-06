@@ -16,7 +16,6 @@
  * @requires OpenLayers/Control.js
  * @requires OpenLayers/Handler/Click.js
  */
-OpenLayers.Control.Identify = function() {}; // jsdoc parser workaround
 OpenLayers.Control.Identify = OpenLayers.Class(OpenLayers.Control, {
 	type: OpenLayers.Control.TYPE_TOOL,
 
