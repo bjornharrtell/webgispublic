@@ -38,7 +38,7 @@ Example.Application = function() {
 			map.addLayers(layers);
 			map.zoomToMaxExtent();
 
-			var toc = new WebGIS.Control.Toc({map: map, autoScroll: true});
+			var toc = new WebGIS.Control.Toc({map: map, useMetadata: true, autoScroll: true});
 
 			// map action is an extended Ext.Action that can be used as a button or menu item
 			toolbar.add(new WebGIS.MapAction.DragPan({map: map}));
