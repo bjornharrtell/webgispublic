@@ -24,6 +24,14 @@ Ext.namespace('WebGIS', 'WebGIS.Control');
  * {WebGIS.Map} [map] Required config option<br>
  * {useMetadata} [boolean] Set to true to enable parsing of metadata and context menu
  */
+WebGIS.Control.Toc = function() {}; 
+
+/**
+ * updates the Toc from current associated map layer contents
+ */
+WebGIS.Control.Toc.prototype.update = function() {};
+
+// actual code
 WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 	
 	// default config options
@@ -63,7 +71,6 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 			childNode.layerIndex = i;
 
 			if (this.useMetadata) {
-				// parse metadata
 				childNode.metadata = {};
 				childNode.metadata.wms = {};
 				childNode.metadata.wms.layer = {};
@@ -206,14 +213,16 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 				checked: layer.getVisibility()
 			});
 			node.layer = layer;
-	
-			// parse metadata
-			node.metadata = {};
-			node.metadata.openlayers = {};
-			node.metadata.openlayers.type = layer.CLASS_NAME;
-			node.metadata.openlayers.source = layer.url;
+
+			if (this.useMetadata) {
+				node.metadata = {};
+				node.metadata.openlayers = {};
+				node.metadata.openlayers.type = layer.CLASS_NAME;
+				node.metadata.openlayers.source = layer.url;
+				
+				node.on("contextmenu", this.onContextmenu, this);
+			}
 			
-			node.on("contextmenu", this.onContextmenu, this);
 			node.on("checkchange", this.onLayerCheckChange, layer);
 			this.getRootNode().appendChild(node);
  
@@ -236,13 +245,14 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 			// parse name and title for top layer (the WMS service) and set the title as the text on the node
 			options.node.name = Ext.DomQuery.selectNode('Name', wmslayer).textContent;
 			options.node.setText(Ext.DomQuery.selectNode('Title', wmslayer).textContent);
-			 
-			// parse metadata
-			options.node.metadata.wms = {};
-			options.node.metadata.wms.service = {};
-			options.node.metadata.wms.service.name = Ext.DomQuery.selectNode('Name', wmsservice).textContent
-			options.node.metadata.wms.service.title = Ext.DomQuery.selectNode('Title', wmsservice).textContent
-			options.node.metadata.wms.service.abstract = Ext.DomQuery.selectNode('Abstract', wmsservice).textContent
+
+			if (this.useMetadata) {
+				options.node.metadata.wms = {};
+				options.node.metadata.wms.service = {};
+				options.node.metadata.wms.service.name = Ext.DomQuery.selectNode('Name', wmsservice).textContent
+				options.node.metadata.wms.service.title = Ext.DomQuery.selectNode('Title', wmsservice).textContent
+				options.node.metadata.wms.service.abstract = Ext.DomQuery.selectNode('Abstract', wmsservice).textContent
+			}
 			
 			// get XML nodes for layers under the top layer
 			var wmssublayers = Ext.DomQuery.select('Layer', wmslayer);
