@@ -30,13 +30,13 @@ WebGIS.MapAction = Ext.extend(Ext.Action, {
 		WebGIS.MapAction.superclass.constructor.call(this, config);
 	
 		// if locale is defined and css is button with icon and text, then set text to locale string for title
-		if (this.titleText) {
+		if (config.text || this.titleText) {
 			if (config.cls === 'x-btn-text-icon'){
-				config.text = this.titleText;
+				config.text = config.text || this.titleText;
 			}
 		}
-		if (this.tooltipText) {
-			config.tooltip = this.tooltipText;
+		if (config.tooltip || this.tooltipText) {
+			config.tooltip = config.tooltip || this.tooltipText;
 		}
 		
 		// if a olcontrol is specified, handle it globally
