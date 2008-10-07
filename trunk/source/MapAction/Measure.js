@@ -28,12 +28,10 @@ WebGIS.MapAction.MeasureLine = function(config) {
 	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler, 
 	{ 
 		callbacks: { 
-			done: function(line) 
-			{
+			done: function(line) {
 				setTip(null);
 			},
-			point: function(point) 
-			{
+			point: function(point) {
 				var len = this.handler.line.geometry.getLength();
 				if(len!=0) {
 					if((len%1000)==len) // is not more than 1 km
@@ -48,8 +46,7 @@ WebGIS.MapAction.MeasureLine = function(config) {
 					tip.showAt([p.x+5+el.getLeft(),p.y+5+el.getTop()]);
 				} 
 			},
-			cancel: function(line) 
-			{
+			cancel: function(line) {
 				setTip(null);
 			}
 		}
@@ -81,15 +78,12 @@ WebGIS.MapAction.MeasureArea = function(config) {
 	
 	handler = OpenLayers.Handler.Polygon;
 
-	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler, 
-	{ 
+	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler, { 
 		callbacks: { 
-			done: function(area) 
-			{
+			done: function(area) {
 				setTip(null);
 			},
-			point: function(point) 
-			{
+			point: function(point) {
 				var area= this.handler.polygon.geometry.getArea();
 				if(area != 0) {
 					if((area%1000000)==area) // is not more than 1 km2
@@ -106,8 +100,7 @@ WebGIS.MapAction.MeasureArea = function(config) {
 					tip.showAt([p.x+5+el.getLeft(),p.y+5+el.getTop()]);	
 				} 
 			},
-			cancel: function(line) 
-			{
+			cancel: function(line) {
 				setTip(null);
 			}
 		}

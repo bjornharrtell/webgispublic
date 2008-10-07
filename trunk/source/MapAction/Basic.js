@@ -53,7 +53,6 @@ Ext.extend(WebGIS.MapAction.ZoomOutBox, WebGIS.MapAction, { });
 WebGIS.MapAction.ZoomIn = function(config) {
 	config.iconCls = 'webgis-mapaction-zoomin';
 	config.handler = function() {
-		for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
 		this.map.zoomIn();
 	}
 	
@@ -71,7 +70,6 @@ Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction, { });
 WebGIS.MapAction.ZoomOut = function(config) {
 	config.iconCls = 'webgis-mapaction-zoomout';
 	config.handler = function() {
-		for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
 		this.map.zoomOut();
 	}
 	
@@ -89,7 +87,6 @@ Ext.extend(WebGIS.MapAction.ZoomOut, WebGIS.MapAction, { });
 WebGIS.MapAction.FullExtent = function(config) {
 	config.iconCls = 'webgis-mapaction-fullextent';
 	config.handler = function() {
-		for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
 		this.map.zoomToMaxExtent();
 	}
 	
@@ -124,7 +121,6 @@ WebGIS.MapAction.PreviousExtent = function(config) {
 	config.disabled = true;
 	config.handler = function() {
 		if (WebGIS.MapAction.currentHistoryPosition<(WebGIS.MapAction.navigationHistory.length-1)) {
-			for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
 			WebGIS.MapAction.currentHistoryPosition++;
 			this.map.zoomToExtent(WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition]);
 		}
@@ -147,7 +143,6 @@ WebGIS.MapAction.NextExtent = function(config) {
 	config.disabled = true;
 	config.handler = function() {
 		if (WebGIS.MapAction.currentHistoryPosition>0) {
-			for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) WebGIS.MapAction.navigationActions[i].disable();
 			WebGIS.MapAction.currentHistoryPosition--;
 			this.map.zoomToExtent(WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition]);
 		}
