@@ -33,7 +33,7 @@ WebGIS.MapAction.DrawFeature = function(config) {
 		handler = OpenLayers.Handler.Path;
 		config.iconCls = 'webgis-mapaction-drawline';
 		this.titleText = this.titleCurveText;
-		this.tooltipText = this.titleCurveText;
+		this.tooltipText = this.tooltipCurveText;
 	}
 	else if (config.geometryType=='OpenLayers.Geometry.Polygon') {
 		handler = OpenLayers.Handler.Polygon;
