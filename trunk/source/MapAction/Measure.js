@@ -18,29 +18,35 @@ Ext.namespace('WebGIS', 'WebGIS.MapAction');
  * @param {Object} config WebGIS.MapAction config options<br>
  */
 WebGIS.MapAction.MeasureLine = function(config) {
-	var handler, nbrOfTips = 0;
-	var tip;
-	
 	config.iconCls = 'webgis-mapaction-measurelength';
 
-	handler = OpenLayers.Handler.Path;
-
-	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler, { 
+	var setTip = function(tip) {
+		if (this.tip) {
+			this.tip.destroy();
+		}
+		this.tip = tip;
+	};
+	
+	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, OpenLayers.Handler.Path, { 
 		callbacks: { 
 			done: function(line) {
 				setTip(null);
 			},
 			point: function(point) {
 				var len = this.handler.line.geometry.getLength();
-				if(len!=0) {
-					if((len%1000)==len) // is not more than 1 km
+				if(len!==0) {
+					// is not more than 1 km
+					if ((len%1000)==len) {
 						len = Math.round(len).toString() + ' m';
-					else len = ((Math.round(len*10/1000)/10)).toString() + ' km';
+					}
+					else {
+						len = ((Math.round(len*10/1000)/10)).toString() + ' km';
+					}
 					
 					var tip = new Ext.Tip({html: len, style: "width:150", autoHeight:true});
 					setTip(tip);
 					
-					var p = this.map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x,point.y))
+					var p = this.map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x,point.y));
 					var el = Ext.Element(this.map.div);
 					tip.showAt([p.x+5+el.getLeft(),p.y+5+el.getTop()]);
 				} 
@@ -49,18 +55,10 @@ WebGIS.MapAction.MeasureLine = function(config) {
 				setTip(null);
 			}
 		}
-	}	 
-);
+	});
 	
-	var setTip =function(tip) {
-		if(this.tip != undefined)
-			this.tip.destroy();
-		this.tip = tip;
-		
-	};
-
 	WebGIS.MapAction.MeasureLine.superclass.constructor.call(this, config);
-}
+};
 Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction);
 
 /**
@@ -69,31 +67,37 @@ Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction);
  * @param {String} config WebGIS.MapAction config options<br>
  */
 WebGIS.MapAction.MeasureArea = function(config) {
-	var handler, nbrOfTips = 0;
-	var tip;
-	
 	config.iconCls = 'webgis-mapaction-measurearea';
 	
-	handler = OpenLayers.Handler.Polygon;
-
-	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler, { 
+	var setTip = function(tip) {
+		if (this.tip) {
+			this.tip.destroy();
+		}
+		this.tip = tip;
+	};
+	
+	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, OpenLayers.Handler.Polygon, { 
 		callbacks: { 
 			done: function(area) {
 				setTip(null);
 			},
 			point: function(point) {
 				var area= this.handler.polygon.geometry.getArea();
-				if(area != 0) {
-					if((area%1000000)==area) // is not more than 1 km2
+				if (area !== 0) {
+					// is not more than 1 km2
+					if ((area%1000000)==area) {
 						area = Math.round(area).toString() + ' m&#178;';
-					else area = (Math.round(area*10/1000000)/10).toString() + ' km&#178;';
+					}
+					else {
+						area = (Math.round(area*10/1000000)/10).toString() + ' km&#178;';
+					}
 					
 					//var p2 = new Ext.Panel({border: false, width: 140, html: area});		
 					var tip = new Ext.Tip({html: area, style: "width:150", autoHeight:true});
 						
 					setTip(tip);
 					
-					var p = this.map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x,point.y))
+					var p = this.map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x,point.y));
 					var el = Ext.Element(this.map.div);
 					tip.showAt([p.x+5+el.getLeft(),p.y+5+el.getTop()]);	
 				} 
@@ -103,14 +107,7 @@ WebGIS.MapAction.MeasureArea = function(config) {
 			}
 		}
 	});
-	
-	var setTip =function(tip) {
-		if(this.tip != undefined)
-			this.tip.destroy();
-		this.tip = tip;
-		
-	};
 
 	WebGIS.MapAction.MeasureArea.superclass.constructor.call(this, config);
-}
+};
 Ext.extend(WebGIS.MapAction.MeasureArea, WebGIS.MapAction);

@@ -26,8 +26,7 @@ WebGIS.MapAction.Identify = function(config) {
 	config.enableToggle = true;
 	config.toggleGroup = 'WebGIS.MapAction';
 	
-	if (typeof(config.resultTo) == 'undefined')
-	{
+	if (config.resultTo === null) {
 		config.resultTo = new Ext.Window({
 			title: config.text,
 			closeAction: 'hide',
@@ -41,5 +40,5 @@ WebGIS.MapAction.Identify = function(config) {
 		
 	// call Ext.Action constructor
 	WebGIS.MapAction.Identify.superclass.constructor.call(this, config);
-}
+};
 Ext.extend(WebGIS.MapAction.Identify, WebGIS.MapAction);
