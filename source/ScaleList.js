@@ -10,7 +10,7 @@
  * @fileoverview WebGIS.Control.ScaleList class
  */
 
-Ext.namespace('WebGIS', 'WebGIS.Control');
+Ext.namespace('WebGIS');
 
 /**
  * @class Scalelist implemented as an Ext JS combobox extension
@@ -18,7 +18,7 @@ Ext.namespace('WebGIS', 'WebGIS.Control');
  * @param {Object} config Ext.form.ComboBox config options<br>
  * {OpenLayers.Map} [map] Required config option
  */
-WebGIS.Control.ScaleList = Ext.extend(Ext.form.ComboBox, {
+WebGIS.ScaleList = Ext.extend(Ext.form.ComboBox, {
 	valueField: 'zoomlevel',
 	displayField: 'scale',
 	mode: 'local',
@@ -27,18 +27,18 @@ WebGIS.Control.ScaleList = Ext.extend(Ext.form.ComboBox, {
 	editable: false,
 	autoWidth: true,
 	autoHeight: true,
-	
 	initialized: false,
-
 	initComponent: function() {
 		// create default store
 		this.store = new Ext.data.SimpleStore({
 			fields: ['res', 'scale']
-		}),
+		});
 		
-		WebGIS.Control.ScaleList.superclass.initComponent.call(this);
+		WebGIS.ScaleList.superclass.initComponent.call(this);
 		
-		if (this.intialized) return;
+		if (this.intialized) {
+			return;
+		}
 		
 		this.update();
 		
@@ -62,7 +62,7 @@ WebGIS.Control.ScaleList = Ext.extend(Ext.form.ComboBox, {
 			
 			var row = new Ext.data.Record({zoomlevel: i, scale: '1:' + Math.round(scale)});
 			this.store.add(row);
-		};
+		}
 		
 		// set initial value
 		this.setValue(this.map.getZoomForResolution(this.map.getResolution()));
@@ -70,4 +70,4 @@ WebGIS.Control.ScaleList = Ext.extend(Ext.form.ComboBox, {
 
 });
 
-Ext.reg('webgis-scalelist', WebGIS.Control.ScaleList);
+Ext.reg('webgis-scalelist', WebGIS.ScaleList);

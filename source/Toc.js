@@ -10,7 +10,7 @@
  * @fileoverview WebGIS.Control.Toc class
  */
 
-Ext.namespace('WebGIS', 'WebGIS.Control');
+Ext.namespace('WebGIS');
 
 /**
  * @class A TOC generated from layers in an OpenLayers.Map.
@@ -24,13 +24,13 @@ Ext.namespace('WebGIS', 'WebGIS.Control');
  * {WebGIS.Map} [map] Required config option<br>
  * {useMetadata} [boolean] Set to true to enable parsing of metadata and context menu
  */
-WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
+WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 	rootVisible: false,
 	useMetadata: false,
 	root: new Ext.tree.TreeNode({draggable:false}),
 
 	initComponent: function() {
-		WebGIS.Control.Toc.superclass.initComponent.call(this);
+		WebGIS.Toc.superclass.initComponent.call(this);
 	},
 	
 	// recursive function to fill an Ext.tree.TreeNode with WMS layer information in XML document array form
@@ -48,13 +48,17 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 			
 			var checked = false;
 			
-			if (layer.params.LAYERS.indexOf(name) != -1) checked = true;
+			if (layer.params.LAYERS.indexOf(name) != -1) {
+				checked = true;
+			}
 			
-			if (root == null) root = node;
+			if (root === null) {
+				root = node;
+			}
 			var childNode = new Ext.tree.TreeNode({
 				text: title,
 				checked: checked
-			})
+			});
 			childNode.name = name;
 			childNode.layer = layer;
 			childNode.layerIndex = i;
@@ -91,37 +95,37 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 			if (metadata) {
 				if (metadata.openlayers) {
 					html += '<h3 class="webgis-metadatalist">' + 'OpenLayers' + '</h3>';
-					html += '<dl class="webgis-metadatalist">'
+					html += '<dl class="webgis-metadatalist">';
 					html += '<dt>' + 'Type' + '</dt>';
 					html += '<dd>' + metadata.openlayers.type + '</dd>';
 					html += '<dt>' + 'Source' + '</dt>';
 					html += '<dd>' + metadata.openlayers.source + '</dd>';
-					html += '</dl><br>'
+					html += '</dl><br>';
 				}
 				
 				if (metadata.wms) {
 					if (metadata.wms.service) {
 						html += '<h3>' + 'WMS Service' + '</h3>';
-						html += '<dl>'
+						html += '<dl>';
 						html += '<dt>' + 'Name' + '</dt>';
 						html += '<dd>' + metadata.wms.service.name + '</dd>';
 						html += '<dt>' + 'Title' + '</dt>';
 						html += '<dd>' + metadata.wms.service.title + '</dd>';
 						html += '<dt>' + 'Abstract' + '</dt>';
-						html += '<dd>' + metadata.wms.service.abstact + '</dd>';
-						html += '</dl><br>'
+						html += '<dd>' + metadata.wms.service.abstacttext + '</dd>';
+						html += '</dl><br>';
 					}
 					
 					if (metadata.wms.layer) {
 						html += '<h3>' + 'WMS Layer' + '</h3>';
-						html += '<dl>'
+						html += '<dl>';
 						html += '<dt>' + 'Name' + '</dt>';
 						html += '<dd>' + metadata.wms.layer.name + '</dd>';
 						html += '<dt>' + 'Title' + '</dt>';
 						html += '<dd>' + metadata.wms.layer.title + '</dd>';
 						html += '<dt>' + 'SRS' + '</dt>';
 						html += '<dd>' + metadata.wms.layer.srs + '</dd>';
-						html += '</dl><br>'
+						html += '</dl><br>';
 					}
 				}
 			}
@@ -169,10 +173,12 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 		this.subLayers[node.layerIndex].visibility = checked;
 		
 		for (var i = 0; i<this.subLayers.length; i++) {			
-			if (this.subLayers[i].visibility) layers = this.subLayers[i].name + "," + layers;
+			if (this.subLayers[i].visibility) {
+				layers = this.subLayers[i].name + "," + layers;
+			}
 		}
 		
-		if (layers == "") {
+		if (layers === "") {
 			this.layer.setVisibility(false);
 		}
 		else {
@@ -213,7 +219,7 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 			node.on("checkchange", this.onLayerCheckChange, layer);
 			this.getRootNode().appendChild(node);
  
-			if (layer.CLASS_NAME=="OpenLayers.Layer.WMS") {
+			if (layer.CLASS_NAME==="OpenLayers.Layer.WMS") {
 				if (layer.capabilitiesUrl) {
 					node.subLayers = [];
 					this.parseWMSCapabilities(layer, node);
@@ -236,9 +242,9 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 			if (this.useMetadata) {
 				options.node.metadata.wms = {};
 				options.node.metadata.wms.service = {};
-				options.node.metadata.wms.service.name = Ext.DomQuery.selectNode('Name', wmsservice).textContent
-				options.node.metadata.wms.service.title = Ext.DomQuery.selectNode('Title', wmsservice).textContent
-				options.node.metadata.wms.service.abstract = Ext.DomQuery.selectNode('Abstract', wmsservice).textContent
+				options.node.metadata.wms.service.name = Ext.DomQuery.selectNode('Name', wmsservice).textContent;
+				options.node.metadata.wms.service.title = Ext.DomQuery.selectNode('Title', wmsservice).textContent;
+				options.node.metadata.wms.service.abstacttext = Ext.DomQuery.selectNode('Abstract', wmsservice).textContent;
 			}
 			
 			// get XML nodes for layers under the top layer
@@ -255,7 +261,7 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 				buttons: Ext.MessageBox.OK,
 				icon: Ext.MessageBox.ERROR
 			});
-		}
+		};
 
 		Ext.Ajax.request({
 			url: layer.capabilitiesUrl + '?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1',
@@ -268,3 +274,5 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 
 	}
 });
+
+Ext.reg('webgis-toc', WebGIS.Toc);

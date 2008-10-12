@@ -11,7 +11,7 @@
  */
 
 // need to define WebGISTileServer.Provider class since the code at serverside doesn't do it
-WebGISTileServer = new Object();
+WebGISTileServer = {};
 WebGISTileServer.Provider = OpenLayers.Class.create();
 
 /**
@@ -20,8 +20,6 @@ WebGISTileServer.Provider = OpenLayers.Class.create();
  * @requires OpenLayers/Layer/Grid.js
  */
 OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
-
-	// overridden config options
 	isBaseLayer: true,
 	tileSize: new OpenLayers.Size(250, 250),
 	/**
@@ -35,7 +33,7 @@ OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
 	 external js files.
 	 */
 	initialize: function(name, url, provider, token) {
-		var newArguments = new Array();
+		var newArguments = [];
 		newArguments.push(name, url, {}, provider);
 		
 		OpenLayers.Layer.Grid.prototype.initialize.apply(this, newArguments);
@@ -63,7 +61,7 @@ OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
 		var y = Math.floor((bounds.bottom - this.tileOrigin.lat) / (res * this.tileSize.h));
 			
 		// WebGISTileServer have reverse y tile order
-		var tilemax = (this.provider.MAXY[z]-this.provider.MINY[z])/(this.provider.SIZES[z]);
+		var tilemax = (this.provider.MAXY[z]-this.provider.MINY[z])/this.provider.SIZES[z];
 		y = tilemax-1-y;
 
 		return this.url + "?providerId=" + this.provider.providerId + "&token="+ this.token + "&zoomlevel=" + z + "&x=" + x + "&y=" + y; 

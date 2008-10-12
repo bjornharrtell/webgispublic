@@ -28,7 +28,7 @@ OpenLayers.Control.Identify = OpenLayers.Class(OpenLayers.Control, {
 	identify: function (event) {
 		var node = this.toc.getSelectionModel().getSelectedNode();
 		
-		if (node == null) {
+		if (node === null) {
 			Ext.MessageBox.show({
 				title: 'Information',
 				msg: 'Requires selected layer in a WMS service',
