@@ -1,5 +1,3 @@
-// WebGIS Public Example application
-
 Ext.namespace('Example');
 
 Example.Application = function() {
@@ -20,9 +18,7 @@ Example.Application = function() {
 	];
 
 	return {
-		init: function()
-		{
-			// Ext Js layout to fill browser with a top toolbar
+		init: function() {
 			toolbar = new Ext.Toolbar();
 			var panel = new Ext.Panel({
 				border: false,
@@ -105,9 +101,10 @@ Example.Application = function() {
 			scalewindow.setPosition(250,150);
 
 			toc.update();
+			
+			return null;
 		}
 	};
 }();
 
-// Run the application when browser is ready
 Ext.onReady(Example.Application.init, Example.Application);
