@@ -42,5 +42,4 @@ WebGIS.MapAction.Identify = function(config) {
 	// call Ext.Action constructor
 	WebGIS.MapAction.Identify.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.Identify, WebGIS.MapAction, {
-});
+Ext.extend(WebGIS.MapAction.Identify, WebGIS.MapAction);

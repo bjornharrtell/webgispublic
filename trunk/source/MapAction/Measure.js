@@ -25,8 +25,7 @@ WebGIS.MapAction.MeasureLine = function(config) {
 
 	handler = OpenLayers.Handler.Path;
 
-	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler, 
-	{ 
+	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler, { 
 		callbacks: { 
 			done: function(line) {
 				setTip(null);
@@ -62,8 +61,7 @@ WebGIS.MapAction.MeasureLine = function(config) {
 
 	WebGIS.MapAction.MeasureLine.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction, {
-});
+Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction);
 
 /**
  * @class Activates measuring area tool on map.<br>The tool presumes the map unit to be meters and presents the result in m2 or km2 depending on value. If the tool is used on a WGS84 map the resulting value will be invalid.
@@ -104,8 +102,7 @@ WebGIS.MapAction.MeasureArea = function(config) {
 				setTip(null);
 			}
 		}
-	}	 
-);
+	});
 	
 	var setTip =function(tip) {
 		if(this.tip != undefined)
@@ -116,5 +113,4 @@ WebGIS.MapAction.MeasureArea = function(config) {
 
 	WebGIS.MapAction.MeasureArea.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.MeasureArea, WebGIS.MapAction, {
-});
+Ext.extend(WebGIS.MapAction.MeasureArea, WebGIS.MapAction);

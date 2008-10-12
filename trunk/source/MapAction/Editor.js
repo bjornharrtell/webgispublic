@@ -46,8 +46,7 @@ WebGIS.MapAction.DrawFeature = function(config) {
 
 	WebGIS.MapAction.DrawFeature.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.DrawFeature, WebGIS.MapAction, {
-});
+Ext.extend(WebGIS.MapAction.DrawFeature, WebGIS.MapAction);
 
 
 /**
@@ -83,8 +82,7 @@ WebGIS.MapAction.SelectFeature = function(config, options) {
 
 	WebGIS.MapAction.SelectFeature.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.SelectFeature, WebGIS.MapAction, {
-});
+Ext.extend(WebGIS.MapAction.SelectFeature, WebGIS.MapAction);
 
 /**
  * @class Removes a feature on specified layer
@@ -109,8 +107,7 @@ WebGIS.MapAction.RemoveSelectedFeatures = function(config) {
 
 	WebGIS.MapAction.RemoveSelectedFeatures.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.RemoveSelectedFeatures, WebGIS.MapAction, {
-});
+Ext.extend(WebGIS.MapAction.RemoveSelectedFeatures, WebGIS.MapAction);
 
 /**
  * @class Activates feature modification on specified layer.
@@ -124,8 +121,7 @@ WebGIS.MapAction.ModifyFeature = function(config) {
 
 	WebGIS.MapAction.ModifyFeature.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.ModifyFeature, WebGIS.MapAction, {
-});
+Ext.extend(WebGIS.MapAction.ModifyFeature, WebGIS.MapAction);
 
 /**
  * @class Activates feature dragging on specified layer.
@@ -139,5 +135,4 @@ WebGIS.MapAction.DragFeature = function(config) {
 
 	WebGIS.MapAction.DragFeature.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.DragFeature, WebGIS.MapAction, {
-});
+Ext.extend(WebGIS.MapAction.DragFeature, WebGIS.MapAction);
