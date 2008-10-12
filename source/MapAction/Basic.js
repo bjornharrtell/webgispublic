@@ -29,8 +29,7 @@ WebGIS.MapAction.ZoomInBox = function(config) {
 	// call Ext.Action constructor
 	WebGIS.MapAction.ZoomInBox.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction, {
-});
+Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction);
 
 /**
  * @class Activates interactive zoom out box on map
@@ -43,7 +42,7 @@ WebGIS.MapAction.ZoomOutBox = function(config) {
 	
 	WebGIS.MapAction.ZoomOutBox.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.ZoomOutBox, WebGIS.MapAction, { });
+Ext.extend(WebGIS.MapAction.ZoomOutBox, WebGIS.MapAction);
 
 /**
  * @class Zooms in one zoomstep
@@ -60,7 +59,7 @@ WebGIS.MapAction.ZoomIn = function(config) {
 	
 	WebGIS.MapAction.ZoomIn.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction, { });
+Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction);
 
 /**
  * @class Zooms out one zoomstep
@@ -77,7 +76,7 @@ WebGIS.MapAction.ZoomOut = function(config) {
 	
 	WebGIS.MapAction.ZoomOut.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.ZoomOut, WebGIS.MapAction, { });
+Ext.extend(WebGIS.MapAction.ZoomOut, WebGIS.MapAction);
 
 /**
  * @class Zooms map to full extent
@@ -94,7 +93,7 @@ WebGIS.MapAction.FullExtent = function(config) {
 	
 	WebGIS.MapAction.FullExtent.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.FullExtent, WebGIS.MapAction, { });
+Ext.extend(WebGIS.MapAction.FullExtent, WebGIS.MapAction);
 
 /**
  * @class Activates interactive drag pan on map
@@ -109,7 +108,7 @@ WebGIS.MapAction.DragPan = function(config) {
 	
 	WebGIS.MapAction.DragPan.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction, { });
+Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 
 /**
  * @class
@@ -131,7 +130,7 @@ WebGIS.MapAction.PreviousExtent = function(config) {
 	
 	WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.PreviousExtent, WebGIS.MapAction, { });
+Ext.extend(WebGIS.MapAction.PreviousExtent, WebGIS.MapAction);
 
 /**
  * @class
@@ -153,4 +152,4 @@ WebGIS.MapAction.NextExtent = function(config) {
 	
 	WebGIS.MapAction.NextExtent.superclass.constructor.call(this, config);
 }
-Ext.extend(WebGIS.MapAction.NextExtent, WebGIS.MapAction, { });
+Ext.extend(WebGIS.MapAction.NextExtent, WebGIS.MapAction);

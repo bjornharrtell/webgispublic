@@ -24,22 +24,11 @@ Ext.namespace('WebGIS', 'WebGIS.Control');
  * {WebGIS.Map} [map] Required config option<br>
  * {useMetadata} [boolean] Set to true to enable parsing of metadata and context menu
  */
-WebGIS.Control.Toc = function() {}; 
-
-/**
- * updates the Toc from current associated map layer contents
- */
-WebGIS.Control.Toc.prototype.update = function() {};
-
-// actual code
 WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
-	
-	// default config options
 	rootVisible: false,
 	useMetadata: false,
 	root: new Ext.tree.TreeNode({draggable:false}),
-	
-	// constructor
+
 	initComponent: function() {
 		WebGIS.Control.Toc.superclass.initComponent.call(this);
 	},
@@ -90,8 +79,7 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 			this.fillTree(node, Ext.DomQuery.select('Layer', layerinfo), layer, root);
 		}
 	},
-	
-	// generic contextmenu handler
+
 	onContextmenu: function(node, event) {
 		
 		var showProperties = function(baseitem, event) {
@@ -169,12 +157,11 @@ WebGIS.Control.Toc = Ext.extend(Ext.tree.TreePanel, {
 		menu.showAt(event.getXY());
 	},
 	
-	// standard handler for OL.Layer visibility
 	onLayerCheckChange: function(node, checked) {
 		this.setVisibility(checked);
 	},
 	
-	// special handler for WMS sublayers visibility
+	// handler for WMS sublayers visibility
 	// creates new params for WMS layer and refreshes it
 	onWmsSubLayerCheckChange: function(node, checked) {
 		var layers = "";
