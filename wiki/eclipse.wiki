@@ -4,7 +4,9 @@
 
 == Eclipse as IDE and project manager ==
 
-An eclipse project is simply a .project file which can be found in the root of the WebGIS Public source code trunk. This file makes is possible to directly open the project in eclipse and using a Subversion-plugin for eclipse you can checkout the project directly into Eclipse which is recommended.
+Amongst others, the file .project in the root of the source code is what makes it a Eclipse project. Eclipse will recognize the project and it can be directly imported by using a Subversion plugin for Eclipse which is recommended.
+
+Eclipse is probably the best IDE right now for javascript development and project handling and it also has excellent custom building and deployment features.
 
 == Building and deploying ==
 
