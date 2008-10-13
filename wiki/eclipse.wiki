@@ -10,7 +10,7 @@ The build scripts assume that they are run in the root of the project and are in
 
 There are two deployment scrips, buildscripts\debug.xml and buildscripts\examples.xml
 
-The deployment scrips use a property called weblocation that is used to define the path where the application should be deployed. This is configured in the Builder.
+The deployment scripts use a property called weblocation that is used to define the path where the application should be deployed. This is configured in the Builder.
 
 In Eclipse there is a mechanism for publishing web application, but it's not very flexible so the recommended way to do it is via the ant scripts.
 
