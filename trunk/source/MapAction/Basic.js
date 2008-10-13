@@ -10,8 +10,6 @@
  * @fileoverview Basic map tools implemented as WebGIS.MapAction classes
  */
 
-Ext.namespace('WebGIS', 'WebGIS.MapAction');
-
 /**
  * @class Activates interactive zoom in box on map
  * @extends WebGIS.MapAction

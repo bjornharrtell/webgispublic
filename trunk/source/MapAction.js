@@ -7,10 +7,7 @@
  * 
  * Author: Björn Harrtell
  *
- * @fileoverview WebGIS.MapAction base class implementation
  */
- 
-Ext.namespace('WebGIS');
 
 /**
  * @class Abstract baseclass extended from Ext.Action to handle interaction with 

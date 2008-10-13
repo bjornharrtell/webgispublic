@@ -54,14 +54,13 @@ OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
 	},
 		
 	getURL: function (bounds) {
-		var res = this.map.getResolution();
-		var z = this.map.resolutions.length-1-this.map.getZoom();
-			
-		var x = Math.floor((bounds.left - this.tileOrigin.lon) / (res * this.tileSize.w));
-		var y = Math.floor((bounds.bottom - this.tileOrigin.lat) / (res * this.tileSize.h));
-			
-		// WebGISTileServer have reverse y tile order
-		var tilemax = (this.provider.MAXY[z]-this.provider.MINY[z])/this.provider.SIZES[z];
+		var res = this.map.getResolution(),
+			z = this.map.resolutions.length-1-this.map.getZoom(),
+			x = Math.floor((bounds.left - this.tileOrigin.lon) / (res * this.tileSize.w)),
+			y = Math.floor((bounds.bottom - this.tileOrigin.lat) / (res * this.tileSize.h)),
+			// WebGISTileServer have reverse y tile order
+			tilemax = (this.provider.MAXY[z]-this.provider.MINY[z])/this.provider.SIZES[z];
+		
 		y = tilemax-1-y;
 
 		return this.url + "?providerId=" + this.provider.providerId + "&token="+ this.token + "&zoomlevel=" + z + "&x=" + x + "&y=" + y; 

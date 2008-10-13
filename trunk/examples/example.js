@@ -2,40 +2,48 @@ Ext.namespace('Example');
 
 Example.Application = function() {
 	var map;
-	var toolbar;
+	var toolbar = new Ext.Toolbar();
 
 	var mapOptions = {
-		maxResolution: 1.40625/2
+		maxResolution: 1.40625/2,
+		controls: []
 	};
 
-	var layers = [new OpenLayers.Layer.WMS("Metacarta Tile Cache",
-		"http://labs.metacarta.com/wms-c/Basic.py?", {
-			"layers": "basic",
-			"format": "image/jpeg"
-		}, {
-			buffer: 0
-		})
+	var layers = [
+	    new OpenLayers.Layer.WMS(
+			"Metacarta Tile Cache",
+			"http://labs.metacarta.com/wms-c/Basic.py?", {
+				"layers": "basic",
+				"format": "image/jpeg"
+			}, {
+				buffer: 0
+			}
+		)
 	];
 
 	return {
 		init: function() {
-			toolbar = new Ext.Toolbar();
+
+			Ext.QuickTips.init();
+		
 			var panel = new Ext.Panel({
 				border: false,
 				layout: 'fit',
 				tbar: toolbar
 			});
-			var viewport = new Ext.Viewport({
+			
+			new Ext.Viewport({
 				layout: 'fit',
-				items: [panel]
+				items: panel
 			});
 
 			map = new OpenLayers.Map(panel.body.dom, mapOptions);
 			map.addLayers(layers);
 			map.zoomToMaxExtent();
 
-			var toc = new WebGIS.Control.Toc({map: map, useMetadata: true, autoScroll: true});
-
+			var editlayer = new OpenLayers.Layer.Vector('editlayer');
+			map.addLayer(editlayer);
+			
 			// map action is an extended Ext.Action that can be used as a button or menu item
 			toolbar.add(new WebGIS.MapAction.DragPan({map: map}));
 			toolbar.add(new WebGIS.MapAction.ZoomInBox({map: map}));
@@ -45,38 +53,20 @@ Example.Application = function() {
 			toolbar.add(new WebGIS.MapAction.PreviousExtent({map: map}));
 			toolbar.add(new WebGIS.MapAction.NextExtent({map: map}));
 			toolbar.add(new WebGIS.MapAction.FullExtent({map: map}));
+			toolbar.add(new WebGIS.MapAction.MeasureLine({map: map}));
+			toolbar.add(new WebGIS.MapAction.MeasureArea({map: map}));
+			toolbar.add('-');
+			toolbar.add({xtype: 'webgis-scalelist', map: map});
+			toolbar.add('-');
+			toolbar.add(new WebGIS.MapAction.DrawFeature({map: map, layer: editlayer, geometryType: 'OpenLayers.Geometry.Point'}));
+			toolbar.add(new WebGIS.MapAction.DrawFeature({map: map, layer: editlayer, geometryType: 'OpenLayers.Geometry.Curve'}));
+			toolbar.add(new WebGIS.MapAction.DrawFeature({map: map, layer: editlayer, geometryType: 'OpenLayers.Geometry.Polygon'}));
+			toolbar.add('-');
+			toolbar.add(new WebGIS.MapAction.SelectFeature({map: map, layer: editlayer}));
+			toolbar.add(new WebGIS.MapAction.ModifyFeature({map: map, layer: editlayer}));
+			toolbar.add(new WebGIS.MapAction.DragFeature({map: map, layer: editlayer}));
 
-			var edittoolbar = new Ext.Toolbar();
-			var editwindow = new Ext.Window({
-				title: 'Edit tools',
-				border: false,
-				layout: 'fit',
-				width: 200,
-				autoHeight: true,
-				tbar: edittoolbar
-			})
-			editwindow.show();
-			editwindow.setPosition(250,50);
-
-			var editlayer = new OpenLayers.Layer.Vector('editlayer');
-			map.addLayer(editlayer);
-
-			var edittools = [];
-			edittools.push(new Ext.Button(new WebGIS.MapAction.DrawFeature({map: map, layer: editlayer, geometryType: 'OpenLayers.Geometry.Point'})));
-			edittools.push(new Ext.Button(new WebGIS.MapAction.DrawFeature({map: map, layer: editlayer, geometryType: 'OpenLayers.Geometry.Curve'})));
-			edittools.push(new Ext.Button(new WebGIS.MapAction.DrawFeature({map: map, layer: editlayer, geometryType: 'OpenLayers.Geometry.Polygon'})));
-			edittools.push(new Ext.Button(new WebGIS.MapAction.ModifyFeature({map: map, layer: editlayer})));
-			edittools.push(new Ext.Button(new WebGIS.MapAction.DragFeature({map: map, layer: editlayer})));
-			edittools.push(new Ext.Button(new WebGIS.MapAction.SelectFeature({map: map, layer: editlayer})));
-
-			// remove text and set css to display the buttons as icons only
-			for (var i=0; i<edittools.length; i++) {
-				edittools[i].removeClass('x-btn-text-icon');
-				edittools[i].addClass('x-btn-icon');
-				edittools[i].setText();
-				edittoolbar.add(edittools[i]);
-			}
-
+			var toc = new WebGIS.Toc({map: map, useMetadata: true, autoScroll: true});
 			var window = new Ext.Window({
 				title: 'Layers',
 				border: false,
@@ -84,21 +74,9 @@ Example.Application = function() {
 				width: 200,
 				height: 300,
 				items: toc
-			})
+			});
 			window.show();
 			window.setPosition(20,50);
-
-			var scalewindow = new Ext.Window({
-				title: 'Scales',
-				border: false,
-				layout: 'form',
-				hideLabels: true,
-				width: 200,
-				height: 50,
-				items: {xtype: 'webgis-scalelist', map: map}
-			})
-			scalewindow.show();
-			scalewindow.setPosition(250,150);
 
 			toc.update();
 			
