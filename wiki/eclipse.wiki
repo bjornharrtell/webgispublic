@@ -2,7 +2,11 @@
 
 [http://www.eclipse.org Eclipse] is a development IDE that can be used for all kinds of stuff.
 
+== Eclipse as IDE and project manager ==
+
 An eclipse project is simply a .project file which can be found in the root of the WebGIS Public source code trunk. This file makes is possible to directly open the project in eclipse and using a Subversion-plugin for eclipse you can checkout the project directly into Eclipse which is recommended.
+
+== Building and deploying ==
 
 [http://ant.apache.org Ant] is integrated in Eclipse and is a tool intended for building/deploying source code. In the WebGIS source code there are building scripts for deploying debug version with example pages to a web server and to build a release version of the library.
 
@@ -10,8 +14,12 @@ The build scripts assume that they are run in the root of the project and are in
 
 There are two deployment scrips, buildscripts\debug.xml and buildscripts\examples.xml
 
-The deployment scripts use a property called weblocation that is used to define the path where the application should be deployed. This is configured in the Builder.
+The deployment scripts use a property called weblocation that is used to define the path where the application should be deployed. A way of setting this property is to create a property file with a single line in it like this:
 
-In Eclipse there is a mechanism for publishing web application, but it's not very flexible so the recommended way to do it is via the ant scripts.
+weblocation = c:\\pathtofolder
+
+The properties file for the buildscripts\debug.xml is preconfigured in the project to use buildscripts\debug.properties - When first opening the project it the build process will complain and fail until you creat this file.
 
 The release build script buildscripts\release.xml concats the source and runs it though the YUI compressor which is included in buildtools. The created release library is put in the build directory.
+
+NOTE: In Eclipse there is a mechanism for publishing web application, but it's not very flexible so the recommended way to do it is via the ant scripts.
