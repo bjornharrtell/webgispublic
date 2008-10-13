@@ -1,0 +1,11 @@
+#summary About Eclipse on how it is used with WebGIS Public
+
+[http://www.eclipse.org/ Eclipse] is a development IDE that can be used for all kinds of stuff.
+
+An eclipse project is controlled by the .project file which can be found in the root of the WebGIS Public source code trunk.
+
+Eclipse has plugins for using subversion so that the project can be directly checked out into Eclipse which is recommended.
+
+The tool Ant is integrated in Eclipse and is used for building. In the WebGIS source code building scripts for deplying debugging versions to a web server and to build a release version of the library.
+
+Note that build scripts assume that they are run in the root of the project. To use the build scripts look into how to configure "Builders" in Eclipse.
