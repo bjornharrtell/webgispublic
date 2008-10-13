@@ -4,18 +4,18 @@
 	<property name="openlayersurl" value="http://www.openlayers.org/download/OpenLayers-2.7.zip"/>
 
 	<target name="deploy" depends="weblocation,openlayers,extjs">		
-		<copy todir="${weblocation}/source">
-			<fileset dir="source"/>
+		<copy todir="${weblocation}/build">
+			<fileset dir="build"/>
 		</copy>
     	<copy todir="${weblocation}/resources">
 			<fileset dir="resources"/>
 		</copy>
     	<copy todir="${weblocation}">
-			<fileset dir="debug"/>
+			<fileset dir="examples"/>
 		</copy>
 
 		<copy todir="${weblocation}">
-			<zipfileset src="OpenLayers-2.7.zip" includes="OpenLayers-2.7/* OpenLayers-2.7/lib/** OpenLayers-2.7/img/* OpenLayers-2.7/theme/**"/>
+			<zipfileset src="OpenLayers-2.7.zip" includes="OpenLayers-2.7/* OpenLayers-2.7/img/* OpenLayers-2.7/theme/**"/>
 		</copy>
 		<copy todir="${weblocation}">
 			<zipfileset src="ext-2.2.zip" includes="ext-2.2/* ext-2.2/adapter/ext/* ext-2.2/resources/**"/>
