@@ -39,8 +39,8 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 
 		for (i=0; i<layerinfos.length; i++) {
 			layerinfo = layerinfos[i];
-			name = Ext.DomQuery.selectNode('Name', layerinfo).textContent;
-			title = Ext.DomQuery.selectNode('Title', layerinfo).textContent;
+			name = Ext.DomQuery.selectNode('Name', layerinfo).firstChild.nodeValue;
+			title = Ext.DomQuery.selectNode('Title', layerinfo).firstChild.nodeValue;
 			checked = false;
 			
 			if (layer.params.LAYERS.indexOf(name) !== -1) {
@@ -65,7 +65,7 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 				metadata.wms.layer = {};
 				metadata.wms.layer.name = name;
 				metadata.wms.layer.title = title;
-				metadata.wms.layer.srs = Ext.DomQuery.selectNode('SRS', layerinfo).textContent;
+				metadata.wms.layer.srs = Ext.DomQuery.selectNode('SRS', layerinfo).firstChild.nodeValue;
 			
 				childNode.on("contextmenu", this.onContextmenu, this);
 			}
@@ -237,16 +237,16 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 				toc = this;
 			
 			// parse name and title for top layer (the WMS service) and set the title as the text on the node
-			options.node.name = Ext.DomQuery.selectNode('Name', wmslayer).textContent;
-			options.node.setText(Ext.DomQuery.selectNode('Title', wmslayer).textContent);
+			options.node.name = Ext.DomQuery.selectNode('Name', wmslayer).firstChild.nodeValue;
+			options.node.setText(Ext.DomQuery.selectNode('Title', wmslayer).firstChild.nodeValue);
 
 			if (toc.useMetadata) {
 				options.node.metadata.wms = {};
 				metadata = options.node.metadata;
 				metadata.wms.service = {};
-				metadata.wms.service.name = Ext.DomQuery.selectNode('Name', wmsservice).textContent;
-				metadata.wms.service.title = Ext.DomQuery.selectNode('Title', wmsservice).textContent;
-				metadata.wms.service.abstacttext = Ext.DomQuery.selectNode('Abstract', wmsservice).textContent;
+				metadata.wms.service.name = Ext.DomQuery.selectNode('Name', wmsservice).firstChild.nodeValue;
+				metadata.wms.service.title = Ext.DomQuery.selectNode('Title', wmsservice).firstChild.nodeValue;
+				metadata.wms.service.abstacttext = Ext.DomQuery.selectNode('Abstract', wmsservice).firstChild.nodeValue;
 			}
 			
 			toc.fillTree(options.node, wmssublayers, options.layer, null);
