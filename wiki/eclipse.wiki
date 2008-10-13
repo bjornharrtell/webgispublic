@@ -4,7 +4,7 @@
 
 An eclipse project is simply a .project file which can be found in the root of the WebGIS Public source code trunk. This file makes is possible to directly open the project in eclipse and using a Subversion-plugin for eclipse you can checkout the project directly into Eclipse which is recommended.
 
-The tool [http://ant.apache.org Ant] is integrated in Eclipse and is a tool intended for building/deploying source code. In the WebGIS source code there are building scripts for deploying debug version with example pages to a web server and to build a release version of the library.
+[http://ant.apache.org Ant] is integrated in Eclipse and is a tool intended for building/deploying source code. In the WebGIS source code there are building scripts for deploying debug version with example pages to a web server and to build a release version of the library.
 
 NOTE: The build scripts assume that they are run in the root of the project. To use the build scripts look into how to configure "Builders" in Eclipse. Builders can be configured to be automatically run when saving source code changes which can be useful when debugging.
 
