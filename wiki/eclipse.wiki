@@ -1,4 +1,4 @@
-#summary About Eclipse on how it is used with WebGIS Public
+#summary About Eclipse and how it is used with WebGIS Public
 
 [http://www.eclipse.org Eclipse] is a development IDE that can be used for all kinds of stuff.
 
