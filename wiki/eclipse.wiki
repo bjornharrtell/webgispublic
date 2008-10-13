@@ -6,8 +6,10 @@ An eclipse project is simply a .project file which can be found in the root of t
 
 The tool [http://ant.apache.org Ant] is integrated in Eclipse and is a tool intended for building/deploying source code. In the WebGIS source code there are building scripts for deploying debug version with example pages to a web server and to build a release version of the library.
 
-Note that build scripts assume that they are run in the root of the project. To use the build scripts look into how to configure "Builders" in Eclipse. Note that Builders can be configured to be automatically run when saving source code changes which can be useful when debugging.
+NOTE: The build scripts assume that they are run in the root of the project. To use the build scripts look into how to configure "Builders" in Eclipse. Builders can be configured to be automatically run when saving source code changes which can be useful when debugging.
 
 The web deployment script buildscripts\debug.xml assume that a property called weblocation is defined to a path where the application should be deployed. This can be set as a command line option in the Builder configuration.
+
+NOTE: In Eclipse there is a mechanism for publishing web application, but it's not very flexible so the recommended way to do it is via above described ant script.
 
 The release build script buildscripts\release.xml concats the source and runs it though the YUI compressor which is included in buildtools. The resulting release library builds are put into the directory build.
