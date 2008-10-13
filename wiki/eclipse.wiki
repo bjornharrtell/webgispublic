@@ -10,9 +10,9 @@ Eclipse is probably the best IDE right now for javascript development and projec
 
 == Building and deploying ==
 
-[http://ant.apache.org Ant] is integrated in Eclipse and is a tool intended for building/deploying source code. In the WebGIS source code there are building scripts for deploying debug version with example pages to a web server and to build a release version of the library.
+[http://ant.apache.org Ant] is integrated in Eclipse and is a tool intended for building/deploying source code. Scripts for creating a release build, deploying debug version and example pages is available.
 
-The build scripts assume that they are run in the root of the project and are included as configured "Builders" in the Eclipse project. Builders can be configured to be automatically run when saving source code changes which can be useful when debugging.
+The build scripts assume that they are run in the root of the project and are configured as "Builders" in the project. Builders can be configured to be automatically run when saving source code changes which can be useful when debugging.
 
 There are two deployment scrips, buildscripts\debug.xml and buildscripts\examples.xml
 
