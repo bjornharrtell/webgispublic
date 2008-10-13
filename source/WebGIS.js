@@ -9,4 +9,4 @@
  *
  */
 
-var WebGIS = { version: "1.2.0" };
+WebGIS = {version: "1.2.0"};
