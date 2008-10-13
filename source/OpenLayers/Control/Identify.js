@@ -26,7 +26,8 @@ OpenLayers.Control.Identify = OpenLayers.Class(OpenLayers.Control, {
 	},
 
 	identify: function (event) {
-		var node = this.toc.getSelectionModel().getSelectedNode();
+		var node = this.toc.getSelectionModel().getSelectedNode(),
+			url;
 		
 		if (node === null) {
 			Ext.MessageBox.show({
@@ -50,7 +51,7 @@ OpenLayers.Control.Identify = OpenLayers.Class(OpenLayers.Control, {
 			return;
 		}
 		
-		var url =  node.layer.getFullRequestString({
+		url = node.layer.getFullRequestString({
 			REQUEST: "GetFeatureInfo",
 			EXCEPTIONS: "application/vnd.ogc.se_xml",
 			BBOX: node.layer.map.getExtent().toBBOX(),
@@ -60,7 +61,8 @@ OpenLayers.Control.Identify = OpenLayers.Class(OpenLayers.Control, {
 			INFO_FORMAT: 'text/html',
 			QUERY_LAYERS: node.name,
 			WIDTH: node.layer.map.size.w,
-			HEIGHT: node.layer.map.size.h});
+			HEIGHT: node.layer.map.size.h
+		});
 		
 		try {
 			Ext.Ajax.request({

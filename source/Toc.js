@@ -7,10 +7,7 @@
  * 
  * Author: Björn Harrtell
  *
- * @fileoverview WebGIS.Control.Toc class
  */
-
-Ext.namespace('WebGIS');
 
 /**
  * @class A TOC generated from layers in an OpenLayers.Map.
@@ -38,24 +35,22 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 	// layerinfos is a XML document array with WMS <Layer> tags to parse
 	// onContextmenu is a function that handles contextmenu events on the nodes
 	fillTree: function(node, layerinfos, layer, root) {
+		var i, layerinfo, name, title, checked, childNode;
 
-		for (var i = 0; i<layerinfos.length; i++)
-		{
-			var layerinfo = layerinfos[i];
+		for (i=0; i<layerinfos.length; i++) {
+			layerinfo = layerinfos[i];
+			name = Ext.DomQuery.selectNode('Name', layerinfo).textContent;
+			title = Ext.DomQuery.selectNode('Title', layerinfo).textContent;
+			checked = false;
 			
-			var name = Ext.DomQuery.selectNode('Name', layerinfo).textContent;
-			var title = Ext.DomQuery.selectNode('Title', layerinfo).textContent;
-			
-			var checked = false;
-			
-			if (layer.params.LAYERS.indexOf(name) != -1) {
+			if (layer.params.LAYERS.indexOf(name) !== -1) {
 				checked = true;
 			}
 			
 			if (root === null) {
 				root = node;
 			}
-			var childNode = new Ext.tree.TreeNode({
+			childNode = new Ext.tree.TreeNode({
 				text: title,
 				checked: checked
 			});
@@ -85,12 +80,11 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 	},
 
 	onContextmenu: function(node, event) {
-		
-		var showProperties = function(baseitem, event) {
-			var layer = baseitem.node;
-			var metadata = baseitem.node.metadata;
+		var showProperties, window, menu;
 
-			var html = "";
+		showProperties = function(baseitem, event) {
+			var metadata = baseitem.node.metadata,
+				html = "";
 
 			if (metadata) {
 				if (metadata.openlayers) {
@@ -130,7 +124,7 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 				}
 			}
 		
-			var window = new Ext.Window({
+			window = new Ext.Window({
 				title: this.windowTitleMetadataText,
 				border: false,
 				width: 400,
@@ -150,7 +144,7 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 			window.show();
 		};
 
-		var menu = new Ext.menu.Menu();
+		menu = new Ext.menu.Menu();
 		
 		menu.add({
 			text: this.contextMenuMetadataText,
@@ -168,11 +162,11 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 	// handler for WMS sublayers visibility
 	// creates new params for WMS layer and refreshes it
 	onWmsSubLayerCheckChange: function(node, checked) {
-		var layers = "";
+		var layers = "", i;
 		
 		this.subLayers[node.layerIndex].visibility = checked;
 		
-		for (var i = 0; i<this.subLayers.length; i++) {			
+		for (i=0; i<this.subLayers.length; i++) {			
 			if (this.subLayers[i].visibility) {
 				layers = this.subLayers[i].name + "," + layers;
 			}
@@ -193,15 +187,17 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 	// updates the Toc from current associated map layer contents
 	// attaches event handling for visibility checkboxes
 	update: function() {
+		var i, layer, node;
+		
 		// loop all layers in map and add them to tree as separate nodes on the root
-		for (var i=0; i<this.map.layers.length; i++) {
-			var layer = this.map.layers[this.map.layers.length-1-i];
+		for (i=0; i<this.map.layers.length; i++) {
+			layer = this.map.layers[this.map.layers.length-1-i];
 			
 			if (layer.visibleInToc === false) {
 				continue;
 			}
 			
-			var node = new Ext.tree.TreeNode({
+			node = new Ext.tree.TreeNode({
 				text: layer.name,
 				checked: layer.getVisibility()
 			});
@@ -229,11 +225,13 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 	},
 	
 	parseWMSCapabilities: function(layer, node) {	 
-		
+		var success, error;
+
 		// callback function on successful request for GetCapabilities XML
-		var success = function(response, options) {	
-			var wmslayer = Ext.DomQuery.selectNode('Layer:first', response.responseXML);
-			var wmsservice = Ext.DomQuery.selectNode('Service:first', response.responseXML);
+		success = function(response, options) {	
+			var wmslayer = Ext.DomQuery.selectNode('Layer:first', response.responseXML),
+				wmsservice = Ext.DomQuery.selectNode('Service:first', response.responseXML),
+				wmssublayers = Ext.DomQuery.select('Layer', wmslayer);
 			
 			// parse name and title for top layer (the WMS service) and set the title as the text on the node
 			options.node.name = Ext.DomQuery.selectNode('Name', wmslayer).textContent;
@@ -247,14 +245,11 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 				options.node.metadata.wms.service.abstacttext = Ext.DomQuery.selectNode('Abstract', wmsservice).textContent;
 			}
 			
-			// get XML nodes for layers under the top layer
-			var wmssublayers = Ext.DomQuery.select('Layer', wmslayer);
-			
 			this.fillTree(options.node, wmssublayers, options.layer, null);
 		};
 
 		// callback function on failed request for GetCapabilities XML
-		var error = function(response, options) {
+		error = function(response, options) {
 			Ext.MessageBox.show({
 				title: 'Error',
 				msg: 'Could not get WMS GetCapabilities',
@@ -271,7 +266,7 @@ WebGIS.Toc = Ext.extend(Ext.tree.TreePanel, {
 			success: success,
 			failure: error
 		});
-
+		
 	}
 });
 

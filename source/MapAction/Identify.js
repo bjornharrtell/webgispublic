@@ -10,8 +10,6 @@
  * @fileoverview Basic identify tools implemented as WebGIS.MapAction classes
  */
 
-Ext.namespace('WebGIS', 'WebGIS.MapAction');
-
 /**
  * @class Identifies on clicked position
  * @extends WebGIS.MapAction

@@ -7,10 +7,7 @@
  * 
  * Author: Björn Harrtell
  *
- * @fileoverview WebGIS.Control.ScaleList class
  */
-
-Ext.namespace('WebGIS');
 
 /**
  * @class Scalelist implemented as an Ext JS combobox extension
@@ -56,11 +53,13 @@ WebGIS.ScaleList = Ext.extend(Ext.form.ComboBox, {
 	},
 	
 	update: function() {
+		var i, scale, row;
+		
 		// load available scales from map
-		for (var i=0; i<this.map.getNumZoomLevels(); i++) {
-			var scale = OpenLayers.Util.getScaleFromResolution(this.map.getResolutionForZoom(i), 'm');
-			
-			var row = new Ext.data.Record({zoomlevel: i, scale: '1:' + Math.round(scale)});
+		for (i=0; i<this.map.getNumZoomLevels(); i++) {
+			scale = OpenLayers.Util.getScaleFromResolution(this.map.getResolutionForZoom(i), 'm'),
+			row = new Ext.data.Record({zoomlevel: i, scale: '1:' + Math.round(scale)});
+
 			this.store.add(row);
 		}
 		

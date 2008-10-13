@@ -15,13 +15,13 @@ WebGIS.Locale = {};
 WebGIS.Locale.errorText = "Error message";
 
 // WebGIS.Toc
-Ext.apply(WebGIS.Control.Toc.prototype, {
+Ext.apply(WebGIS.Toc.prototype, {
 	windowTitleMetadataText: 'Metadata for this layer',
 	contextMenuMetadataText: 'Show metadata'
 });
 
 // WebGIS.Control.ScaleList
-Ext.apply(WebGIS.Control.ScaleList.prototype, {
+Ext.apply(WebGIS.ScaleList.prototype, {
 	configErrorText: 'Requires defined resolutions array in map configuration'
 });
 

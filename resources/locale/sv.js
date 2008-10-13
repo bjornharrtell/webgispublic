@@ -15,13 +15,13 @@ WebGIS.Locale = {};
 WebGIS.Locale.errorText = "Felmeddelande";
 
 // WebGIS.Toc
-Ext.apply(WebGIS.Control.Toc.prototype, {
+Ext.apply(WebGIS.Toc.prototype, {
 	windowTitleMetadataText: 'Metadata för lagret',
 	contextMenuMetadataText: 'Visa metadata'
 });
 
 // WebGIS.Control.ScaleList
-Ext.apply(WebGIS.Control.ScaleList.prototype, {
+Ext.apply(WebGIS.ScaleList.prototype, {
 	configErrorText: 'Requires defined resolutions array in map configuration'
 });
 
