@@ -57,7 +57,7 @@ WebGIS.ScaleList = Ext.extend(Ext.form.ComboBox, {
 		
 		// load available scales from map
 		for (i=0; i<this.map.getNumZoomLevels(); i++) {
-			scale = OpenLayers.Util.getScaleFromResolution(this.map.getResolutionForZoom(i), 'm'),
+			scale = OpenLayers.Util.getScaleFromResolution(this.map.getResolutionForZoom(i), 'm');
 			row = new Ext.data.Record({zoomlevel: i, scale: '1:' + Math.round(scale)});
 
 			this.store.add(row);
