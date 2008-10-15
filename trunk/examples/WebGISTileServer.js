@@ -10,7 +10,8 @@ WebGISTileServer.Application = function() {
 		resolutions: provider.map_options.resolutions,
 		maxExtent: new OpenLayers.Bounds(0, 4000000, 3000000, 9000000),
 	    units: "meters",
-	    projection: "EPSG:3006"
+	    projection: "EPSG:3006",
+	    controls: []
 	};
 
     return {
@@ -33,7 +34,7 @@ WebGISTileServer.Application = function() {
     			'WebGISTileServer',
     			'http://www.asp-mapservices.com/WebGISTileServer/PublicServletProxy',
     			provider,
-    			'b75269bfdc6b3cb372963503b369e14c'
+    			'af4383ad50a6140498d1f8839727b595'
     		);
             map.addLayer(layer);
 
