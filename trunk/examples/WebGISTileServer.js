@@ -4,21 +4,14 @@ WebGISTileServer.Application = function() {
     var map;
     var toolbar;
     
-    var provider = new WebGISTileServer.Provider.LMVSE();
+    var provider = new WebGISTileServer.Provider.LMVSESweref99();
 
     var mapOptions = {
-		resolutions: [3000/(6*250),6000/(6*250),18000/(6*250),54000/(6*250),162000/(6*250),375000/(6*250),630000/(6*250),3300000/(6*250),6900000/(6*250)],
-		maxExtent: new OpenLayers.Bounds(0, 5000000, 3000000, 9000000),
+		resolutions: provider.map_options.resolutions,
+		maxExtent: new OpenLayers.Bounds(0, 4000000, 3000000, 9000000),
 	    units: "meters",
-	    projection: "EPSG:2400"
+	    projection: "EPSG:3006"
 	};
-    
-	var layer = new OpenLayers.Layer.WebGISTileServer(
-		'WebGISTileServer',
-		'http://www.asp-mapservices.com/WebGISTileServer/PublicServletProxy',
-		provider,
-		OpenLayers.Layer.WebGISTileServer.GetToken()
-	);
 
     return {
         init: function() {
@@ -35,9 +28,16 @@ WebGISTileServer.Application = function() {
             });
             
             map = new OpenLayers.Map(panel.body.dom, mapOptions);
+            
+        	var layer = new OpenLayers.Layer.WebGISTileServer(
+    			'WebGISTileServer',
+    			'http://www.asp-mapservices.com/WebGISTileServer/PublicServletProxy',
+    			provider,
+    			'b75269bfdc6b3cb372963503b369e14c'
+    		);
             map.addLayer(layer);
 
-            map.setCenter(new OpenLayers.LonLat(1500000, 6920000), 1);
+            map.setCenter(new OpenLayers.LonLat(150000, 6700000), 1);
             
             map.addControl(new OpenLayers.Control.MousePosition());
 
