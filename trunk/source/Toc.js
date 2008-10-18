@@ -196,8 +196,7 @@ WebGIS.Toc = function(config) {
 		success = function(response, options) {	
 			var wmslayer = Ext.DomQuery.selectNode('Layer:first', response.responseXML),
 				wmsservice = Ext.DomQuery.selectNode('Service:first', response.responseXML),
-				wmssublayers = Ext.DomQuery.select('Layer', wmslayer),
-				toc = this;
+				wmssublayers = Ext.DomQuery.select('Layer', wmslayer);
 			
 			// parse name and title for top layer (the WMS service) and set the title as the text on the node
 			options.node.name = Ext.DomQuery.selectNode('Name', wmslayer).firstChild.nodeValue;
@@ -211,7 +210,7 @@ WebGIS.Toc = function(config) {
 				options.node.metadata.wms.service.abstracttext = Ext.DomQuery.selectNode('Abstract', wmsservice).firstChild.nodeValue;
 			}
 			
-			toc.fillTree(options.node, wmssublayers, options.layer, null);
+			this.fillTree(options.node, wmssublayers, options.layer, null);
 		};
 
 		// callback function on failed request for GetCapabilities XML
