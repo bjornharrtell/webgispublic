@@ -63,9 +63,7 @@ Example.Application = function() {
 			});
 			toolbarWindow2.show();
 			toolbarWindow2.setPosition(480,5);
-		
-			var navigationHistory = new WebGIS.NavigationHistory({map: map});
-			
+
 			// map action is an extended Ext.Action that can be used as a button or menu item
 			toolbar1.add('-');
 			toolbar1.add(new WebGIS.MapAction.DragPan({map: map}));
@@ -73,8 +71,8 @@ Example.Application = function() {
 			toolbar1.add(new WebGIS.MapAction.ZoomOutBox({map: map}));
 			toolbar1.add(new WebGIS.MapAction.ZoomIn({map: map}));
 			toolbar1.add(new WebGIS.MapAction.ZoomOut({map: map}));
-			toolbar1.add(new WebGIS.MapAction.PreviousExtent({map: map, navigationHistory: navigationHistory}));
-			toolbar1.add(new WebGIS.MapAction.NextExtent({map: map, navigationHistory: navigationHistory}));
+			toolbar1.add(new WebGIS.MapAction.PreviousExtent({map: map}));
+			toolbar1.add(new WebGIS.MapAction.NextExtent({map: map}));
 			toolbar1.add(new WebGIS.MapAction.FullExtent({map: map}));
 			toolbar1.add(new WebGIS.MapAction.MeasureLine({map: map}));
 			toolbar1.add(new WebGIS.MapAction.MeasureArea({map: map}));

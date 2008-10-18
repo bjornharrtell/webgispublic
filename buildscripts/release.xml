@@ -7,7 +7,7 @@
 		</concat>
 		
 		<concat destfile="build/webgis.js" append="true">
-		    <fileset dir="source" includes="**/*.js" excludes="WebGIS.js" />
+		    <fileset dir="source" includes="WebGIS/**/*.js" />
 		</concat>
 		
 		<concat destfile="build/webgis.js" append="true">

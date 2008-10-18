@@ -44,16 +44,14 @@ Example.Application = function() {
 			var editlayer = new OpenLayers.Layer.Vector('editlayer');
 			map.addLayer(editlayer);
 			
-			var navigationHistory = new WebGIS.NavigationHistory({map: map});
-			
 			// map action is an extended Ext.Action that can be used as a button or menu item
 			toolbar.add(new WebGIS.MapAction.DragPan({map: map}));
 			toolbar.add(new WebGIS.MapAction.ZoomInBox({map: map}));
 			toolbar.add(new WebGIS.MapAction.ZoomOutBox({map: map}));
 			toolbar.add(new WebGIS.MapAction.ZoomIn({map: map}));
 			toolbar.add(new WebGIS.MapAction.ZoomOut({map: map}));
-			toolbar.add(new WebGIS.MapAction.PreviousExtent({map: map, navigationHistory: navigationHistory}));
-			toolbar.add(new WebGIS.MapAction.NextExtent({map: map, navigationHistory: navigationHistory}));
+			toolbar.add(new WebGIS.MapAction.PreviousExtent({map: map}));
+			toolbar.add(new WebGIS.MapAction.NextExtent({map: map}));
 			toolbar.add(new WebGIS.MapAction.FullExtent({map: map}));
 			toolbar.add(new WebGIS.MapAction.MeasureLine({map: map}));
 			toolbar.add(new WebGIS.MapAction.MeasureArea({map: map}));
