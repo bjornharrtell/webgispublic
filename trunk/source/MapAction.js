@@ -6,16 +6,16 @@
  * http://www.gnu.org/licenses/gpl.html
  * 
  * Author: Björn Harrtell
- *
  */
 
-// need private scope for this class
-(function(){
+// need a private scope for this class
+(function() {
 
 /**
  * Private static array to manage activation/deactivation of added OpenLayers controls
+ * @type Array
  */
-var openLayersControls = [];
+var openLayersControls = new Array();
 
 /**
  * extended from Ext.Action to handle interaction with 

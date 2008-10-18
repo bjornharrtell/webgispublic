@@ -6,7 +6,7 @@
  * http://www.gnu.org/licenses/gpl.html
  * 
  * Author: Björn Harrtell
- *
  */
-WebGIS = {};
-WebGIS.prototype = {version: "1.2.0"};
+
+WebGIS = {version: "1.2.0"};
+WebGIS.prototype = {};

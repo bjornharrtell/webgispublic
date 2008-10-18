@@ -108,54 +108,122 @@ WebGIS.MapAction.DragPan = function(config) {
 WebGIS.MapAction.DragPan.prototype = {};
 Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 
-/**
- * @class
- * @base WebGIS.MapAction
- * @param {Object} config
- */
-WebGIS.MapAction.PreviousExtent = function(config) {
-	config.iconCls = 'webgis-mapaction-previousextent';
-	config.disabled = true;
-	config.handler = config.navigationHistory.back;
-	
-	config.navigationHistory.on('historystatuschange', function(e) {
-			if (e.previousHistory === true) { 
-				this.enable();
-			}
-			else {
-				this.disable();
-			}
-		},
-		this
-	);
-	
-	WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this, config);
-};
-WebGIS.MapAction.PreviousExtent.prototype = {};
-Ext.extend(WebGIS.MapAction.PreviousExtent, WebGIS.MapAction);
+(function() {
 
-/**
- * @class
- * @base WebGIS.MapAction
- * @param {Object} config
- */
-WebGIS.MapAction.NextExtent = function(config) {
-	config.iconCls = 'webgis-mapaction-nextextent';
-	config.disabled = true;
-	config.handler = config.navigationHistory.next;
-	
-	config.navigationHistory.on('historystatuschange', function(e) {
-			if (e.nextHistory) { 
-				this.enable();
+	/**
+	 * Private inner class for managing navigation history
+	 */
+	var NavigationHistory = function(config) {
+		var map = config.map,
+			currentHistoryPosition = 0,
+			navigationHistory = [],
+			processNewBounds;
+		
+		this.addEvents('historystatuschange');
+		
+		this.back = function() {
+			if (currentHistoryPosition<(navigationHistory.length-1)) {
+				currentHistoryPosition++;
+				map.zoomToExtent(navigationHistory[currentHistoryPosition]);
 			}
-			else {
-				this.disable();
+		};
+		
+		this.next = function() {
+			if (currentHistoryPosition>0) {
+				currentHistoryPosition--;
+				map.zoomToExtent(navigationHistory[currentHistoryPosition]);
 			}
-		},
-		this
-	);
+		};
+		
+		processNewBounds = function() {		
+			var previous = navigationHistory[currentHistoryPosition],
+				previousHistory = true,
+				nextHistory = true;
 	
-	WebGIS.MapAction.NextExtent.superclass.constructor.call(this, config);
-};
-WebGIS.MapAction.NextExtent.prototype = {};
-Ext.extend(WebGIS.MapAction.NextExtent, WebGIS.MapAction);
+			if (navigationHistory.length < 2) {
+				previousHistory = false;
+				nextHistory = false;
+			}
+			else if (currentHistoryPosition === navigationHistory.length-1)	{
+				previousHistory = false;
+			}
+			else if (currentHistoryPosition === 0)	{
+				nextHistory = false;
+			}
+			
+			this.fireEvent('historystatuschange', { previousHistory: previousHistory, nextHistory: nextHistory });
+			
+			//  abort if new extent equals the next/previous one			
+			if (map.getExtent().equals(previous)) {
+				return;
+			}
+			// add historic bounds to top of history
+			navigationHistory.splice(0, 0, map.getExtent());
+		};
+		
+		// call custom processing handler when map is done with move/zoom
+		map.events.register('zoomend', this, processNewBounds);
+		map.events.register('moveend', this, processNewBounds);
+		
+		// add first map extent to history
+		navigationHistory.push(map.getExtent());
+	};
+	
+	Ext.extend(NavigationHistory, Ext.util.Observable);
+	
+	/**
+	 * Singleton instance for navigation history used by the related mapactions
+	 */
+	var navigationHistoryInstance;
+	
+	/**
+	 * @base WebGIS.MapAction
+	 * @param {Object} config
+	 */
+	WebGIS.MapAction.PreviousExtent = function(config) {
+		config.iconCls = 'webgis-mapaction-previousextent';
+		config.disabled = true;
+		
+		if (!navigationHistoryInstance) {
+			navigationHistoryInstance = new NavigationHistory({map: config.map});
+		}
+
+		config.handler = navigationHistoryInstance.back;
+		
+		navigationHistoryInstance.on('historystatuschange', 
+			function(e) {
+				e.previousHistory ? this.enable() : this.disable();
+			}, this
+		);
+		
+		WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this, config);
+	};
+	WebGIS.MapAction.PreviousExtent.prototype = {};
+	Ext.extend(WebGIS.MapAction.PreviousExtent, WebGIS.MapAction);
+
+	/**
+	 * @base WebGIS.MapAction
+	 * @param {Object} config
+	 */
+	WebGIS.MapAction.NextExtent = function(config) {
+		config.iconCls = 'webgis-mapaction-nextextent';
+		config.disabled = true;
+		
+		if (!navigationHistoryInstance) {
+			navigationHistoryInstance = new NavigationHistory({map: config.map});
+		}
+		
+		config.handler = navigationHistoryInstance.next;
+		
+		navigationHistoryInstance.on('historystatuschange', 
+			function(e) {
+				e.nextHistory ? this.enable() : this.disable();
+			}, this
+		);
+		
+		WebGIS.MapAction.NextExtent.superclass.constructor.call(this, config);
+	};
+	WebGIS.MapAction.NextExtent.prototype = {};
+	Ext.extend(WebGIS.MapAction.NextExtent, WebGIS.MapAction);
+
+})();
