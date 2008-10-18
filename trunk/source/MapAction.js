@@ -9,6 +9,13 @@
  *
  */
 
+(function(){
+
+/**
+ * Private static array to manage activation/deactivation of added OpenLayers controls
+ */
+var openLayersControls = [];
+
 /**
  * @class Abstract baseclass extended from Ext.Action to handle interaction with 
  * OpenLayers and can be used as buttons, menu items and more in an Ext Js GUI.
@@ -21,77 +28,26 @@
  * @extends Ext.Action
  * @param {Object} config Ext.Action config options<br>
  {OpenLayers.Map} [map] Required config option
- */ 
+ */
 WebGIS.MapAction = function(config) {
-	var map = config.map;
+	var map = config.map,
+		olcontrol = config.olcontrol,
+		mapActionHandler;
 	
 	WebGIS.MapAction.superclass.constructor.call(this, config);
-	
-	var initNavigationHistory = function() {
-		var processNewBounds = function() {
-			var previous = WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition], 
-				i;
 
-			// map is done with move/zoom so enable navigation tools
-			for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) {
-				WebGIS.MapAction.navigationActions[i].enable();
-			}
-
-			// check where we are in navigation history and disable related actions
-			if (WebGIS.MapAction.navigationHistory.length < 2) {
-				for (i=0; i<WebGIS.MapAction.nextExtentActions.length; i++) {
-					WebGIS.MapAction.nextExtentActions[i].disable();
-				}
-				for (i=0; i<WebGIS.MapAction.previousExtentActions.length; i++) {
-					WebGIS.MapAction.previousExtentActions[i].disable();
-				}
-			}
-			else if (WebGIS.MapAction.currentHistoryPosition === WebGIS.MapAction.navigationHistory.length-1)	{
-				for (i=0; i<WebGIS.MapAction.previousExtentActions.length; i++) {
-					WebGIS.MapAction.previousExtentActions[i].disable();
-				}
-			}
-			else if (WebGIS.MapAction.currentHistoryPosition === 0)	{
-				for (i=0; i<WebGIS.MapAction.nextExtentActions.length; i++) {
-					WebGIS.MapAction.nextExtentActions[i].disable();
-				}
-			}
-
-			//  abort if new extent equals the next/previous one			
-			if (this.getExtent().equals(previous)) {
-				return;
-			}
-
-			// add historic bounds to top of history
-			WebGIS.MapAction.navigationHistory.splice(0, 0, this.getExtent());
-		};
-		
-		// call custom processing handler when map is done with move/zoom
-		map.events.register('zoomend', map, processNewBounds);
-		map.events.register('moveend', map, processNewBounds);
-		
-		// add first map extent to history
-		WebGIS.MapAction.navigationHistory.push(map.getExtent());
-		WebGIS.MapAction.navigationHistoryInitialized = true;
-	};
-
-	// if locale is defined and css is button with icon and text, then set text to locale string for title
-	if (config.text || this.titleText) {
-		if (config.cls === 'x-btn-text-icon') {
-			config.text = config.text || this.titleText;
-		}
-	}
-	if (config.tooltip || this.tooltipText) {
-		config.tooltip = config.tooltip || this.tooltipText;
+	if (config.cls === 'x-btn-text-icon') {
+		config.text = config.text || this.titleText;
 	}
 	
-	// if a olcontrol is specified, handle it globally
-	if (config.olcontrol) {
+	config.tooltip = config.tooltip || this.tooltipText;
+	
+	if (olcontrol) {
 		// handler to handle activation of an OpenLayers control (need to deactivate other controls)
 		// scope is assumed to be the OpenLayers control itself
-		var mapActionHandler = function(object, event) {
-			for (var index in WebGIS.MapAction.openLayersControls) {
-				var control = WebGIS.MapAction.openLayersControls[index];
+		mapActionHandler = function(object, event) {
+			for (var index in openLayersControls) {
+				var control = openLayersControls[index];
 				
 				if (control.deactivate) {
 					control.deactivate();
@@ -106,68 +62,18 @@ WebGIS.MapAction = function(config) {
 			}
 		};
 	
-		config.map.addControl(config.olcontrol);
-		WebGIS.MapAction.openLayersControls.push(config.olcontrol);
+		map.addControl(olcontrol);
+		openLayersControls.push(olcontrol);
 		config.handler = mapActionHandler;
-		config.scope = config.olcontrol;
+		config.scope = olcontrol;
 		config.enableToggle = true;
 		config.toggleGroup = 'WebGIS.MapAction';
 	}
-	
-	// initalize navigation history (only do this once)
-	if (!WebGIS.MapAction.navigationHistoryInitialized) {
-		initNavigationHistory(); 
-	}
+
 };
 
 WebGIS.MapAction.prototype = {};
 
 Ext.extend(WebGIS.MapAction, Ext.Action);
 
-/**
- * Static array to manage activation/deactivation of added OpenLayers controls
- * @private
- */
-WebGIS.MapAction.openLayersControls = [];
-
-/**
- * Static array to manage instances of all instant selection related MapActions
- * @private
- */
-WebGIS.MapAction.selectionActions = [];
-
-/**
- * Static array to manage instances of all instant navigation related MapActions
- * @private
- */
-WebGIS.MapAction.navigationActions = [];
-
-/**
- * Static array to manage instances of MapAction.PreviousEXtent
- * @private
- */
-WebGIS.MapAction.previousExtentActions = [];
-
-/**
- * Static array to manage instances of MapAction.NextEXtent
- * @private
- */
-WebGIS.MapAction.nextExtentActions = [];
-
-/**
- * Static array to manage navigation and history
- * @private
- */
-WebGIS.MapAction.navigationHistory = [];
-
-/**
- * Static bool to indicate if navigation history has been initalized
- * @private
- */
-WebGIS.MapAction.navigationHistoryInitialized = false;
-
-/**
- * Static int representing current navigation history position
- * @private
- */
-WebGIS.MapAction.currentHistoryPosition = 0;
+})();
