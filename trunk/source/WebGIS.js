@@ -8,5 +8,5 @@
  * Author: Björn Harrtell
  *
  */
-
-WebGIS = {version: "1.2.0"};
+WebGIS = {};
+WebGIS.prototype = {version: "1.2.0"};
