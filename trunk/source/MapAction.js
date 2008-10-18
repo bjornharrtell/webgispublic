@@ -22,106 +22,107 @@
  * @param {Object} config Ext.Action config options<br>
  {OpenLayers.Map} [map] Required config option
  */ 
-WebGIS.MapAction = Ext.extend(Ext.Action, {
-	constructor: function(config) {
-		WebGIS.MapAction.superclass.constructor.call(this, config);
+WebGIS.MapAction = function(config) {
+	var map = config.map;
 	
-		// if locale is defined and css is button with icon and text, then set text to locale string for title
-		if (config.text || this.titleText) {
-			if (config.cls === 'x-btn-text-icon') {
-				config.text = config.text || this.titleText;
-			}
-		}
-		if (config.tooltip || this.tooltipText) {
-			config.tooltip = config.tooltip || this.tooltipText;
-		}
-		
-		// if a olcontrol is specified, handle it globally
-		if (config.olcontrol) {
-			// handler to handle activation of an OpenLayers control (need to deactivate other controls)
-			// scope is assumed to be the OpenLayers control itself
-			var mapActionHandler = function(object, event) {
-				for (index in WebGIS.MapAction.openLayersControls) {
-					var control = WebGIS.MapAction.openLayersControls[index];
-					
-					if (control.deactivate) {
-						control.deactivate();
-					}
-				}
+	WebGIS.MapAction.superclass.constructor.call(this, config);
+	
+	var initNavigationHistory = function() {
+		var processNewBounds = function() {
+			var previous = WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition], 
+				i;
 
-				this.activate();
-				
-				// if this action is connected to a button, make sure it's toggled if pressed twice
-				if (object.toggle) {
-					object.toggle(true);
+			// map is done with move/zoom so enable navigation tools
+			for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) {
+				WebGIS.MapAction.navigationActions[i].enable();
+			}
+
+			// check where we are in navigation history and disable related actions
+			if (WebGIS.MapAction.navigationHistory.length < 2) {
+				for (i=0; i<WebGIS.MapAction.nextExtentActions.length; i++) {
+					WebGIS.MapAction.nextExtentActions[i].disable();
 				}
-			};
+				for (i=0; i<WebGIS.MapAction.previousExtentActions.length; i++) {
+					WebGIS.MapAction.previousExtentActions[i].disable();
+				}
+			}
+			else if (WebGIS.MapAction.currentHistoryPosition === WebGIS.MapAction.navigationHistory.length-1)	{
+				for (i=0; i<WebGIS.MapAction.previousExtentActions.length; i++) {
+					WebGIS.MapAction.previousExtentActions[i].disable();
+				}
+			}
+			else if (WebGIS.MapAction.currentHistoryPosition === 0)	{
+				for (i=0; i<WebGIS.MapAction.nextExtentActions.length; i++) {
+					WebGIS.MapAction.nextExtentActions[i].disable();
+				}
+			}
+
+			//  abort if new extent equals the next/previous one			
+			if (this.getExtent().equals(previous)) {
+				return;
+			}
+
+			// add historic bounds to top of history
+			WebGIS.MapAction.navigationHistory.splice(0, 0, this.getExtent());
+		};
 		
-			config.map.addControl(config.olcontrol);
-			WebGIS.MapAction.openLayersControls.push(config.olcontrol);
-			config.handler = mapActionHandler;
-			config.scope = config.olcontrol;
-			config.enableToggle = true;
-			config.toggleGroup = 'WebGIS.MapAction';
-		}
+		// call custom processing handler when map is done with move/zoom
+		map.events.register('zoomend', map, processNewBounds);
+		map.events.register('moveend', map, processNewBounds);
 		
-		// initalize navigation history (only do this once)
-		if (!WebGIS.MapAction.navigationHistoryInitialized) {
-			WebGIS.MapAction.initNavigationHistory(config.map); 
+		// add first map extent to history
+		WebGIS.MapAction.navigationHistory.push(map.getExtent());
+		WebGIS.MapAction.navigationHistoryInitialized = true;
+	};
+
+	// if locale is defined and css is button with icon and text, then set text to locale string for title
+	if (config.text || this.titleText) {
+		if (config.cls === 'x-btn-text-icon') {
+			config.text = config.text || this.titleText;
 		}
 	}
-});
-
-/**
- * @private
- */
-WebGIS.MapAction.initNavigationHistory = function(map) {
-	var processNewBounds = function() {
-		var previous = WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition], 
-			i;
-
-		// map is done with move/zoom so enable navigation tools
-		for (i=0; i<WebGIS.MapAction.navigationActions.length; i++) {
-			WebGIS.MapAction.navigationActions[i].enable();
-		}
-
-		// check where we are in navigation history and disable related actions
-		if (WebGIS.MapAction.navigationHistory.length < 2) {
-			for (i=0; i<WebGIS.MapAction.nextExtentActions.length; i++) {
-				WebGIS.MapAction.nextExtentActions[i].disable();
-			}
-			for (i=0; i<WebGIS.MapAction.previousExtentActions.length; i++) {
-				WebGIS.MapAction.previousExtentActions[i].disable();
-			}
-		}
-		else if (WebGIS.MapAction.currentHistoryPosition === WebGIS.MapAction.navigationHistory.length-1)	{
-			for (i=0; i<WebGIS.MapAction.previousExtentActions.length; i++) {
-				WebGIS.MapAction.previousExtentActions[i].disable();
-			}
-		}
-		else if (WebGIS.MapAction.currentHistoryPosition === 0)	{
-			for (i=0; i<WebGIS.MapAction.nextExtentActions.length; i++) {
-				WebGIS.MapAction.nextExtentActions[i].disable();
-			}
-		}
-
-		//  abort if new extent equals the next/previous one			
-		if (this.getExtent().equals(previous)) {
-			return;
-		}
-
-		// add historic bounds to top of history
-		WebGIS.MapAction.navigationHistory.splice(0, 0, this.getExtent());
-	};
+	if (config.tooltip || this.tooltipText) {
+		config.tooltip = config.tooltip || this.tooltipText;
+	}
 	
-	// call custom processing handler when map is done with move/zoom
-	map.events.register('zoomend', map, processNewBounds);
-	map.events.register('moveend', map, processNewBounds);
+	// if a olcontrol is specified, handle it globally
+	if (config.olcontrol) {
+		// handler to handle activation of an OpenLayers control (need to deactivate other controls)
+		// scope is assumed to be the OpenLayers control itself
+		var mapActionHandler = function(object, event) {
+			for (var index in WebGIS.MapAction.openLayersControls) {
+				var control = WebGIS.MapAction.openLayersControls[index];
+				
+				if (control.deactivate) {
+					control.deactivate();
+				}
+			}
+
+			this.activate();
+			
+			// if this action is connected to a button, make sure it's toggled if pressed twice
+			if (object.toggle) {
+				object.toggle(true);
+			}
+		};
 	
-	// add first map extent to history
-	WebGIS.MapAction.navigationHistory.push(map.getExtent());
-	WebGIS.MapAction.navigationHistoryInitialized = true;
+		config.map.addControl(config.olcontrol);
+		WebGIS.MapAction.openLayersControls.push(config.olcontrol);
+		config.handler = mapActionHandler;
+		config.scope = config.olcontrol;
+		config.enableToggle = true;
+		config.toggleGroup = 'WebGIS.MapAction';
+	}
+	
+	// initalize navigation history (only do this once)
+	if (!WebGIS.MapAction.navigationHistoryInitialized) {
+		initNavigationHistory(); 
+	}
 };
+
+WebGIS.MapAction.prototype = {};
+
+Ext.extend(WebGIS.MapAction, Ext.Action);
 
 /**
  * Static array to manage activation/deactivation of added OpenLayers controls
