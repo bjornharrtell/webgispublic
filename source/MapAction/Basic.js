@@ -53,8 +53,6 @@ WebGIS.MapAction.ZoomIn = function(config) {
 		this.map.zoomIn();
 	};
 	
-	WebGIS.MapAction.navigationActions.push(this);
-	
 	WebGIS.MapAction.ZoomIn.superclass.constructor.call(this, config);
 };
 Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction);
@@ -70,8 +68,6 @@ WebGIS.MapAction.ZoomOut = function(config) {
 		this.map.zoomOut();
 	};
 	
-	WebGIS.MapAction.navigationActions.push(this);
-	
 	WebGIS.MapAction.ZoomOut.superclass.constructor.call(this, config);
 };
 Ext.extend(WebGIS.MapAction.ZoomOut, WebGIS.MapAction);
@@ -86,9 +82,7 @@ WebGIS.MapAction.FullExtent = function(config) {
 	config.handler = function() {
 		this.map.zoomToMaxExtent();
 	};
-	
-	WebGIS.MapAction.navigationActions.push(this);
-	
+
 	WebGIS.MapAction.FullExtent.superclass.constructor.call(this, config);
 };
 Ext.extend(WebGIS.MapAction.FullExtent, WebGIS.MapAction);
@@ -116,15 +110,18 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 WebGIS.MapAction.PreviousExtent = function(config) {
 	config.iconCls = 'webgis-mapaction-previousextent';
 	config.disabled = true;
-	config.handler = function() {
-		if (WebGIS.MapAction.currentHistoryPosition<(WebGIS.MapAction.navigationHistory.length-1)) {
-			WebGIS.MapAction.currentHistoryPosition++;
-			this.map.zoomToExtent(WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition]);
-		}
-	};
+	config.handler = config.navigationHistory.back;
 	
-	WebGIS.MapAction.navigationActions.push(this);
-	WebGIS.MapAction.previousExtentActions.push(this);
+	config.navigationHistory.on('historystatuschange', function(e) {
+			if (e.previousHistory === true) { 
+				this.enable();
+			}
+			else {
+				this.disable();
+			}
+		},
+		this
+	);
 	
 	WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this, config);
 };
@@ -138,15 +135,18 @@ Ext.extend(WebGIS.MapAction.PreviousExtent, WebGIS.MapAction);
 WebGIS.MapAction.NextExtent = function(config) {
 	config.iconCls = 'webgis-mapaction-nextextent';
 	config.disabled = true;
-	config.handler = function() {
-		if (WebGIS.MapAction.currentHistoryPosition>0) {
-			WebGIS.MapAction.currentHistoryPosition--;
-			this.map.zoomToExtent(WebGIS.MapAction.navigationHistory[WebGIS.MapAction.currentHistoryPosition]);
-		}
-	};
+	config.handler = config.navigationHistory.next;
 	
-	WebGIS.MapAction.navigationActions.push(this);
-	WebGIS.MapAction.nextExtentActions.push(this);
+	config.navigationHistory.on('historystatuschange', function(e) {
+			if (e.nextHistory) { 
+				this.enable();
+			}
+			else {
+				this.disable();
+			}
+		},
+		this
+	);
 	
 	WebGIS.MapAction.NextExtent.superclass.constructor.call(this, config);
 };

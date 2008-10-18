@@ -21,7 +21,7 @@
 </mapAttribute>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_PROPERTY_FILES" value="${workspace_loc:/webgispublic/buildscripts/debug.properties},"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/webgispublic/buildscripts/debug.xml}"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS" value="full,incremental,"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS" value="full,incremental,auto,"/>
 <booleanAttribute key="org.eclipse.ui.externaltools.ATTR_TRIGGERS_CONFIGURED" value="true"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/webgispublic}"/>
 </launchConfiguration>
