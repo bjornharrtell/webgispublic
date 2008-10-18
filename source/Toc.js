@@ -6,10 +6,7 @@
  * http://www.gnu.org/licenses/gpl.html
  * 
  * Author: Björn Harrtell
- *
  */
-
-/*global WebGIS, Ext */
 
 /**
  * A TOC generated from layers in an OpenLayers.Map.
@@ -202,7 +199,7 @@ WebGIS.Toc = function(config) {
 			options.node.name = Ext.DomQuery.selectNode('Name', wmslayer).firstChild.nodeValue;
 			options.node.setText(Ext.DomQuery.selectNode('Title', wmslayer).firstChild.nodeValue);
 
-			if (toc.useMetadata) {
+			if (this.useMetadata) {
 				options.node.metadata.wms = {};
 				options.node.metadata.wms.service = {};
 				options.node.metadata.wms.service.name = Ext.DomQuery.selectNode('Name', wmsservice).firstChild.nodeValue;

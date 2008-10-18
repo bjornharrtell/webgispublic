@@ -6,17 +6,13 @@
  * http://www.gnu.org/licenses/gpl.html
  * 
  * Author: Björn Harrtell
- *
- * @fileoverview OpenLayers.Control.Identify extension
  */
 
 /**
- * @class Handles indentify clicks on map, works with WMS service only and is affected by same origin policy
- * @extends OpenLayers.Control
- * @requires OpenLayers/Control.js
- * @requires OpenLayers/Handler/Click.js
+ * Handles indentify clicks on map, works with WMS service only and is affected by same origin policy
+ * @base OpenLayers.Control
  */
-OpenLayers.Control.Identify = OpenLayers.Class(OpenLayers.Control, {
+WebGIS.OpenLayers.Control.Identify = OpenLayers.Class(OpenLayers.Control, {
 	type: OpenLayers.Control.TYPE_TOOL,
 
 	initialize: function(options) {

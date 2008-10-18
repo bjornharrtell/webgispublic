@@ -20,11 +20,6 @@ Ext.apply(WebGIS.Toc.prototype, {
 	contextMenuMetadataText: 'Visa metadata'
 });
 
-// WebGIS.Control.ScaleList
-Ext.apply(WebGIS.ScaleList.prototype, {
-	configErrorText: 'Requires defined resolutions array in map configuration'
-});
-
 // Basic tools
 Ext.apply(WebGIS.MapAction.ZoomInBox.prototype, {
 	titleText: 'Zooma in',

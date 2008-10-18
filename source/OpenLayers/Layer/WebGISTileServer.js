@@ -6,22 +6,20 @@
  * http://www.gnu.org/licenses/gpl.html
  *
  * Author: Björn Harrtell
- *
- * @fileoverview OpenLayers.Layer.WebGISTileServer class
  */
 
 // need to define WebGISTileServer.Provider class since the code at serverside doesn't do it
 WebGISTileServer = {};
-WebGISTileServer.Provider = OpenLayers.Class.create();
+WebGISTileServer.Provider = {};
 
 /**
- * @class Layer that supports WebGISTileServer sources
- * @extends OpenLayers.Layer.Grid
- * @requires OpenLayers/Layer/Grid.js
+ * Layer that supports WebGISTileServer sources
+ * @base OpenLayers.Layer.Grid
  */
-OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
+WebGIS.OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
 	isBaseLayer: true,
 	tileSize: new OpenLayers.Size(250, 250),
+	
 	/**
 	 * @constructor
 	 *
@@ -29,8 +27,8 @@ OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
 	 * @param {String} url URL to WebGISTileServer service
 	 * @param {WebGISTileServer.Provider} provider WebGISTileServer service 
 	 * @param {String} token Valid token from WebGISTileServer
-	 specific provider instance. The server exposes the providers as
-	 external js files.
+	 * specific provider instance. The server exposes the providers as
+	 * external js files.
 	 */
 	initialize: function(name, url, provider, token) {
 		var newArguments = [];
@@ -52,7 +50,7 @@ OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
 		
 		OpenLayers.Layer.Grid.prototype.initGriddedTiles.apply(this, arguments);
 	},
-		
+
 	getURL: function (bounds) {
 		var res = this.map.getResolution(),
 			z = this.map.resolutions.length-1-this.map.getZoom(),
@@ -70,6 +68,8 @@ OpenLayers.Layer.WebGISTileServer = OpenLayers.Class(OpenLayers.Layer.Grid, {
 		return new OpenLayers.Tile.Image(this, position, bounds, null, this.tileSize);
 	},
 
-	/** @final @type String */
-	CLASS_NAME: "OpenLayers.Layer.WebGISTileServer"
+	/**
+	 * @type String
+	 */
+	CLASS_NAME: "WebGIS.OpenLayers.Layer.WebGISTileServer"
 });

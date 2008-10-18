@@ -6,16 +6,13 @@
  * http://www.gnu.org/licenses/gpl.html
  * 
  * Author: Björn Harrtell
- *
  */
-
-/*global WebGIS, Ext, OpenLayers  */
 
 /**
  * @class Scalelist implemented as an Ext JS combobox extension
- * @extends Ext.form.ComboBox
- * @param {Object} config Ext.form.ComboBox config options<br>
- * {OpenLayers.Map} [map] Required config option
+ * @base Ext.form.ComboBox
+ * @param {Object} config
+ * @cfg {OpenLayers.Map} map required
  */
 WebGIS.ScaleList = function(config) {
 	Ext.apply(this, { 
@@ -34,27 +31,21 @@ WebGIS.ScaleList = function(config) {
 	
 	WebGIS.ScaleList.superclass.constructor.call(this, config);
 
-	// attach eventhandler for scale selection
 	this.on('select', function(combo, record, index) {
 		this.map.zoomTo(record.get('zoomlevel'));
 	});
 	
-	// attach eventhandler for when map zoomlevel is changed
 	this.map.events.register('zoomend', this, function() {
 		this.setValue(this.map.getZoomForResolution(this.map.getResolution()));
 	});
-	
-	var i, scale, row;
-	
-	// load available scales from map
-	for (i=0; i<this.map.getNumZoomLevels(); i++) {
-		scale = OpenLayers.Util.getScaleFromResolution(this.map.getResolutionForZoom(i), 'm');
-		row = new Ext.data.Record({zoomlevel: i, scale: '1:' + Math.round(scale)});
+		
+	for (var i=0; i<this.map.getNumZoomLevels(); i++) {
+		var scale = OpenLayers.Util.getScaleFromResolution(this.map.getResolutionForZoom(i), 'm'),
+			row = new Ext.data.Record({zoomlevel: i, scale: '1:' + Math.round(scale)});
 
 		this.store.add(row);
 	}
 	
-	// set initial value
 	this.setValue(this.map.getZoomForResolution(this.map.getResolution()));
 };
 
