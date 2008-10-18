@@ -9,6 +9,7 @@
  *
  */
 
+// need private scope for this class
 (function(){
 
 /**
@@ -17,59 +18,59 @@
 var openLayersControls = [];
 
 /**
- * @class Abstract baseclass extended from Ext.Action to handle interaction with 
+ * extended from Ext.Action to handle interaction with 
  * OpenLayers and can be used as buttons, menu items and more in an Ext Js GUI.
  *
- * This class also handles OpenLayers.Control activation and manages navigation history.
+ * This class also handles OpenLayers.Control activation.
  * 
  * OpenLayers can have several controls active, but MapAction restricts to one
  * MapAction active at one time.
  *
- * @extends Ext.Action
- * @param {Object} config Ext.Action config options<br>
- {OpenLayers.Map} [map] Required config option
+ * @base Ext.Action
+ * @param {Object} config
+ * @cfg {OpenLayers.Map} map required
+ * @cfg {OpenLayers.Control} olcontrol optional
  */
 WebGIS.MapAction = function(config) {
-	var map = config.map,
-		olcontrol = config.olcontrol,
-		mapActionHandler;
-	
+	var map = config.map;
+
 	WebGIS.MapAction.superclass.constructor.call(this, config);
 
 	if (config.cls === 'x-btn-text-icon') {
 		config.text = config.text || this.titleText;
 	}
-	
 	config.tooltip = config.tooltip || this.tooltipText;
 	
-	if (olcontrol) {
-		// handler to handle activation of an OpenLayers control (need to deactivate other controls)
-		// scope is assumed to be the OpenLayers control itself
-		mapActionHandler = function(object, event) {
-			for (var index in openLayersControls) {
-				var control = openLayersControls[index];
-				
-				if (control.deactivate) {
-					control.deactivate();
-				}
-			}
+	// rest of construction is only for MapActions using a OL control
+	var olcontrol = config.olcontrol;
+	if (!olcontrol) return;
 
-			this.activate();
+	// function to handle activation of an OpenLayers control, will
+	// deactivate other controls
+	// scope is assumed to be the OpenLayers control itself
+	var mapActionHandler = function(object, event) {
+		for (var i in openLayersControls) {
+			var control = openLayersControls[i];
 			
-			// if this action is connected to a button, make sure it's toggled if pressed twice
-			if (object.toggle) {
-				object.toggle(true);
+			if (control.deactivate) {
+				control.deactivate();
 			}
-		};
-	
-		map.addControl(olcontrol);
-		openLayersControls.push(olcontrol);
-		config.handler = mapActionHandler;
-		config.scope = olcontrol;
-		config.enableToggle = true;
-		config.toggleGroup = 'WebGIS.MapAction';
-	}
+		}
 
+		this.activate();
+		
+		// if this action is connected to a button, make sure it's toggled if pressed twice
+		if (object.toggle) {
+			object.toggle(true);
+		}
+	};
+
+	map.addControl(olcontrol);
+	openLayersControls.push(olcontrol);
+	config.handler = mapActionHandler;
+	config.scope = olcontrol;
+	config.enableToggle = true;
+	config.toggleGroup = 'WebGIS.MapAction';
 };
 
 WebGIS.MapAction.prototype = {};

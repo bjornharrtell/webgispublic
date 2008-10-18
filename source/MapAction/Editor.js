@@ -12,11 +12,11 @@
 
 /**
  * @class Activates feature drawing on specified layer.
- * @extends WebGIS.MapAction
- * @param {Object} config WebGIS.MapAction config options<br>
- {OpenLayers.Layer.Vector} [layer] Required config option<br>
- {String} [geometryType] Required config option<br>
- {Function} [handler] Optional config option. function to be called after each feature is drawn<br>
+ * @base WebGIS.MapAction
+ * @param {Object} config
+ * @cfg {OpenLayers.Layer.Vector} layer required
+ * @cfg {String} geometryType required
+ * @cfg {function} handler optional function to be called after each feature is drawn
  */
 WebGIS.MapAction.DrawFeature = function(config) {
 
@@ -44,22 +44,23 @@ WebGIS.MapAction.DrawFeature = function(config) {
 
 	WebGIS.MapAction.DrawFeature.superclass.constructor.call(this, config);
 };
+WebGIS.MapAction.DrawFeature.prototype = {};
 Ext.extend(WebGIS.MapAction.DrawFeature, WebGIS.MapAction);
 
 
 /**
  * @class Selects a feature on specified layer
- * @extends WebGIS.MapAction
- * @param {String} config WebGIS.MapAction config options<br>
- {OpenLayers.Layer.Vector} [layer] Required config option<br>
- {Object} [options] Optional options to pass to OpenLayers SelectFeature control<br>
+ * @base WebGIS.MapAction
+ * @param {Object} config
+ * @cfg {Object} options Optional options to pass to OpenLayers SelectFeature control
+ * @cfg {OpenLayers.Layer.Vector} layer required
  */
 WebGIS.MapAction.SelectFeature = function(config, options) {
 	//var onFeatureselected,
 	//	onFeatureunselected;
 	
 	config.iconCls = 'webgis-mapaction-selectfeature';
-	config.olcontrol = new OpenLayers.Control.SelectFeature(config.layer, options);
+	config.olcontrol = new OpenLayers.Control.SelectFeature(config.layer, config.options);
 
 	/*onFeatureselected = function() {
 		var i;
@@ -93,13 +94,14 @@ WebGIS.MapAction.SelectFeature = function(config, options) {
 
 	WebGIS.MapAction.SelectFeature.superclass.constructor.call(this, config);
 };
+WebGIS.MapAction.SelectFeature.prototype = {};
 Ext.extend(WebGIS.MapAction.SelectFeature, WebGIS.MapAction);
 
 /**
  * @class Removes a feature on specified layer
- * @extends WebGIS.MapAction
- * @param {String} config WebGIS.MapAction config options<br>
- {OpenLayers.Layer.Vector} [layer] Required config option<br>
+ * @base WebGIS.MapAction
+ * @param {Object} config
+ * @cfg {OpenLayers.Layer.Vector} layer required
  */
 WebGIS.MapAction.RemoveSelectedFeatures = function(config) {
 	config.iconCls = 'webgis-mapaction-removefeature';
@@ -118,13 +120,14 @@ WebGIS.MapAction.RemoveSelectedFeatures = function(config) {
 
 	WebGIS.MapAction.RemoveSelectedFeatures.superclass.constructor.call(this, config);
 };
+WebGIS.MapAction.RemoveSelectedFeatures.prototype = {};
 Ext.extend(WebGIS.MapAction.RemoveSelectedFeatures, WebGIS.MapAction);
 
 /**
  * @class Activates feature modification on specified layer.
- * @extends WebGIS.MapAction
- * @param {Object} config WebGIS.MapAction config options<br>
- {OpenLayers.Layer.Vector} [layer] Required config option<br>
+ * @base WebGIS.MapAction
+ * @param {Object} config
+ * @cfg {OpenLayers.Layer.Vector} layer required
  */
 WebGIS.MapAction.ModifyFeature = function(config) {
 	config.iconCls = 'webgis-mapaction-modifyfeature';
@@ -132,13 +135,14 @@ WebGIS.MapAction.ModifyFeature = function(config) {
 
 	WebGIS.MapAction.ModifyFeature.superclass.constructor.call(this, config);
 };
+WebGIS.MapAction.ModifyFeature.prototype = {};
 Ext.extend(WebGIS.MapAction.ModifyFeature, WebGIS.MapAction);
 
 /**
  * @class Activates feature dragging on specified layer.
- * @extends WebGIS.MapAction
- * @param {Object} config WebGIS.MapAction config options<br>
- {OpenLayers.Layer.Vector} [layer] Required config option<br>
+ * @base WebGIS.MapAction
+ * @param {Object} config
+ * @cfg {OpenLayers.Layer.Vector} layer required
  */
 WebGIS.MapAction.DragFeature = function(config) {
 	config.iconCls = 'webgis-mapaction-dragfeature';
@@ -146,4 +150,5 @@ WebGIS.MapAction.DragFeature = function(config) {
 
 	WebGIS.MapAction.DragFeature.superclass.constructor.call(this, config);
 };
+WebGIS.MapAction.DragFeature.prototype = {};
 Ext.extend(WebGIS.MapAction.DragFeature, WebGIS.MapAction);

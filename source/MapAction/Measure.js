@@ -60,6 +60,7 @@ WebGIS.MapAction.MeasureLine = function(config) {
 	
 	WebGIS.MapAction.MeasureLine.superclass.constructor.call(this, config);
 };
+WebGIS.MapAction.MeasureLine.prototype = {};
 Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction);
 
 /**
@@ -110,4 +111,5 @@ WebGIS.MapAction.MeasureArea = function(config) {
 	
 	WebGIS.MapAction.MeasureArea.superclass.constructor.call(this, config);
 };
+WebGIS.MapAction.MeasureArea.prototype = {};
 Ext.extend(WebGIS.MapAction.MeasureArea, WebGIS.MapAction);
