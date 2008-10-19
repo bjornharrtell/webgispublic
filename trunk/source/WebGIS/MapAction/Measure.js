@@ -11,7 +11,11 @@
  */
 
 /**
- * @class Activates measuring line tool on map.<br>The tool presumes the map unit to be meters and presents the result in m or km depending on value. If the tool is used on a WGS84 (or other none-meter) map the resulting value will be invalid.
+ * Activates measuring line tool on map.<br>
+ * <br>
+ * The tool presumes the map unit to be meters and presents the result in m or km depending on value.
+ * If the tool is used on a WGS84 (or other none-meter) map the resulting value will be invalid.
+ * @constructor
  * @extends WebGIS.MapAction
  * @param {Object} config WebGIS.MapAction config options<br>
  */
@@ -64,7 +68,11 @@ WebGIS.MapAction.MeasureLine.prototype = {};
 Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction);
 
 /**
- * @class Activates measuring area tool on map.<br>The tool presumes the map unit to be meters and presents the result in m2 or km2 depending on value. If the tool is used on a WGS84 map the resulting value will be invalid.
+ * Activates measuring area tool on map.<br>
+ * <br>
+ * The tool presumes the map unit to be meters and presents the result in m2 or km2 depending on value.
+ * If the tool is used on a WGS84 map the resulting value will be invalid.
+ * @constructor
  * @extends WebGIS.MapAction
  * @param {String} config WebGIS.MapAction config options<br>
  */
@@ -111,5 +119,4 @@ WebGIS.MapAction.MeasureArea = function(config) {
 	
 	WebGIS.MapAction.MeasureArea.superclass.constructor.call(this, config);
 };
-WebGIS.MapAction.MeasureArea.prototype = {};
 Ext.extend(WebGIS.MapAction.MeasureArea, WebGIS.MapAction);

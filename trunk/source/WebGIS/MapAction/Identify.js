@@ -11,8 +11,9 @@
  */
 
 /**
- * @class Identifies on clicked position
- * @extends WebGIS.MapAction
+ * Identifies on clicked position
+ * @constructor
+ * @base WebGIS.MapAction
  * @required OpenLayers.Control.Identify
  * @param {Object} config WebGIS.MapAction config options<br>
  * {WebGIS.Control.Toc} [toc] Required config option<br>
@@ -39,5 +40,4 @@ WebGIS.MapAction.Identify = function(config) {
 	// call Ext.Action constructor
 	WebGIS.MapAction.Identify.superclass.constructor.call(this, config);
 };
-WebGIS.MapAction.Identify.prototype = {};
 Ext.extend(WebGIS.MapAction.Identify, WebGIS.MapAction);

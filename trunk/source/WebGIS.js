@@ -8,5 +8,14 @@
  * Author: Björn Harrtell
  */
 
-WebGIS = {version: "1.2.0"};
-WebGIS.prototype = {};
+WebGIS = {
+	/**
+	 * @member MinSkog
+	 */
+	version: "1.2.0",
+	MapAction: {},
+	OpenLayers: {
+		Control: {},
+		Layer: {}
+	}
+};

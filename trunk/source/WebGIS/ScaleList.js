@@ -9,7 +9,8 @@
  */
 
 /**
- * @class Scalelist implemented as an Ext JS combobox extension
+ * Scalelist implemented as an Ext JS combobox extension
+ * @constructor
  * @base Ext.form.ComboBox
  * @param {Object} config
  * @cfg {OpenLayers.Map} map required
@@ -48,8 +49,6 @@ WebGIS.ScaleList = function(config) {
 	
 	this.setValue(this.map.getZoomForResolution(this.map.getResolution()));
 };
-
-WebGIS.ScaleList.prototype = {};
 
 Ext.extend(WebGIS.ScaleList, Ext.form.ComboBox);
 

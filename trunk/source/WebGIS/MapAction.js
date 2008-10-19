@@ -13,25 +13,28 @@
 
 /**
  * Private static array to manage activation/deactivation of added OpenLayers controls
- * @type Array
  */
-var openLayersControls = new Array();
+var openLayersControls = [];
 
 /**
  * extended from Ext.Action to handle interaction with 
- * OpenLayers and can be used as buttons, menu items and more in an Ext Js GUI.
- *
- * This class also handles OpenLayers.Control activation.
- * 
+ * OpenLayers and can be used as buttons, menu items and more in an Ext Js GUI.<br>
+ * <br>
+ * This class also handles OpenLayers.Control activation.<br>
+ * <br>
  * OpenLayers can have several controls active, but MapAction restricts to one
- * MapAction active at one time.
- *
+ * MapAction active at one time.<br>
+ * <br>
+ * @constructor
  * @base Ext.Action
  * @param {Object} config
  * @cfg {OpenLayers.Map} map required
  * @cfg {OpenLayers.Control} olcontrol optional
  */
 WebGIS.MapAction = function(config) {
+	/**
+	 * @type OpenLayers.Map
+	 */
 	var map = config.map;
 
 	WebGIS.MapAction.superclass.constructor.call(this, config);
@@ -42,6 +45,9 @@ WebGIS.MapAction = function(config) {
 	config.tooltip = config.tooltip || this.tooltipText;
 	
 	// rest of construction is only for MapActions using a OL control
+	/**
+	 * @type OpenLayers.Control
+	 */
 	var olcontrol = config.olcontrol;
 	if (!olcontrol) return;
 
@@ -72,8 +78,6 @@ WebGIS.MapAction = function(config) {
 	config.enableToggle = true;
 	config.toggleGroup = 'WebGIS.MapAction';
 };
-
-WebGIS.MapAction.prototype = {};
 
 Ext.extend(WebGIS.MapAction, Ext.Action);
 

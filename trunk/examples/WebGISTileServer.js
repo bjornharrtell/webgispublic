@@ -34,7 +34,7 @@ WebGISTileServer.Application = function() {
     			'WebGISTileServer',
     			'http://www.asp-mapservices.com/WebGISTileServer/PublicServletProxy',
     			provider,
-    			'af4383ad50a6140498d1f8839727b595'
+    			OpenLayers.Layer.WebGISTileServer.GetToken()
     		);
             map.addLayer(layer);
 
