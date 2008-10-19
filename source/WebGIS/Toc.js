@@ -9,19 +9,18 @@
  */
 
 /**
- * A TOC generated from layers in an OpenLayers.Map.
- * All nodes are extended with a property "layer" referencing OL.Layer
- * All nodes are also extended with a property "metadata" that is used to view dynamic metadata on context menu clicks
- * Childnodes on parsed WMS layers have added property "name" that is the short layer name in the WMS service
- * WMS layers that has a valid capabilitiesUrl property will be parsed and expanded with subnodes representing the layers
- * @extends Ext.tree.TreePanel
+ * A TOC generated from layers in an OpenLayers.Map<br>
+ * All nodes are extended with a property "layer" referencing OL.Layer<br>
+ * All nodes are also extended with a property "metadata" that is used to view dynamic metadata on context menu clicks<br>
+ * Childnodes on parsed WMS layers have added property "name" that is the short layer name in the WMS service<br>
+ * WMS layers that has a valid capabilitiesUrl property will be parsed and expanded with subnodes representing the layers<br>
+ * @constructor
+ * @base Ext.tree.TreePanel
  * @param {Object} config
  * @cfg {OpenLayers.Map} map
- * @cfg {boolean} useMetadata Set to true to enable parsing of metadata and context menu
+ * @cfg {Boolean} useMetadata Set to true to enable parsing of metadata and context menu
  */
 WebGIS.Toc = function(config) {
-	
-	
 	Ext.apply(this, {
 		rootVisible: false,
 		useMetadata: false,
@@ -29,10 +28,9 @@ WebGIS.Toc = function(config) {
 	});
 	
 	/**
-	 * 
+	 * handler that displays a context menu
 	 * @param {Ext.tree.TreeNode} node
 	 * @param event
-	 * @return
 	 */
 	var onContextMenu = function(node, event) {
 		var showProperties, window, menu;
@@ -112,7 +110,7 @@ WebGIS.Toc = function(config) {
 	/**
 	 * handler for WMS sublayers visibility
 	 * creates new params for WMS layer and refreshes it
-	 * @param {Ext.tree.Node} node
+	 * @param {Ext.tree.TreeNode} node
 	 * @param {Boolean} checked
 	 */
 	var onWmsSubLayerCheckChange = function(node, checked) {
@@ -143,7 +141,6 @@ WebGIS.Toc = function(config) {
 	 * @param {DOM.Document} layerinfos
 	 * @param {OpenLayers.Layer} layer
 	 * @param {Ext.tree.TreeNode} root
-	 * @return
 	 */
 	var fillTree = function(node, layerinfos, layer, root) {
 		var layerinfo, name, title, checked, childNode, i;
@@ -239,10 +236,8 @@ WebGIS.Toc = function(config) {
 	};
 
 	/**
-	 * 
 	 * @param node
-	 * @param checked
-	 * @return
+	 * @param {Boolean} checked
 	 */
 	var onLayerCheckChange =  function(node, checked) {
 		this.setVisibility(checked);
@@ -294,9 +289,6 @@ WebGIS.Toc = function(config) {
 	WebGIS.Toc.superclass.constructor.call(this, config);
 };
 
-WebGIS.Toc.prototype = {};
-
 Ext.extend(WebGIS.Toc, Ext.tree.TreePanel);
 
 Ext.reg('webgis-toc', WebGIS.Toc);
-

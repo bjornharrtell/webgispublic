@@ -11,7 +11,8 @@
  */
 
 /**
- * @class Activates interactive zoom in box on map
+ * Activates interactive zoom in box on map
+ * @constructor
  * @base WebGIS.MapAction
  * @param {Object} config
  */
@@ -27,11 +28,11 @@ WebGIS.MapAction.ZoomInBox = function(config) {
 	// call Ext.Action constructor
 	WebGIS.MapAction.ZoomInBox.superclass.constructor.call(this, config);
 };
-WebGIS.MapAction.ZoomInBox.prototype = {};
 Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction);
 
 /**
- * @class Activates interactive zoom out box on map
+ * Activates interactive zoom out box on map
+ * @constructor
  * @base WebGIS.MapAction
  * @param {Object} config
  */
@@ -41,11 +42,11 @@ WebGIS.MapAction.ZoomOutBox = function(config) {
 	
 	WebGIS.MapAction.ZoomOutBox.superclass.constructor.call(this, config);
 };
-WebGIS.MapAction.ZoomOutBox.prototype = {};
 Ext.extend(WebGIS.MapAction.ZoomOutBox, WebGIS.MapAction);
 
 /**
- * @class Zooms in one zoomstep
+ * Zooms in one zoomstep
+ * @constructor
  * @base WebGIS.MapAction
  * @param {Object} config
  */
@@ -57,11 +58,11 @@ WebGIS.MapAction.ZoomIn = function(config) {
 	
 	WebGIS.MapAction.ZoomIn.superclass.constructor.call(this, config);
 };
-WebGIS.MapAction.ZoomIn.prototype = {};
 Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction);
 
 /**
- * @class Zooms out one zoomstep
+ * Zooms out one zoomstep
+ * @constructor
  * @base WebGIS.MapAction
  * @param {Object} config
  */
@@ -73,11 +74,11 @@ WebGIS.MapAction.ZoomOut = function(config) {
 	
 	WebGIS.MapAction.ZoomOut.superclass.constructor.call(this, config);
 };
-WebGIS.MapAction.ZoomOut.prototype = {};
 Ext.extend(WebGIS.MapAction.ZoomOut, WebGIS.MapAction);
 
 /**
- * @class Zooms map to full extent
+ * Zooms map to full extent
+ * @constructor
  * @base WebGIS.MapAction
  * @param {Object} config
  */
@@ -89,11 +90,11 @@ WebGIS.MapAction.FullExtent = function(config) {
 
 	WebGIS.MapAction.FullExtent.superclass.constructor.call(this, config);
 };
-WebGIS.MapAction.FullExtent.prototype = {};
 Ext.extend(WebGIS.MapAction.FullExtent, WebGIS.MapAction);
 
 /**
- * @class Activates interactive drag pan on map
+ * Activates interactive drag pan on map
+ * @constructor
  * @base WebGIS.MapAction
  * @param {Object} config
  */
@@ -105,7 +106,6 @@ WebGIS.MapAction.DragPan = function(config) {
 	
 	WebGIS.MapAction.DragPan.superclass.constructor.call(this, config);
 };
-WebGIS.MapAction.DragPan.prototype = {};
 Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 
 (function() {
@@ -177,6 +177,7 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 	var navigationHistoryInstance;
 	
 	/**
+	 * @constructor
 	 * @base WebGIS.MapAction
 	 * @param {Object} config
 	 */
@@ -198,10 +199,10 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 		
 		WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this, config);
 	};
-	WebGIS.MapAction.PreviousExtent.prototype = {};
 	Ext.extend(WebGIS.MapAction.PreviousExtent, WebGIS.MapAction);
 
 	/**
+	 * @constructor
 	 * @base WebGIS.MapAction
 	 * @param {Object} config
 	 */
@@ -223,7 +224,6 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 		
 		WebGIS.MapAction.NextExtent.superclass.constructor.call(this, config);
 	};
-	WebGIS.MapAction.NextExtent.prototype = {};
 	Ext.extend(WebGIS.MapAction.NextExtent, WebGIS.MapAction);
 
 })();
