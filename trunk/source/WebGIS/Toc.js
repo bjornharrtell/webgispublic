@@ -20,6 +20,8 @@
  * @cfg {boolean} useMetadata Set to true to enable parsing of metadata and context menu
  */
 WebGIS.Toc = function(config) {
+	
+	
 	Ext.apply(this, {
 		rootVisible: false,
 		useMetadata: false,
@@ -28,7 +30,7 @@ WebGIS.Toc = function(config) {
 	
 	/**
 	 * 
-	 * @param node
+	 * @param {Ext.tree.TreeNode} node
 	 * @param event
 	 * @return
 	 */
@@ -110,6 +112,8 @@ WebGIS.Toc = function(config) {
 	/**
 	 * handler for WMS sublayers visibility
 	 * creates new params for WMS layer and refreshes it
+	 * @param {Ext.tree.Node} node
+	 * @param {Boolean} checked
 	 */
 	var onWmsSubLayerCheckChange = function(node, checked) {
 		var layers = "", i;
@@ -134,7 +138,7 @@ WebGIS.Toc = function(config) {
 	};
 	
 	/**
-	 * Fills an Ext.tree.TreeNode recusevly with WMS layer information in XML document array form
+	 * Fills an Ext.tree.TreeNode recursively with WMS layer information in XML document array form
 	 * @param {Ext.tree.TreeNode} node
 	 * @param {DOM.Document} layerinfos
 	 * @param {OpenLayers.Layer} layer
@@ -166,12 +170,15 @@ WebGIS.Toc = function(config) {
 			childNode.layerIndex = i;
 
 			if (this.useMetadata) {
-				childNode.metadata = {};
-				childNode.metadata.wms = {};
-				childNode.metadata.wms.layer = {};
-				childNode.metadata.wms.layer.name = name;
-				childNode.metadata.wms.layer.title = title;
-				childNode.metadata.wms.layer.srs = Ext.DomQuery.selectNode('SRS', layerinfo).firstChild.nodeValue;
+				childNode.metadata = {
+					wms: {
+						layer: {
+							name: name,
+							title: title,
+							srs: Ext.DomQuery.selectNode('SRS', layerinfo).firstChild.nodeValue
+						}
+					}
+				};
 			
 				childNode.on("contextmenu", onContextMenu, this);
 			}
@@ -265,10 +272,12 @@ WebGIS.Toc = function(config) {
 			node.on("checkchange", onLayerCheckChange, layer);
 	
 			if (this.useMetadata) {
-				node.metadata = {};
-				node.metadata.openlayers = {};
-				node.metadata.openlayers.type = layer.CLASS_NAME;
-				node.metadata.openlayers.source = layer.url;
+				node.metadata = {
+						openlayers: {
+							type: layer.CLASS_NAME,
+							source: layer.url
+					}
+				};
 				
 				node.on("contextmenu", onContextMenu, this);
 			}
