@@ -6,8 +6,6 @@
  * http://www.gnu.org/licenses/gpl.html
  * 
  * Author: Björn Harrtell
- *
- * @fileoverview Basic map tools implemented as WebGIS.MapAction classes
  */
 
 /**
@@ -112,6 +110,7 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 
 	/**
 	 * Private inner class for managing navigation history
+	 * @constructor
 	 */
 	var NavigationHistory = function(config) {
 		var map = config.map,

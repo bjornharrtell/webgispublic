@@ -8,10 +8,6 @@
  * Author: Björn Harrtell
  */
 
-// need to define WebGISTileServer.Provider class since the code at serverside doesn't do it
-WebGISTileServer = {};
-WebGISTileServer.Provider = {};
-
 /**
  * Layer that supports WebGISTileServer sources
  * @base OpenLayers.Layer.Grid
