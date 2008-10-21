@@ -12,31 +12,37 @@
 
 /**
  * Identifies on clicked position
+ * 
  * @constructor
  * @base WebGIS.MapAction
  * @required OpenLayers.Control.Identify
- * @param {Object} config WebGIS.MapAction config options<br>
- * {WebGIS.Control.Toc} [toc] Required config option<br>
- * {String/DOM.Element/Ext.Element} [resultTo] Optional config option, if not specified identify will open its result in a floating window
+ * @param {Object} config
+ * @param {WebGIS.Control.Toc} config.toc required
+ * @param {String/DOM.Element/Ext.Element} config.resultTo Optional config option, if not specified identify will open its result in a floating window
  */
 WebGIS.MapAction.Identify = function(config) {
-	// default config for this action, also used by button to make it toggle correctly
+	// default config for this action, also used by button to make it toggle
+	// correctly
 	config.iconCls = 'webgis-mapaction-identify';
 	config.enableToggle = true;
 	config.toggleGroup = 'WebGIS.MapAction';
-	
+
 	if (config.resultTo === null) {
-		config.resultTo = new Ext.Window({
-			title: config.text,
-			closeAction: 'hide',
-			width: 300,
-			autoHeight: true
+		config.resultTo = new Ext.Window( {
+			title :config.text,
+			closeAction :'hide',
+			width :300,
+			autoHeight :true
 		});
 	}
-	
-	// define an OpenLayers control for this MapAction (is handled by MapAction constructor)
-	config.olcontrol = new OpenLayers.Control.Identify({toc: config.toc, resultTo: config.resultTo});
-		
+
+	// define an OpenLayers control for this MapAction (is handled by MapAction
+	// constructor)
+	config.olcontrol = new OpenLayers.Control.Identify( {
+		toc :config.toc,
+		resultTo :config.resultTo
+	});
+
 	// call Ext.Action constructor
 	WebGIS.MapAction.Identify.superclass.constructor.call(this, config);
 };
