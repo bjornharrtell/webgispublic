@@ -10,44 +10,55 @@
 
 /**
  * Scalelist implemented as an Ext JS combobox extension
+ * 
  * @constructor
  * @base Ext.form.ComboBox
- * @param {Object} config
- * @cfg {OpenLayers.Map} map required
+ * @param {Object}
+ *            config
+ * @param {OpenLayers.Map}
+ *            config.map required
  */
 WebGIS.ScaleList = function(config) {
-	Ext.apply(this, { 
-		valueField: 'zoomlevel',
-		displayField: 'scale',
-		mode: 'local',
-		triggerAction: 'all',
-		forceSelection: true,
-		editable: false,
-		autoWidth: true,
-		autoHeight: true,
-		store: new Ext.data.SimpleStore({
-			fields: ['res', 'scale']
-		})
+	var store = new Ext.data.SimpleStore( {
+		fields : [ 'res', 'scale' ]
 	});
-	
-	WebGIS.ScaleList.superclass.constructor.call(this, config);
+	var map = config.map;
 
-	this.on('select', function(combo, record, index) {
-		this.map.zoomTo(record.get('zoomlevel'));
+	Ext.apply(this, {
+		valueField :'zoomlevel',
+		displayField :'scale',
+		mode :'local',
+		triggerAction :'all',
+		forceSelection :true,
+		editable :false,
+		autoWidth :true,
+		autoHeight :true,
+		store :store
 	});
-	
-	this.map.events.register('zoomend', this, function() {
-		this.setValue(this.map.getZoomForResolution(this.map.getResolution()));
-	});
-		
-	for (var i=0; i<this.map.getNumZoomLevels(); i++) {
-		var scale = OpenLayers.Util.getScaleFromResolution(this.map.getResolutionForZoom(i), 'm'),
-			row = new Ext.data.Record({zoomlevel: i, scale: '1:' + Math.round(scale)});
 
-		this.store.add(row);
+	WebGIS.ScaleList.superclass.constructor.apply(this, arguments);
+
+	var onSelect = function(combo, record, index) {
+		map.zoomTo(record.get('zoomlevel'));
+	};
+	this.on('select', onSelect);
+
+	var onZoomend = function() {
+		this.setValue(map.getZoomForResolution(map.getResolution()));
+	};
+	map.events.register('zoomend', this, onZoomend);
+
+	for ( var i = 0; i < map.getNumZoomLevels(); i++) {
+		var scale = OpenLayers.Util.getScaleFromResolution(map
+				.getResolutionForZoom(i), 'm'), row = new Ext.data.Record( {
+			zoomlevel :i,
+			scale :'1:' + Math.round(scale)
+		});
+
+		store.add(row);
 	}
-	
-	this.setValue(this.map.getZoomForResolution(this.map.getResolution()));
+
+	this.setValue(map.getZoomForResolution(map.getResolution()));
 };
 
 Ext.extend(WebGIS.ScaleList, Ext.form.ComboBox);

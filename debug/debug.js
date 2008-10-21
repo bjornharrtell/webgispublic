@@ -65,6 +65,7 @@ Example.Application = function() {
 			toolbar.add(new WebGIS.MapAction.SelectFeature({map: map, layer: editlayer}));
 			toolbar.add(new WebGIS.MapAction.ModifyFeature({map: map, layer: editlayer}));
 			toolbar.add(new WebGIS.MapAction.DragFeature({map: map, layer: editlayer}));
+			toolbar.add(new WebGIS.MapAction.RemoveSelectedFeatures({map: map, layer: editlayer}));
 
 			var toc = new WebGIS.Toc({map: map, useMetadata: true, autoScroll: true});
 			var window = new Ext.Window({
