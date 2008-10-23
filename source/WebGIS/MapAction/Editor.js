@@ -68,7 +68,7 @@ WebGIS.MapAction.SelectFeature = function(config, options) {
 Ext.extend(WebGIS.MapAction.SelectFeature, WebGIS.MapAction);
 
 /**
- * Removes a feature on specified layer
+ * Removes selected features
  * 
  * @constructor
  * @base WebGIS.MapAction
@@ -81,6 +81,9 @@ WebGIS.MapAction.RemoveSelectedFeatures = function(config) {
 	
 	var layer = config.layer;
 	
+	/**
+	 * @private
+	 */
 	var handler = function() {
 		if (layer.selectedFeatures) {
 			layer.removeFeatures(layer.selectedFeatures);

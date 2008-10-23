@@ -69,19 +69,19 @@ Ext.apply(WebGIS.MapAction.DrawFeature.prototype, {
 });
 Ext.apply(WebGIS.MapAction.SelectFeature.prototype, {
 	titleText: 'Markera',
-	tooltipText: 'Markera geometri'
+	tooltipText: 'Markera objekt'
 });
 Ext.apply(WebGIS.MapAction.RemoveSelectedFeatures.prototype, {
 	titleText: 'Ta bort',
-	tooltipText: 'Ta bort geometri'
+	tooltipText: 'Ta bort markerade objekt'
 });
 Ext.apply(WebGIS.MapAction.ModifyFeature.prototype, {
 	titleText: 'Ändra',
-	tooltipText: 'Ändra geometri'
+	tooltipText: 'Ändra objekt'
 });
 Ext.apply(WebGIS.MapAction.DragFeature.prototype, {
 	titleText: 'Flytta',
-	tooltipText: 'Flytta geometri'
+	tooltipText: 'Flytta objekt'
 });
 
 // Measure tools
