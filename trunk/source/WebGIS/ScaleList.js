@@ -16,7 +16,7 @@
  * @param {Object}
  *            config
  * @param {OpenLayers.Map}
- *            config.map required
+ *            config.map
  */
 WebGIS.ScaleList = function(config) {
 	var store = new Ext.data.SimpleStore( {
@@ -55,8 +55,9 @@ WebGIS.ScaleList = function(config) {
 	map.events.register('zoomend', this, onZoomend);
 
 	for ( var i = 0; i < map.getNumZoomLevels(); i++) {
-		var scale = OpenLayers.Util.getScaleFromResolution(map
-				.getResolutionForZoom(i), 'm'), row = new Ext.data.Record( {
+		var res = map.getResolutionForZoom(i);
+		var scale = OpenLayers.Util.getScaleFromResolution(res, 'm');
+		var row = new Ext.data.Record( {
 			zoomlevel :i,
 			scale :'1:' + Math.round(scale)
 		});

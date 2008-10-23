@@ -41,7 +41,7 @@ WebGIS.MapAction.DrawFeature = function(config) {
 		this.tooltipText = this.tooltipPolygonText;
 	}
 
-	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler);
+	this.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler);
 
 	WebGIS.MapAction.DrawFeature.superclass.constructor.call(this, config);
 };
@@ -108,7 +108,8 @@ Ext.extend(WebGIS.MapAction.RemoveSelectedFeatures, WebGIS.MapAction);
  */
 WebGIS.MapAction.ModifyFeature = function(config) {
 	config.iconCls = 'webgis-mapaction-modifyfeature';
-	config.olcontrol = new OpenLayers.Control.ModifyFeature(config.layer);
+	
+	this.olcontrol = new OpenLayers.Control.ModifyFeature(config.layer);
 
 	WebGIS.MapAction.ModifyFeature.superclass.constructor.call(this, config);
 };
@@ -125,7 +126,8 @@ Ext.extend(WebGIS.MapAction.ModifyFeature, WebGIS.MapAction);
  */
 WebGIS.MapAction.DragFeature = function(config) {
 	config.iconCls = 'webgis-mapaction-dragfeature';
-	config.olcontrol = new OpenLayers.Control.DragFeature(config.layer);
+	
+	this.olcontrol = new OpenLayers.Control.DragFeature(config.layer);
 
 	WebGIS.MapAction.DragFeature.superclass.constructor.call(this, config);
 };

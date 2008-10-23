@@ -27,7 +27,7 @@ WebGIS.MapAction.Identify = function(config) {
 	config.enableToggle = true;
 	config.toggleGroup = 'WebGIS.MapAction';
 
-	if (config.resultTo === null) {
+	if (!config.resultTo) {
 		config.resultTo = new Ext.Window( {
 			title :config.text,
 			closeAction :'hide',
@@ -38,7 +38,7 @@ WebGIS.MapAction.Identify = function(config) {
 
 	// define an OpenLayers control for this MapAction (is handled by MapAction
 	// constructor)
-	config.olcontrol = new OpenLayers.Control.Identify( {
+	this.olcontrol = new OpenLayers.Control.Identify( {
 		toc :config.toc,
 		resultTo :config.resultTo
 	});
