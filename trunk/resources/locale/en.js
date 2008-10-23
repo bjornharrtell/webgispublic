@@ -65,19 +65,19 @@ Ext.apply(WebGIS.MapAction.DrawFeature.prototype, {
 });
 Ext.apply(WebGIS.MapAction.SelectFeature.prototype, {
 	titleText: 'Select',
-	tooltipText: 'Select geometry'
+	tooltipText: 'Select objects'
 });
 Ext.apply(WebGIS.MapAction.RemoveSelectedFeatures.prototype, {
 	titleText: 'Remove',
-	tooltipText: 'Remove geometry'
+	tooltipText: 'Remove selected objects'
 });
 Ext.apply(WebGIS.MapAction.ModifyFeature.prototype, {
 	titleText: 'Modify',
-	tooltipText: 'Modify geometry'
+	tooltipText: 'Modify objects'
 });
 Ext.apply(WebGIS.MapAction.DragFeature.prototype, {
 	titleText: 'Move',
-	tooltipText: 'Move geometry'
+	tooltipText: 'Move objects'
 });
 
 // Measure tools

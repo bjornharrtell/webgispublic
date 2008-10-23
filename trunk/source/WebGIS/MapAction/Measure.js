@@ -22,12 +22,18 @@
 WebGIS.MapAction.MeasureLine = function(config) {
 	config.iconCls = 'webgis-mapaction-measurelength';
 
+	/**
+	 * @private
+	 */
 	var destroyTip = function() {
 		if (this.tip) {
 			this.tip.destroy();
 		}
 	};
 	
+	/**
+	 * @private
+	 */
 	var updateTip = function(point) {
 		var length = this.handler.line.geometry.getLength(),
 			pixel,
@@ -71,15 +77,21 @@ Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction);
  * If the tool is used on a WGS84 map the resulting value will be invalid.
  * @constructor
  * @extends WebGIS.MapAction
- * @param {String} config WebGIS.MapAction config options<br>
+ * @param {Object} config WebGIS.MapAction config options<br>
  */
 WebGIS.MapAction.MeasureArea = function(config) {
 	config.iconCls = 'webgis-mapaction-measurearea';
 	
+	/**
+	 * @private
+	 */
 	var destroyTip = function() {
 		if (this.tip) { this.tip.destroy(); }
 	};
 	
+	/**
+	 * @private
+	 */
 	var updateTip = function(point) {
 		var area = this.handler.polygon.geometry.getArea(),
 			pixel,

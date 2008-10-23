@@ -38,11 +38,17 @@ WebGIS.ScaleList = function(config) {
 
 	WebGIS.ScaleList.superclass.constructor.apply(this, arguments);
 
+	/**
+	 * @private
+	 */
 	var onSelect = function(combo, record, index) {
 		map.zoomTo(record.get('zoomlevel'));
 	};
 	this.on('select', onSelect);
 
+	/**
+	 * @private
+	 */
 	var onZoomend = function() {
 		this.setValue(map.getZoomForResolution(map.getResolution()));
 	};
