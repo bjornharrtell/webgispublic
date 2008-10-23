@@ -23,11 +23,8 @@ WebGIS.MapAction.ZoomInBox = function(config) {
 	config.enableToggle = true;
 	config.toggleGroup = 'WebGIS.MapAction';
 
-	// define an OpenLayers control for this MapAction (is handled by MapAction
-	// constructor)
-	config.olcontrol = new OpenLayers.Control.ZoomBox();
+	this.olcontrol = new OpenLayers.Control.ZoomBox();
 
-	// call Ext.Action constructor
 	WebGIS.MapAction.ZoomInBox.superclass.constructor.call(this, config);
 };
 Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction);
@@ -42,7 +39,8 @@ Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction);
  */
 WebGIS.MapAction.ZoomOutBox = function(config) {
 	config.iconCls = 'webgis-mapaction-zoomoutbox';
-	config.olcontrol = new OpenLayers.Control.ZoomBox( {
+	
+	this.olcontrol = new OpenLayers.Control.ZoomBox( {
 		out :true
 	});
 
@@ -116,7 +114,8 @@ WebGIS.MapAction.DragPan = function(config) {
 	config.iconCls = 'webgis-mapaction-dragpan';
 	config.enableToggle = true;
 	config.toggleGroup = 'WebGIS.MapAction';
-	config.olcontrol = new OpenLayers.Control.DragPan();
+	
+	this.olcontrol = new OpenLayers.Control.DragPan();
 
 	WebGIS.MapAction.DragPan.superclass.constructor.call(this, config);
 };
@@ -131,8 +130,8 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 	 * @constructor
 	 */
 	var NavigationHistory = function(config) {
-		var map = config.map
-		var currentHistoryPosition = 0
+		var map = config.map;
+		var currentHistoryPosition = 0;
 		var navigationHistory = [];
 
 		this.addEvents('historystatuschange');

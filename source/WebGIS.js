@@ -12,7 +12,6 @@ WebGIS = {
 	 * @member WebGIS
 	 */
 	version :"1.2.0",
-	MapAction : {},
 	OpenLayers : {
 		Control : {},
 		Layer : {}
