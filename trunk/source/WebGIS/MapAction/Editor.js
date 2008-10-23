@@ -17,12 +17,14 @@
  * @base WebGIS.MapAction
  * @param {Object}
  *            config
- * @cfg {OpenLayers.Layer.Vector} layer required
- * @cfg {String} geometryType required
- * @cfg {function} handler optional function to be called after each feature is
- *      drawn
+ * @param {OpenLayers.Layer.Vector}
+ *            config.layer
+ * @param {String}
+ *            config.geometryType
  */
 WebGIS.MapAction.DrawFeature = function(config) {
+	var handler;
+
 	// use config parameter to determine geometry type to handle
 	if (config.geometryType === 'OpenLayers.Geometry.Point') {
 		handler = OpenLayers.Handler.Point;
@@ -54,13 +56,16 @@ Ext.extend(WebGIS.MapAction.DrawFeature, WebGIS.MapAction);
  * @base WebGIS.MapAction
  * @param {Object}
  *            config
- * @cfg {OpenLayers.Layer.Vector} layer required
- * @cfg {Object} options Optional options to pass to OpenLayers SelectFeature
- *      control
+ * @param {OpenLayers.Layer.Vector}
+ *            config.layer
+ * @param {Object}
+ *            [config.options] options passed as options to
+ *            OpenLayers.Control.SelectFeature instance
  */
 WebGIS.MapAction.SelectFeature = function(config, options) {
 	config.iconCls = 'webgis-mapaction-selectfeature';
-	config.olcontrol = new OpenLayers.Control.SelectFeature(config.layer,
+
+	this.olcontrol = new OpenLayers.Control.SelectFeature(config.layer,
 			config.options);
 
 	WebGIS.MapAction.SelectFeature.superclass.constructor.call(this, config);
@@ -74,13 +79,14 @@ Ext.extend(WebGIS.MapAction.SelectFeature, WebGIS.MapAction);
  * @base WebGIS.MapAction
  * @param {Object}
  *            config
- * @cfg {OpenLayers.Layer.Vector} layer required
+ * @param {OpenLayers.Layer.Vector}
+ *            config.layer
  */
 WebGIS.MapAction.RemoveSelectedFeatures = function(config) {
 	config.iconCls = 'webgis-mapaction-removefeature';
-	
+
 	var layer = config.layer;
-	
+
 	/**
 	 * @private
 	 */
@@ -89,7 +95,7 @@ WebGIS.MapAction.RemoveSelectedFeatures = function(config) {
 			layer.removeFeatures(layer.selectedFeatures);
 		}
 	};
-	
+
 	config.handler = handler;
 
 	WebGIS.MapAction.RemoveSelectedFeatures.superclass.constructor.call(this,
@@ -104,11 +110,12 @@ Ext.extend(WebGIS.MapAction.RemoveSelectedFeatures, WebGIS.MapAction);
  * @base WebGIS.MapAction
  * @param {Object}
  *            config
- * @cfg {OpenLayers.Layer.Vector} layer required
+ * @param {OpenLayers.Layer.Vector}
+ *            config.layer
  */
 WebGIS.MapAction.ModifyFeature = function(config) {
 	config.iconCls = 'webgis-mapaction-modifyfeature';
-	
+
 	this.olcontrol = new OpenLayers.Control.ModifyFeature(config.layer);
 
 	WebGIS.MapAction.ModifyFeature.superclass.constructor.call(this, config);
@@ -122,11 +129,12 @@ Ext.extend(WebGIS.MapAction.ModifyFeature, WebGIS.MapAction);
  * @base WebGIS.MapAction
  * @param {Object}
  *            config
- * @cfg {OpenLayers.Layer.Vector} layer required
+ * @param {OpenLayers.Layer.Vector}
+ *            config.layer
  */
 WebGIS.MapAction.DragFeature = function(config) {
 	config.iconCls = 'webgis-mapaction-dragfeature';
-	
+
 	this.olcontrol = new OpenLayers.Control.DragFeature(config.layer);
 
 	WebGIS.MapAction.DragFeature.superclass.constructor.call(this, config);

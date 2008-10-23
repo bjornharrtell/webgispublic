@@ -39,7 +39,7 @@ Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction);
  */
 WebGIS.MapAction.ZoomOutBox = function(config) {
 	config.iconCls = 'webgis-mapaction-zoomoutbox';
-	
+
 	this.olcontrol = new OpenLayers.Control.ZoomBox( {
 		out :true
 	});
@@ -114,7 +114,7 @@ WebGIS.MapAction.DragPan = function(config) {
 	config.iconCls = 'webgis-mapaction-dragpan';
 	config.enableToggle = true;
 	config.toggleGroup = 'WebGIS.MapAction';
-	
+
 	this.olcontrol = new OpenLayers.Control.DragPan();
 
 	WebGIS.MapAction.DragPan.superclass.constructor.call(this, config);
