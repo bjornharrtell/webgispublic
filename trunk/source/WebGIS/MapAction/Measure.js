@@ -48,13 +48,14 @@ WebGIS.MapAction.MeasureLine = function(config) {
 		if (length === 0) {
 			return;
 		}
-
-		// is not more than 1 km
-		if ((length % 1000) === length) {
-			length = Math.round(length).toString() + ' m';
-		} else {
-			length = ((Math.round(length * 10 / 1000) / 10)).toString() + ' km';
+		
+		// is not more than 10 km
+		if ((length%10000)===length) {
+			length = (Math.round(length*100)/100).toString() + ' m'; 
 		}
+		else {
+			length = ((Math.round(length*100/1000)/100)).toString() + ' km'; 				
+		}		
 
 		destroyTip();
 		
@@ -123,13 +124,9 @@ WebGIS.MapAction.MeasureArea = function(config) {
 		if (area === 0) {
 			return;
 		}
-
-		// is not more than 1 km2
-		if ((area % 1000000) === area) {
-			area = Math.round(area).toString() + ' m&#178;';
-		} else {
-			area = (Math.round(area * 10 / 1000000) / 10).toString() + ' km&#178;';
-		}
+		
+		area = (Math.round(area*100/10000)/100).toString() + ' ha';
+		
 
 		destroyTip();
 		
