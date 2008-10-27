@@ -71,7 +71,7 @@ WebGIS.MapAction.MeasureLine = function(config) {
 		tip.showAt( [ pixel.x + 5 + el.getLeft(),
 				pixel.y + 5 + el.getTop() ]);
 	};
-
+	
 	this.olcontrol = new OpenLayers.Control.DrawFeature(layer,
 			OpenLayers.Handler.Path, {
 				callbacks : {
