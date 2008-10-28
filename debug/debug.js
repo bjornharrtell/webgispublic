@@ -43,6 +43,37 @@ Example.Application = function() {
 
 			var editlayer = new OpenLayers.Layer.Vector('editlayer');
 			map.addLayer(editlayer);
+			
+			var featureTreePanel = new WebGIS.FeatureTreePanel({layer: editlayer});
+					
+			var success = function(response) {
+				var json = response.responseText;
+				
+				var format = new OpenLayers.Format.GML();
+				var features = format.read(json);
+				
+				editlayer.addFeatures(features);
+				
+				var window2 = new Ext.Window({
+					title: 'Features',
+					border: false,
+					layout: 'fit',
+					width: 200,
+					height: 300,
+					items: featureTreePanel
+				});
+				window2.show();
+				window2.setPosition(220,50);
+				
+				featureTreePanel.update();
+				
+				return true;
+			};
+			
+			Ext.Ajax.request({
+				url: 'waterbodies.gml',
+				success: success
+			});
 
 			// map action is an extended Ext.Action that can be used as a button or menu item
 			toolbar.add(new WebGIS.MapAction.DragPan({map: map}));
@@ -78,9 +109,12 @@ Example.Application = function() {
 			});
 			window.show();
 			window.setPosition(20,50);
-
+			
 			toc.update();
 			
+			
+
+
 			return null;
 		}
 	};
