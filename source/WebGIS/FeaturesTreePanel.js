@@ -16,7 +16,7 @@
  * @param {Object}
  *            config
  */
-WebGIS.FeatureTreePanel = function(config) {
+WebGIS.FeaturesTreePanel = function(config) {
 
 	var root = new Ext.tree.TreeNode( {
 		draggable :false
@@ -27,7 +27,7 @@ WebGIS.FeatureTreePanel = function(config) {
 		rootVisible :false
 	});
 
-	WebGIS.FeatureTreePanel.superclass.constructor.apply(this, arguments);
+	WebGIS.FeaturesTreePanel.superclass.constructor.apply(this, arguments);
 
 	/**
 	 * @param {Array}
@@ -51,7 +51,7 @@ WebGIS.FeatureTreePanel = function(config) {
 		for ( var i = 0; i < features.length; i++) {
 			node = new Ext.tree.TreeNode( {
 				// TODO: get most likely attribute to be a text field and use it
-				// to name the feature, else use the FID
+					// to name the feature, else use the FID
 					text :i
 				});
 
@@ -60,6 +60,6 @@ WebGIS.FeatureTreePanel = function(config) {
 	};
 };
 
-Ext.extend(WebGIS.FeatureTreePanel, Ext.tree.TreePanel);
+Ext.extend(WebGIS.FeaturesTreePanel, Ext.tree.TreePanel);
 
-Ext.reg('webgis-featuretreepanel', WebGIS.FeatureTreePanel);
+Ext.reg('webgis-featurestreepanel', WebGIS.FeaturesTreePanel);
