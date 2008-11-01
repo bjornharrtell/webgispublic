@@ -20,9 +20,13 @@
  * 
  * @constructor
  * @base Ext.tree.TreePanel
- * @param {Object} config
- * @param {OpenLayers.Map} config.map
- * @param {Boolean} config.useMetadata Set to true to enable parsing of metadata and context menu
+ * @param {Object}
+ *            config
+ * @param {OpenLayers.Map}
+ *            config.map
+ * @param {Boolean}
+ *            config.useMetadata Set to true to enable parsing of metadata and
+ *            context menu
  */
 WebGIS.Toc = function(config) {
 	Ext.apply(this, {
@@ -35,6 +39,7 @@ WebGIS.Toc = function(config) {
 
 	/**
 	 * handler that displays a context menu
+	 * 
 	 * @private
 	 * @param {Ext.tree.TreeNode}
 	 *            node
@@ -116,6 +121,7 @@ WebGIS.Toc = function(config) {
 	/**
 	 * handler for WMS sublayers visibility creates new params for WMS layer and
 	 * refreshes it
+	 * 
 	 * @private
 	 * @param {Ext.tree.TreeNode}
 	 *            node
@@ -146,6 +152,7 @@ WebGIS.Toc = function(config) {
 	/**
 	 * Fills an Ext.tree.TreeNode recursively with WMS layer information in XML
 	 * document array form
+	 * 
 	 * @private
 	 * @param {Ext.tree.TreeNode}
 	 *            node
@@ -154,7 +161,7 @@ WebGIS.Toc = function(config) {
 	 * @param {OpenLayers.Layer}
 	 *            layer
 	 * @param {Ext.tree.TreeNode}
-	 *            root   
+	 *            root
 	 */
 	var fillTree = function(node, layerinfos, layer, root) {
 		var layerinfo, name, title, checked, childNode, i;
