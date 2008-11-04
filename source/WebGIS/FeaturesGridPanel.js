@@ -22,7 +22,7 @@ WebGIS.FeaturesGridPanel = function(config) {
 
 	var fields = [];
 	var columns = [];
-
+	
 	fields.push('fid');
 	columns.push( {
 		id :'fid',
@@ -74,6 +74,27 @@ WebGIS.FeaturesGridPanel = function(config) {
 	};
 
 	addFeatures(layer.features);
+	
+
+	var zoomTo = function() {
+		layer.map.zoomToExtent(layer.features[this.rowIndex].geometry.getBounds());
+	};
+	
+	var onRowContextMenu = function(grid, rowIndex, event) {
+		var menu = new Ext.menu.Menu();
+
+		menu.add( {
+			text : 'Zoom to',
+			handler :zoomTo,
+			rowIndex: rowIndex
+		});
+
+		menu.showAt(event.getXY());
+		
+		event.stopEvent();
+	};
+	
+	this.on('rowcontextmenu', onRowContextMenu);
 };
 
 Ext.extend(WebGIS.FeaturesGridPanel, Ext.grid.GridPanel);
