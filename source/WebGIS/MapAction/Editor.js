@@ -67,6 +67,15 @@ WebGIS.MapAction.SelectFeature = function(config, options) {
 
 	this.olcontrol = new OpenLayers.Control.SelectFeature(config.layer,
 			config.options);
+	
+	this.select = function(feature) {
+		this.olcontrol.select(feature);
+	};
+	
+	this.unselectAll = function(options) {
+		this.olcontrol.unselectAll(options);
+	};
+
 
 	WebGIS.MapAction.SelectFeature.superclass.constructor.call(this, config);
 };
