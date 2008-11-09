@@ -16,6 +16,7 @@
  *            config
  * @param {OpenLayers.Layer.Vector}
  *            config.layer
+ * @param {WebGIS.MapAction.SelectFeature} config.selectFeature
  */
 WebGIS.FeaturesGridPanel = function(config) {
 	var layer = config.layer;
@@ -23,6 +24,7 @@ WebGIS.FeaturesGridPanel = function(config) {
 	var fields = [];
 	var columns = [];
 	
+	fields.push('feature');
 	fields.push('fid');
 	columns.push( {
 		id :'fid',
@@ -62,6 +64,7 @@ WebGIS.FeaturesGridPanel = function(config) {
 		for ( var i = 0; i < features.length; i++) {
 			var feature = features[i];
 			var row = [];
+			row.push(feature);
 			row.push(feature.fid);
 			for ( var name in feature.attributes) {
 				var value = feature.attributes[name];
@@ -76,25 +79,43 @@ WebGIS.FeaturesGridPanel = function(config) {
 	addFeatures(layer.features);
 	
 
+	var featureIndex;
+	
 	var zoomTo = function() {
-		layer.map.zoomToExtent(layer.features[this.rowIndex].geometry.getBounds());
+		layer.map.zoomToExtent(layer.features[featureIndex].geometry.getBounds());
 	};
 	
-	var onRowContextMenu = function(grid, rowIndex, event) {
-		var menu = new Ext.menu.Menu();
+	var menu = new Ext.menu.Menu();
 
-		menu.add( {
-			text : 'Zoom to',
-			handler :zoomTo,
-			rowIndex: rowIndex
-		});
+	menu.add( {
+		text : 'Zoom to',
+		handler :zoomTo
+	});
+	
+	var onRowContextMenu = function(grid, rowIndex, event) {
+		featureIndex = rowIndex;
 
 		menu.showAt(event.getXY());
 		
 		event.stopEvent();
 	};
-	
+
 	this.on('rowcontextmenu', onRowContextMenu);
+	
+	var selectionModel = this.getSelectionModel();
+	var onSelectionChange = function() {
+		var selections = selectionModel.getSelections();
+		
+		config.selectFeature.unselectAll();
+		
+		for (var i = 0; i < selections.length; i++) {
+			var record = selections[i];
+			var feature = record.get('feature');
+			config.selectFeature.select(feature);
+		}
+	};
+	
+	selectionModel.on('selectionchange', onSelectionChange); 
 };
 
 Ext.extend(WebGIS.FeaturesGridPanel, Ext.grid.GridPanel);

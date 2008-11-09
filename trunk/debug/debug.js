@@ -64,8 +64,9 @@ Example.Application = function() {
 			toolbar.add(new WebGIS.MapAction.DrawFeature({map: map, layer: editlayer, geometryType: 'OpenLayers.Geometry.Curve'}));
 			toolbar.add(new WebGIS.MapAction.DrawFeature({map: map, layer: editlayer, geometryType: 'OpenLayers.Geometry.Polygon'}));
 			toolbar.add('-');
-			toolbar.add(new WebGIS.MapAction.SelectFeature({map: map, layer: editlayer}));
-			toolbar.add(new WebGIS.MapAction.ModifyFeature({map: map, layer: editlayer}));
+			var selectFeature = new WebGIS.MapAction.SelectFeature({map: map, layer: editlayer});
+			toolbar.add(selectFeature);
+			//toolbar.add(new WebGIS.MapAction.ModifyFeature({map: map, layer: editlayer}));
 			toolbar.add(new WebGIS.MapAction.DragFeature({map: map, layer: editlayer}));
 			toolbar.add(new WebGIS.MapAction.RemoveSelectedFeatures({map: map, layer: editlayer}));
 
@@ -91,7 +92,7 @@ Example.Application = function() {
 				
 				editlayer.addFeatures(features);
 				
-				var featureGridPanel = new WebGIS.FeaturesGridPanel({layer: editlayer});
+				var featureGridPanel = new WebGIS.FeaturesGridPanel({layer: editlayer, selectFeature: selectFeature});
 				
 				var window2 = new Ext.Window({
 					title: 'Features',
