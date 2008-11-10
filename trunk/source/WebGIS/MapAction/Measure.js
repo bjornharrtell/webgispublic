@@ -83,7 +83,6 @@ WebGIS.MapAction.MeasureLine = function(config) {
 
 	WebGIS.MapAction.MeasureLine.superclass.constructor.call(this, config);
 };
-WebGIS.MapAction.MeasureLine.prototype = {};
 Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction);
 
 /**
