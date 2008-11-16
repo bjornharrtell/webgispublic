@@ -28,7 +28,7 @@ WebGIS.MapAction.MeasureLine = function(config) {
 	var map = config.map;
 	var layer = config.layer;
 	var tip;
-	
+
 	/**
 	 * @private
 	 */
@@ -40,6 +40,7 @@ WebGIS.MapAction.MeasureLine = function(config) {
 
 	/**
 	 * will be called in the context of the OpenLayers.Control
+	 * 
 	 * @private
 	 */
 	var updateTip = function(point) {
@@ -48,38 +49,34 @@ WebGIS.MapAction.MeasureLine = function(config) {
 		if (length === 0) {
 			return;
 		}
-		
+
 		// is not more than 10 km
-		if ((length%10000)===length) {
-			length = (Math.round(length*100)/100).toString() + ' m'; 
+		if ((length % 10000) === length) {
+			length = (Math.round(length * 100) / 100).toString() + ' m';
+		} else {
+			length = ((Math.round(length * 100 / 1000) / 100)).toString() + ' km';
 		}
-		else {
-			length = ((Math.round(length*100/1000)/100)).toString() + ' km'; 				
-		}		
 
 		destroyTip();
-		
+
 		tip = new Ext.Tip( {
-			html :length,
-			style :"width:150",
-			autoHeight :true
+		    html :length,
+		    style :'width:150',
+		    autoHeight :true
 		});
 
-		pixel = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x,
-				point.y));
+		pixel = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x, point.y));
 		el = Ext.Element(map.div);
-		tip.showAt( [ pixel.x + 5 + el.getLeft(),
-				pixel.y + 5 + el.getTop() ]);
+		tip.showAt( [ pixel.x + 5 + el.getLeft(), pixel.y + 5 + el.getTop() ]);
 	};
-	
-	this.olcontrol = new OpenLayers.Control.DrawFeature(layer,
-			OpenLayers.Handler.Path, {
-				callbacks : {
-					done :destroyTip,
-					point :updateTip,
-					cancel :destroyTip
-				}
-			});
+
+	this.olcontrol = new OpenLayers.Control.DrawFeature(layer, OpenLayers.Handler.Path, {
+		callbacks : {
+		    done :destroyTip,
+		    point :updateTip,
+		    cancel :destroyTip
+		}
+	});
 
 	WebGIS.MapAction.MeasureLine.superclass.constructor.call(this, config);
 };
@@ -103,7 +100,7 @@ WebGIS.MapAction.MeasureArea = function(config) {
 	var map = config.map;
 	var layer = config.layer;
 	var tip;
-	
+
 	/**
 	 * @private
 	 */
@@ -123,33 +120,29 @@ WebGIS.MapAction.MeasureArea = function(config) {
 		if (area === 0) {
 			return;
 		}
-		
-		area = (Math.round(area*100/10000)/100).toString() + ' ha';
-		
+
+		area = (Math.round(area * 100 / 10000) / 100).toString() + ' ha';
 
 		destroyTip();
-		
+
 		tip = new Ext.Tip( {
-			html :area,
-			style :"width:150",
-			autoHeight :true
+		    html :area,
+		    style :'width:150',
+		    autoHeight :true
 		});
 
-		pixel = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x,
-				point.y));
+		pixel = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x, point.y));
 		el = Ext.Element(map.div);
-		tip.showAt( [ pixel.x + 5 + el.getLeft(),
-				pixel.y + 5 + el.getTop() ]);
+		tip.showAt( [ pixel.x + 5 + el.getLeft(), pixel.y + 5 + el.getTop() ]);
 	};
 
-	this.olcontrol = new OpenLayers.Control.DrawFeature(config.layer,
-			OpenLayers.Handler.Polygon, {
-				callbacks : {
-					done :destroyTip,
-					point :updateTip,
-					cancel :destroyTip
-				}
-			});
+	this.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, OpenLayers.Handler.Polygon, {
+		callbacks : {
+		    done :destroyTip,
+		    point :updateTip,
+		    cancel :destroyTip
+		}
+	});
 
 	WebGIS.MapAction.MeasureArea.superclass.constructor.call(this, config);
 };

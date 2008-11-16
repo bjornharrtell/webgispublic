@@ -16,17 +16,22 @@
  * @constructor
  * @base WebGIS.MapAction
  * @required OpenLayers.Control.Identify
- * @param {Object} config
- * @param {WebGIS.Control.Toc} config.toc required
- * @param {String/DOM.Element/Ext.Element} config.resultTo Optional config option, if not specified identify will open its result in a floating window
+ * @param {Object}
+ *            config
+ * @param {WebGIS.Control.Toc}
+ *            config.toc required
+ * @param {String/DOM.Element/Ext.Element}
+ *            config.resultTo Optional config option, if not specified identify
+ *            will open its result in a floating window
  */
 WebGIS.MapAction.Identify = function(config) {
-	// default config for this action, also used by button to make it toggle
-	// correctly
-	config.iconCls = 'webgis-mapaction-identify';
-	config.enableToggle = true;
-	config.toggleGroup = 'WebGIS.MapAction';
-
+	// default config for this action, also used by button to make it toggle correctly
+	Ext.apply(config, {
+	    iconCls :'webgis-mapaction-identify',
+	    enableToggle :true,
+	    toggleGroup :'WebGIS.MapAction'
+	});
+	
 	if (!config.resultTo) {
 		config.resultTo = new Ext.Window( {
 			title :config.text,
@@ -36,8 +41,7 @@ WebGIS.MapAction.Identify = function(config) {
 		});
 	}
 
-	// define an OpenLayers control for this MapAction (is handled by MapAction
-	// constructor)
+	// define an OpenLayers control for this MapAction (is handled by MapAction constructor)
 	this.olcontrol = new OpenLayers.Control.Identify( {
 		toc :config.toc,
 		resultTo :config.resultTo

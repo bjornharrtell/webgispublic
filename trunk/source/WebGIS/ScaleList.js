@@ -25,15 +25,15 @@ WebGIS.ScaleList = function(config) {
 	var map = config.map;
 
 	Ext.apply(this, {
-		valueField :'zoomlevel',
-		displayField :'scale',
-		mode :'local',
-		triggerAction :'all',
-		forceSelection :true,
-		editable :false,
-		autoWidth :true,
-		autoHeight :true,
-		store :store
+	    valueField :'zoomlevel',
+	    displayField :'scale',
+	    mode :'local',
+	    triggerAction :'all',
+	    forceSelection :true,
+	    editable :false,
+	    autoWidth :true,
+	    autoHeight :true,
+	    store :store
 	});
 
 	WebGIS.ScaleList.superclass.constructor.apply(this, arguments);
@@ -58,8 +58,8 @@ WebGIS.ScaleList = function(config) {
 		var res = map.getResolutionForZoom(i);
 		var scale = OpenLayers.Util.getScaleFromResolution(res, 'm');
 		var row = new Ext.data.Record( {
-			zoomlevel :i,
-			scale :'1:' + Math.round(scale)
+		    zoomlevel :i,
+		    scale :'1:' + Math.round(scale)
 		});
 
 		store.add(row);

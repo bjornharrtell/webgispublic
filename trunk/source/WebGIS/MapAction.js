@@ -42,12 +42,12 @@
 		 */
 		var map = config.map;
 
-		WebGIS.MapAction.superclass.constructor.call(this, config);
-
 		if (config.cls === 'x-btn-text-icon') {
-			config.text = config.text || this.titleText;
+			config.text = config.text || config.titleText;
 		}
-		config.tooltip = config.tooltip || this.tooltipText;
+		config.tooltip = config.tooltip || config.tooltipText;
+
+		WebGIS.MapAction.superclass.constructor.call(this, config);
 
 		// rest of construction is only for MapActions using a OL control
 		/**
@@ -55,8 +55,9 @@
 		 * @private
 		 */
 		var olcontrol = this.olcontrol;
-		if (!olcontrol)
+		if (!olcontrol) {
 			return;
+		}
 
 		/**
 		 * function to handle activation of an OpenLayers control, will
@@ -85,10 +86,13 @@
 
 		map.addControl(olcontrol);
 		openLayersControls.push(olcontrol);
-		config.handler = mapActionHandler;
-		config.scope = olcontrol;
-		config.enableToggle = true;
-		config.toggleGroup = 'WebGIS.MapAction';
+
+		Ext.apply(config, {
+		    handler :mapActionHandler,
+		    scope :olcontrol,
+		    enableToggle :true,
+		    toggleGroup :'WebGIS.MapAction'
+		});
 	};
 
 	Ext.extend(WebGIS.MapAction, Ext.Action);
