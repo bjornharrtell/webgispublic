@@ -23,8 +23,8 @@ WebGIS.FeaturesTreePanel = function(config) {
 	});
 
 	Ext.apply(this, {
-		root :root,
-		rootVisible :false
+	    root :root,
+	    rootVisible :false
 	});
 
 	WebGIS.FeaturesTreePanel.superclass.constructor.apply(this, arguments);
@@ -51,9 +51,9 @@ WebGIS.FeaturesTreePanel = function(config) {
 		for ( var i = 0; i < features.length; i++) {
 			node = new Ext.tree.TreeNode( {
 				// TODO: get most likely attribute to be a text field and use it
-					// to name the feature, else use the FID
-					text :i
-				});
+				    // to name the feature, else use the FID
+				    text :i
+			    });
 
 			resultNode.appendChild(node);
 		}

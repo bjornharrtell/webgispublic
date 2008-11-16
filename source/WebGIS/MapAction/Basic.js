@@ -17,11 +17,11 @@
  *            config
  */
 WebGIS.MapAction.ZoomInBox = function(config) {
-	// default config for this action, also used by button to make it toggle
-	// correctly
-	config.iconCls = 'webgis-mapaction-zoominbox';
-	config.enableToggle = true;
-	config.toggleGroup = 'WebGIS.MapAction';
+	Ext.apply(config, {
+	    iconCls :'webgis-mapaction-zoominbox',
+	    enableToggle :true,
+	    toggleGroup :'WebGIS.MapAction'
+	});
 
 	this.olcontrol = new OpenLayers.Control.ZoomBox();
 
@@ -38,7 +38,11 @@ Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.ZoomOutBox = function(config) {
-	config.iconCls = 'webgis-mapaction-zoomoutbox';
+	Ext.apply(config, {
+	    iconCls :'webgis-mapaction-zoomoutbox',
+	    enableToggle :true,
+	    toggleGroup :'WebGIS.MapAction'
+	});
 
 	this.olcontrol = new OpenLayers.Control.ZoomBox( {
 		out :true
@@ -57,10 +61,12 @@ Ext.extend(WebGIS.MapAction.ZoomOutBox, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.ZoomIn = function(config) {
-	config.iconCls = 'webgis-mapaction-zoomin';
-	config.handler = function() {
-		this.map.zoomIn();
-	};
+	Ext.apply(config, {
+	    iconCls :'webgis-mapaction-zoomin',
+	    handler : function() {
+		    this.map.zoomIn();
+	    }
+	});
 
 	WebGIS.MapAction.ZoomIn.superclass.constructor.call(this, config);
 };
@@ -75,10 +81,12 @@ Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.ZoomOut = function(config) {
-	config.iconCls = 'webgis-mapaction-zoomout';
-	config.handler = function() {
-		this.map.zoomOut();
-	};
+	Ext.apply(config, {
+	    iconCls :'webgis-mapaction-zoomout',
+	    handler : function() {
+		    this.map.zoomOut();
+	    }
+	});
 
 	WebGIS.MapAction.ZoomOut.superclass.constructor.call(this, config);
 };
@@ -93,10 +101,12 @@ Ext.extend(WebGIS.MapAction.ZoomOut, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.FullExtent = function(config) {
-	config.iconCls = 'webgis-mapaction-fullextent';
-	config.handler = function() {
-		this.map.zoomToMaxExtent();
-	};
+	Ext.apply(config, {
+	    iconCls :'webgis-mapaction-fullextent',
+	    handler : function() {
+		    this.map.zoomToMaxExtent();
+	    }
+	});
 
 	WebGIS.MapAction.FullExtent.superclass.constructor.call(this, config);
 };
@@ -111,9 +121,11 @@ Ext.extend(WebGIS.MapAction.FullExtent, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.DragPan = function(config) {
-	config.iconCls = 'webgis-mapaction-dragpan';
-	config.enableToggle = true;
-	config.toggleGroup = 'WebGIS.MapAction';
+	Ext.apply(config, {
+	    iconCls :'webgis-mapaction-dragpan',
+	    enableToggle :true,
+	    toggleGroup :'WebGIS.MapAction'
+	});
 
 	this.olcontrol = new OpenLayers.Control.DragPan();
 
@@ -163,8 +175,8 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 			}
 
 			this.fireEvent('historystatuschange', {
-				previousHistory :previousHistory,
-				nextHistory :nextHistory
+			    previousHistory :previousHistory,
+			    nextHistory :nextHistory
 			});
 
 			// abort if new extent equals the next/previous one
@@ -197,8 +209,10 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 	 *            config
 	 */
 	WebGIS.MapAction.PreviousExtent = function(config) {
-		config.iconCls = 'webgis-mapaction-previousextent';
-		config.disabled = true;
+		Ext.apply(config, {
+		    iconCls :'webgis-mapaction-previousextent',
+		    disabled :true
+		});
 
 		if (!navigationHistoryInstance) {
 			navigationHistoryInstance = new NavigationHistory( {
@@ -212,8 +226,7 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 			e.previousHistory ? this.enable() : this.disable();
 		}, this);
 
-		WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this,
-				config);
+		WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this, config);
 	};
 	Ext.extend(WebGIS.MapAction.PreviousExtent, WebGIS.MapAction);
 
@@ -224,8 +237,10 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 	 *            config
 	 */
 	WebGIS.MapAction.NextExtent = function(config) {
-		config.iconCls = 'webgis-mapaction-nextextent';
-		config.disabled = true;
+		Ext.apply(config, {
+		    iconCls :'webgis-mapaction-nextextent',
+		    disabled :true
+		});
 
 		if (!navigationHistoryInstance) {
 			navigationHistoryInstance = new NavigationHistory( {
