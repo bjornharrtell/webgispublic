@@ -43,10 +43,7 @@ Example.Application = function() {
 
 			var editlayer = new OpenLayers.Layer.Vector('editlayer');
 			map.addLayer(editlayer);
-			
-			
 
-			// map action is an extended Ext.Action that can be used as a button or menu item
 			toolbar.add(new WebGIS.MapAction.DragPan({map: map}));
 			toolbar.add(new WebGIS.MapAction.ZoomInBox({map: map}));
 			toolbar.add(new WebGIS.MapAction.ZoomOutBox({map: map}));
@@ -104,8 +101,6 @@ Example.Application = function() {
 				});
 				window2.show();
 				window2.setPosition(220,50);
-				
-				//featureGridPanel.addFeatures(features);
 				
 				return true;
 			};
