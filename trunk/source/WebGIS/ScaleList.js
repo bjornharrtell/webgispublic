@@ -17,12 +17,21 @@
  *            config
  * @param {OpenLayers.Map}
  *            config.map
+ * @param {Number}
+ *            config.decimals number of decimals to round the scale values
  */
 WebGIS.ScaleList = function(config) {
 	var store = new Ext.data.SimpleStore( {
 		fields : [ 'res', 'scale' ]
 	});
 	var map = config.map;
+
+	var decimals = config.decimals | 0;
+	if (decimals === 0) {
+		factor = 1;
+	} else {
+		factor = 10 ^ decimals;
+	}
 
 	Ext.apply(this, {
 	    valueField :'zoomlevel',
@@ -59,7 +68,7 @@ WebGIS.ScaleList = function(config) {
 		var scale = OpenLayers.Util.getScaleFromResolution(res, 'm');
 		var row = new Ext.data.Record( {
 		    zoomlevel :i,
-		    scale :'1:' + Math.round(scale)
+		    scale :'1:' + Math.round(scale / factor) * factor
 		});
 
 		store.add(row);
