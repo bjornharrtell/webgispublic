@@ -9,7 +9,9 @@
  */
 
 /**
- * Scalelist implemented as an Ext JS combobox extension
+ * Scalelist implemented as an Ext JS combobox extension<br>
+ * <br>
+ * Scales are read from the map and presented as integer values<br>
  * 
  * @constructor
  * @base Ext.form.ComboBox
@@ -18,7 +20,8 @@
  * @param {OpenLayers.Map}
  *            config.map
  * @param {Number}
- *            config.decimals number of decimals to round the scale values
+ *            [config.significantDigits] Number of significant digits in the
+ *            presented integer scale value
  */
 WebGIS.ScaleList = function(config) {
 	var store = new Ext.data.SimpleStore( {
@@ -26,12 +29,7 @@ WebGIS.ScaleList = function(config) {
 	});
 	var map = config.map;
 
-	var decimals = config.decimals | 0;
-	if (decimals === 0) {
-		factor = 1;
-	} else {
-		factor = 10 ^ decimals;
-	}
+	var significantDigits = config.significantDigits;
 
 	Ext.apply(this, {
 	    valueField :'zoomlevel',
@@ -65,10 +63,18 @@ WebGIS.ScaleList = function(config) {
 
 	for ( var i = 0; i < map.getNumZoomLevels(); i++) {
 		var res = map.getResolutionForZoom(i);
-		var scale = OpenLayers.Util.getScaleFromResolution(res, 'm');
+		var scale = Math.round(OpenLayers.Util.getScaleFromResolution(res, 'm'));
+		if (significantDigits) {
+			var numberOfDigits = 1 + Math.floor(Math.log(scale) * Math.LOG10E);
+			var power = numberOfDigits - significantDigits;
+			if (power > 0) {
+				scale = Math.round(scale / Math.pow(10, power)) * Math.pow(10, power);
+			}
+
+		}
 		var row = new Ext.data.Record( {
 		    zoomlevel :i,
-		    scale :'1:' + Math.round(scale / factor) * factor
+		    scale :'1:' + scale
 		});
 
 		store.add(row);
