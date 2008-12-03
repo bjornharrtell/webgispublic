@@ -24,7 +24,6 @@
 	 * <br>
 	 * OpenLayers can have several controls active, but MapAction restricts to
 	 * one MapAction active at one time.<br>
-	 * <br>
 	 * 
 	 * @constructor
 	 * @base Ext.Action

@@ -55,7 +55,7 @@ Example.Application = function() {
 			toolbar.add(new WebGIS.MapAction.MeasureLine({map: map}));
 			toolbar.add(new WebGIS.MapAction.MeasureArea({map: map}));
 			toolbar.add('-');
-			toolbar.add({xtype: 'webgis-scalelist', map: map});
+			toolbar.add({xtype: 'webgis-scalelist', map: map, significantDigits: 2});
 			toolbar.add('-');
 			toolbar.add(new WebGIS.MapAction.DrawFeature({map: map, layer: editlayer, geometryType: 'OpenLayers.Geometry.Point'}));
 			toolbar.add(new WebGIS.MapAction.DrawFeature({map: map, layer: editlayer, geometryType: 'OpenLayers.Geometry.Curve'}));
