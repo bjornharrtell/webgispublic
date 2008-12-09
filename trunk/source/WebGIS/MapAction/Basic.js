@@ -17,6 +17,8 @@
  *            config
  */
 WebGIS.MapAction.ZoomInBox = function(config) {
+	var map = config.map;
+
 	Ext.apply(config, {
 	    iconCls :'webgis-mapaction-zoominbox',
 	    enableToggle :true,
@@ -25,7 +27,21 @@ WebGIS.MapAction.ZoomInBox = function(config) {
 
 	this.olcontrol = new OpenLayers.Control.ZoomBox();
 
+	var onZoomend = function() {
+		if (map.numZoomLevels - 1 === map.getZoom()) {
+			this.disable();
+			this.each( function() {
+				this.toggle(false);
+			});
+			this.olcontrol.deactivate();
+		} else {
+			this.enable();
+		}
+	};
+	map.events.register('zoomend', this, onZoomend);
+
 	WebGIS.MapAction.ZoomInBox.superclass.constructor.call(this, config);
+
 };
 Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction);
 
@@ -38,6 +54,8 @@ Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.ZoomOutBox = function(config) {
+	var map = config.map;
+
 	Ext.apply(config, {
 	    iconCls :'webgis-mapaction-zoomoutbox',
 	    enableToggle :true,
@@ -47,6 +65,19 @@ WebGIS.MapAction.ZoomOutBox = function(config) {
 	this.olcontrol = new OpenLayers.Control.ZoomBox( {
 		out :true
 	});
+
+	var onZoomend = function() {
+		if (0 === map.getZoom()) {
+			this.disable();
+			this.each( function() {
+				this.toggle(false);
+			});
+			this.olcontrol.deactivate();
+		} else {
+			this.enable();
+		}
+	};
+	map.events.register('zoomend', this, onZoomend);
 
 	WebGIS.MapAction.ZoomOutBox.superclass.constructor.call(this, config);
 };
@@ -61,12 +92,23 @@ Ext.extend(WebGIS.MapAction.ZoomOutBox, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.ZoomIn = function(config) {
+	var map = config.map;
+	
 	Ext.apply(config, {
 	    iconCls :'webgis-mapaction-zoomin',
 	    handler : function() {
 		    this.map.zoomIn();
 	    }
 	});
+	
+	var onZoomend = function() {
+		if (map.numZoomLevels - 1 === map.getZoom()) {
+			this.disable();
+		} else {
+			this.enable();
+		}
+	};
+	map.events.register('zoomend', this, onZoomend);
 
 	WebGIS.MapAction.ZoomIn.superclass.constructor.call(this, config);
 };
@@ -81,12 +123,23 @@ Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.ZoomOut = function(config) {
+	var map = config.map;
+	
 	Ext.apply(config, {
 	    iconCls :'webgis-mapaction-zoomout',
 	    handler : function() {
 		    this.map.zoomOut();
 	    }
 	});
+	
+	var onZoomend = function() {
+		if (0 === map.getZoom()) {
+			this.disable();
+		} else {
+			this.enable();
+		}
+	};
+	map.events.register('zoomend', this, onZoomend);
 
 	WebGIS.MapAction.ZoomOut.superclass.constructor.call(this, config);
 };
