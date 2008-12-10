@@ -12,16 +12,19 @@
  * existing HTML markup.<br>
  * <br>
  * The OpenLayers.Map will automatically be rendered to the panels body at the
- * appropriate time and resized if needed.
+ * appropriate time and resized if needed.<br>
+ * <br>
+ * The class adds the event 'afterMapRender' which is triggered when the
+ * OpenLayers.Map instance is initialized and rendered to the panel body.
  * 
  * @constructor
  * @base Ext.Panel
  * @param {Object}
  *            config
  * @param {Object}
- *            mapOptions
+ *            mapOptions The options parameter passed to the OpenLayers.Map constructor
  * @event afterMapRender Triggered when the OpenLayers.Map instance is
- *        initialized and rendered to the DOM
+ *        initialized and rendered to the panel body
  */
 WebGIS.MapPanel = function(config) {
 	var mapOptions = config.mapOptions;
@@ -34,9 +37,9 @@ WebGIS.MapPanel = function(config) {
 	});
 
 	/**
-	 * Creates the OpenLayers.Map instance. Note that this
-	 * override seem to be the one that gives most reliable map sizes at
-	 * initialization time when used in various Ext layouts
+	 * Creates the OpenLayers.Map instance. Note that this override seem to be
+	 * the one that gives most reliable map sizes at initialization time when
+	 * used in various Ext layouts
 	 * 
 	 * @private
 	 */
