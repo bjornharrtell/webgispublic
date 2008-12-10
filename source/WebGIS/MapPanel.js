@@ -34,7 +34,7 @@ WebGIS.MapPanel = function(config) {
 	});
 
 	/**
-	 * This function will create the OpenLayers.Map instance. Note that this
+	 * Creates the OpenLayers.Map instance. Note that this
 	 * override seem to be the one that gives most reliable map sizes at
 	 * initialization time when used in various Ext layouts
 	 * 
@@ -52,16 +52,16 @@ WebGIS.MapPanel = function(config) {
 	});
 
 	/**
-	 * This function will create the OpenLayers.Map instance. Note that this
-	 * override seem to be the one that gives most reliable map sizes at
-	 * initialization time when used in various Ext layouts
+	 * Force resize of the map when the body of the panel is resized
 	 * 
 	 * @private
 	 */
 	var onResize = function() {
 		WebGIS.MapPanel.superclass.onResize.apply(this, arguments);
 
-		this.map.updateSize();
+		if (this.map) {
+			this.map.updateSize();
+		}
 	};
 	this.override( {
 		onResize :onResize
