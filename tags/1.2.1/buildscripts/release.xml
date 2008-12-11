@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="WebGIS Public release build" default="build" basedir=".">
+
+	<target name="build">
+		<concat destfile="build/webgis.js">
+		    <fileset dir="source" includes="WebGIS.js"/>
+		</concat>
+		
+		<concat destfile="build/webgis.js" append="true">
+		    <fileset dir="source" includes="WebGIS/**/*.js" />
+		</concat>
+		
+		<concat destfile="build/webgis.js" append="true">
+		    <fileset dir="resources/locale" includes="en.js"/>
+		</concat>
+		
+		<apply executable="java" parallel="false" dest="build">
+			<fileset dir="build" includes="webgis.js" />
+			<arg line="-jar" />
+			<arg path="buildtools/yuicompressor-2.4.2.jar" />
+			<arg line="--charset UTF8 -v " />
+			<srcfile />
+			<arg line="-o" />
+			<mapper type="glob" from="*.js" to="*-min.js" />
+			<targetfile />
+		</apply>
+
+	</target>
+
+</project>
