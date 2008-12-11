@@ -7,7 +7,7 @@
  */
 
 WebGIS = {
-	version :'1.2.x',
+	version :'1.2.1',
 	OpenLayers : {
 		Control : {},
 		Layer : {}
