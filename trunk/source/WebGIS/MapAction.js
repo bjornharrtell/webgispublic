@@ -14,7 +14,7 @@
 	 * OpenLayers controls
 	 */
 	var openLayersControls = [];
-
+	
 	/**
 	 * Handle interaction with OpenLayers and can be used as buttons, menu items
 	 * and more in an Ext Js GUI. Note that this is because this class extends

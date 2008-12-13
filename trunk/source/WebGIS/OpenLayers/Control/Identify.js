@@ -12,7 +12,7 @@
  * Handles indentify clicks on map, works with WMS service only and is affected
  * by same origin policy
  * 
- * @base OpenLayers.Control
+ * @augments OpenLayers.Control
  */
 WebGIS.OpenLayers.Control.Identify = OpenLayers.Class(OpenLayers.Control, {
 	type :OpenLayers.Control.TYPE_TOOL,

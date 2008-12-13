@@ -19,7 +19,7 @@
  * expanded with subnodes representing the layers<br>
  * 
  * @constructor
- * @base Ext.tree.TreePanel
+ * @augments Ext.tree.TreePanel
  * @param {Object}
  *            config
  * @param {OpenLayers.Map}

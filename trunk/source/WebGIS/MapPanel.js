@@ -18,13 +18,11 @@
  * OpenLayers.Map instance is initialized and rendered to the panel body.
  * 
  * @constructor
- * @base Ext.Panel
+ * @augments Ext.Panel
  * @param {Object}
  *            config
  * @param {Object}
- *            mapOptions The options parameter passed to the OpenLayers.Map constructor
- * @event afterMapRender Triggered when the OpenLayers.Map instance is
- *        initialized and rendered to the panel body
+ *            config.mapOptions The options parameter passed to the OpenLayers.Map constructor
  */
 WebGIS.MapPanel = function(config) {
 	var mapOptions = config.mapOptions;

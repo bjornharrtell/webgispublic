@@ -12,7 +12,7 @@
  * An extended TreePanel that couples with a layer to view its features
  * 
  * @constructor
- * @base Ext.tree.TreePanel
+ * @augments Ext.tree.TreePanel
  * @param {Object}
  *            config
  */

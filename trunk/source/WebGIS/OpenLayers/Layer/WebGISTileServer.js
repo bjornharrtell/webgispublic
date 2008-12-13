@@ -11,7 +11,7 @@
 /**
  * Layer that supports WebGISTileServer sources
  * 
- * @base OpenLayers.Layer.Grid
+ * @augments OpenLayers.Layer.Grid
  */
 WebGIS.OpenLayers.Layer.WebGISTileServer = OpenLayers
 		.Class(
