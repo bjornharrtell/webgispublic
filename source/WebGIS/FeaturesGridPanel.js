@@ -11,7 +11,7 @@
  * attributes or manually update from feature array data
  * 
  * @constructor
- * @base Ext.grid.GridPanel
+ * @augments Ext.grid.GridPanel
  * @param {Object}
  *            config
  * @param {OpenLayers.Layer.Vector}

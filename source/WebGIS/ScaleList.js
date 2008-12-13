@@ -14,7 +14,7 @@
  * Scales are read from the map and presented as integer values<br>
  * 
  * @constructor
- * @base Ext.form.ComboBox
+ * @augments Ext.form.ComboBox
  * @param {Object}
  *            config
  * @param {OpenLayers.Map}
