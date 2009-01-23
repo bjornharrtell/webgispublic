@@ -42,7 +42,7 @@ WebGIS.MapAction.Identify = function(config) {
 	}
 
 	// define an OpenLayers control for this MapAction (is handled by MapAction constructor)
-	this.olcontrol = new OpenLayers.Control.Identify( {
+	config.olcontrol = new OpenLayers.Control.Identify( {
 		toc :config.toc,
 		resultTo :config.resultTo
 	});

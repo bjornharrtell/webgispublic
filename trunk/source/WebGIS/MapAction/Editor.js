@@ -29,21 +29,21 @@ WebGIS.MapAction.DrawFeature = function(config) {
 	if (config.geometryType === 'OpenLayers.Geometry.Point') {
 		handler = OpenLayers.Handler.Point;
 		config.iconCls = 'webgis-mapaction-drawpoint';
-		this.titleText = this.titlePointText;
-		this.tooltipText = this.tooltipPointText;
+		config.titleText = config.titlePointText;
+		config.tooltipText = config.tooltipPointText;
 	} else if (config.geometryType === 'OpenLayers.Geometry.Curve') {
 		handler = OpenLayers.Handler.Path;
 		config.iconCls = 'webgis-mapaction-drawline';
-		this.titleText = this.titleCurveText;
-		this.tooltipText = this.tooltipCurveText;
+		config.titleText = config.titleCurveText;
+		config.tooltipText = config.tooltipCurveText;
 	} else if (config.geometryType === 'OpenLayers.Geometry.Polygon') {
 		handler = OpenLayers.Handler.Polygon;
 		config.iconCls = 'webgis-mapaction-drawpolygon';
-		this.titleText = this.titlePolygonText;
-		this.tooltipText = this.tooltipPolygonText;
+		config.titleText = config.titlePolygonText;
+		config.tooltipText = config.tooltipPolygonText;
 	}
 
-	this.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler);
+	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler);
 
 	WebGIS.MapAction.DrawFeature.superclass.constructor.call(this, config);
 };
@@ -65,15 +65,16 @@ Ext.extend(WebGIS.MapAction.DrawFeature, WebGIS.MapAction);
 WebGIS.MapAction.SelectFeature = function(config, options) {
 	config.iconCls = 'webgis-mapaction-selectfeature';
 
-	this.olcontrol = new OpenLayers.Control.SelectFeature(config.layer,
+	var olcontrol = new OpenLayers.Control.SelectFeature(config.layer,
 			config.options);
+	config.olcontrol = olcontrol;
 
 	this.select = function(feature) {
-		this.olcontrol.select(feature);
+		olcontrol.select(feature);
 	};
 
 	this.unselectAll = function(options) {
-		this.olcontrol.unselectAll(options);
+		olcontrol.unselectAll(options);
 	};
 
 	WebGIS.MapAction.SelectFeature.superclass.constructor.call(this, config);
@@ -95,19 +96,16 @@ WebGIS.MapAction.RemoveSelectedFeatures = function(config) {
 
 	var layer = config.layer;
 
-	/**
-	 * @private
-	 */
+	WebGIS.MapAction.RemoveSelectedFeatures.superclass.constructor.call(this,
+			config);
+	
 	var handler = function() {
 		if (layer.selectedFeatures) {
 			layer.removeFeatures(layer.selectedFeatures);
 		}
 	};
-
-	this.handler = handler;
-
-	WebGIS.MapAction.RemoveSelectedFeatures.superclass.constructor.call(this,
-			config);
+	
+	this.setHandler(handler);
 };
 Ext.extend(WebGIS.MapAction.RemoveSelectedFeatures, WebGIS.MapAction);
 
@@ -124,7 +122,7 @@ Ext.extend(WebGIS.MapAction.RemoveSelectedFeatures, WebGIS.MapAction);
 WebGIS.MapAction.ModifyFeature = function(config) {
 	config.iconCls = 'webgis-mapaction-modifyfeature';
 
-	this.olcontrol = new OpenLayers.Control.ModifyFeature(config.layer);
+	config.olcontrol = new OpenLayers.Control.ModifyFeature(config.layer);
 
 	WebGIS.MapAction.ModifyFeature.superclass.constructor.call(this, config);
 };
@@ -143,7 +141,7 @@ Ext.extend(WebGIS.MapAction.ModifyFeature, WebGIS.MapAction);
 WebGIS.MapAction.DragFeature = function(config) {
 	config.iconCls = 'webgis-mapaction-dragfeature';
 
-	this.olcontrol = new OpenLayers.Control.DragFeature(config.layer);
+	config.olcontrol = new OpenLayers.Control.DragFeature(config.layer);
 
 	WebGIS.MapAction.DragFeature.superclass.constructor.call(this, config);
 };
