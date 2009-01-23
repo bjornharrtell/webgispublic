@@ -17,15 +17,14 @@
  *            config
  */
 WebGIS.MapAction.ZoomInBox = function(config) {
-	var map = config.map;
-
-	Ext.apply(config, {
+	WebGIS.MapAction.ZoomInBox.superclass.constructor.call(this, Ext.apply( {
 	    iconCls :'webgis-mapaction-zoominbox',
 	    enableToggle :true,
-	    toggleGroup :'WebGIS.MapAction'
-	});
+	    toggleGroup :'WebGIS.MapAction',
+	    olcontrol :new OpenLayers.Control.ZoomBox()
+	}, config));
 
-	this.olcontrol = new OpenLayers.Control.ZoomBox();
+	var map = this.map;
 
 	var onZoomend = function() {
 		if (map.numZoomLevels - 1 === map.getZoom()) {
@@ -39,9 +38,6 @@ WebGIS.MapAction.ZoomInBox = function(config) {
 		}
 	};
 	map.events.register('zoomend', this, onZoomend);
-
-	WebGIS.MapAction.ZoomInBox.superclass.constructor.call(this, config);
-
 };
 Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction);
 
@@ -54,17 +50,16 @@ Ext.extend(WebGIS.MapAction.ZoomInBox, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.ZoomOutBox = function(config) {
-	var map = config.map;
-
-	Ext.apply(config, {
+	WebGIS.MapAction.ZoomOutBox.superclass.constructor.call(this, Ext.apply( {
 	    iconCls :'webgis-mapaction-zoomoutbox',
 	    enableToggle :true,
-	    toggleGroup :'WebGIS.MapAction'
-	});
+	    toggleGroup :'WebGIS.MapAction',
+	    olcontrol :new OpenLayers.Control.ZoomBox( {
+		    out :true
+	    })
+	}, config));
 
-	this.olcontrol = new OpenLayers.Control.ZoomBox( {
-		out :true
-	});
+	var map = this.map;
 
 	var onZoomend = function() {
 		if (0 === map.getZoom()) {
@@ -79,7 +74,6 @@ WebGIS.MapAction.ZoomOutBox = function(config) {
 	};
 	map.events.register('zoomend', this, onZoomend);
 
-	WebGIS.MapAction.ZoomOutBox.superclass.constructor.call(this, config);
 };
 Ext.extend(WebGIS.MapAction.ZoomOutBox, WebGIS.MapAction);
 
@@ -92,15 +86,15 @@ Ext.extend(WebGIS.MapAction.ZoomOutBox, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.ZoomIn = function(config) {
-	var map = config.map;
-	
-	Ext.apply(config, {
+	WebGIS.MapAction.ZoomIn.superclass.constructor.call(this, Ext.apply( {
 	    iconCls :'webgis-mapaction-zoomin',
 	    handler : function() {
 		    this.map.zoomIn();
 	    }
-	});
-	
+	}, config));
+
+	var map = this.map;
+
 	var onZoomend = function() {
 		if (map.numZoomLevels - 1 === map.getZoom()) {
 			this.disable();
@@ -109,8 +103,6 @@ WebGIS.MapAction.ZoomIn = function(config) {
 		}
 	};
 	map.events.register('zoomend', this, onZoomend);
-
-	WebGIS.MapAction.ZoomIn.superclass.constructor.call(this, config);
 };
 Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction);
 
@@ -123,15 +115,15 @@ Ext.extend(WebGIS.MapAction.ZoomIn, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.ZoomOut = function(config) {
-	var map = config.map;
-	
-	Ext.apply(config, {
+	WebGIS.MapAction.ZoomOut.superclass.constructor.call(this, Ext.apply({
 	    iconCls :'webgis-mapaction-zoomout',
 	    handler : function() {
 		    this.map.zoomOut();
 	    }
-	});
+	},config));
 	
+	var map = this.map;
+
 	var onZoomend = function() {
 		if (0 === map.getZoom()) {
 			this.disable();
@@ -141,7 +133,7 @@ WebGIS.MapAction.ZoomOut = function(config) {
 	};
 	map.events.register('zoomend', this, onZoomend);
 
-	WebGIS.MapAction.ZoomOut.superclass.constructor.call(this, config);
+	
 };
 Ext.extend(WebGIS.MapAction.ZoomOut, WebGIS.MapAction);
 
@@ -154,14 +146,12 @@ Ext.extend(WebGIS.MapAction.ZoomOut, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.FullExtent = function(config) {
-	Ext.apply(config, {
+	WebGIS.MapAction.FullExtent.superclass.constructor.call(this, Ext.apply( {
 	    iconCls :'webgis-mapaction-fullextent',
 	    handler : function() {
 		    this.map.zoomToMaxExtent();
 	    }
-	});
-
-	WebGIS.MapAction.FullExtent.superclass.constructor.call(this, config);
+	}, config));
 };
 Ext.extend(WebGIS.MapAction.FullExtent, WebGIS.MapAction);
 
@@ -174,15 +164,12 @@ Ext.extend(WebGIS.MapAction.FullExtent, WebGIS.MapAction);
  *            config
  */
 WebGIS.MapAction.DragPan = function(config) {
-	Ext.apply(config, {
+	WebGIS.MapAction.DragPan.superclass.constructor.call(this, Ext.apply( {
 	    iconCls :'webgis-mapaction-dragpan',
 	    enableToggle :true,
-	    toggleGroup :'WebGIS.MapAction'
-	});
-
-	this.olcontrol = new OpenLayers.Control.DragPan();
-
-	WebGIS.MapAction.DragPan.superclass.constructor.call(this, config);
+	    toggleGroup :'WebGIS.MapAction',
+	    olcontrol :new OpenLayers.Control.DragPan()
+	}, config));
 };
 Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 
@@ -194,8 +181,7 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 	 * 
 	 * @constructor
 	 */
-	var NavigationHistory = function(config) {
-		var map = config.map;
+	var NavigationHistory = function(map) {
 		var currentHistoryPosition = 0;
 		var navigationHistory = [];
 
@@ -262,24 +248,23 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 	 *            config
 	 */
 	WebGIS.MapAction.PreviousExtent = function(config) {
-		Ext.apply(config, {
+		WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this, Ext.apply( {
 		    iconCls :'webgis-mapaction-previousextent',
 		    disabled :true
-		});
+		}, config));
+
+		var map = this.map;
 
 		if (!navigationHistoryInstance) {
-			navigationHistoryInstance = new NavigationHistory( {
-				map :config.map
-			});
+			navigationHistoryInstance = new NavigationHistory(map);
 		}
 
-		config.handler = navigationHistoryInstance.back;
+		this.setHandler(navigationHistoryInstance.back);
 
 		navigationHistoryInstance.on('historystatuschange', function(e) {
 			e.previousHistory ? this.enable() : this.disable();
 		}, this);
 
-		WebGIS.MapAction.PreviousExtent.superclass.constructor.call(this, config);
 	};
 	Ext.extend(WebGIS.MapAction.PreviousExtent, WebGIS.MapAction);
 
@@ -290,24 +275,23 @@ Ext.extend(WebGIS.MapAction.DragPan, WebGIS.MapAction);
 	 *            config
 	 */
 	WebGIS.MapAction.NextExtent = function(config) {
-		Ext.apply(config, {
+		WebGIS.MapAction.NextExtent.superclass.constructor.call(this, Ext.apply( {
 		    iconCls :'webgis-mapaction-nextextent',
 		    disabled :true
-		});
+		}, config));
+
+		var map = this.map;
 
 		if (!navigationHistoryInstance) {
-			navigationHistoryInstance = new NavigationHistory( {
-				map :config.map
-			});
+			navigationHistoryInstance = new NavigationHistory(map);
 		}
 
-		config.handler = navigationHistoryInstance.next;
+		this.setHandler(navigationHistoryInstance.next);
 
 		navigationHistoryInstance.on('historystatuschange', function(e) {
 			e.nextHistory ? this.enable() : this.disable();
 		}, this);
 
-		WebGIS.MapAction.NextExtent.superclass.constructor.call(this, config);
 	};
 	Ext.extend(WebGIS.MapAction.NextExtent, WebGIS.MapAction);
 

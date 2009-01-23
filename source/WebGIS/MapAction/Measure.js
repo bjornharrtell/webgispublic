@@ -23,8 +23,10 @@
  *            config
  */
 WebGIS.MapAction.MeasureLine = function(config) {
+	config = config ? config : {};
 	config.iconCls = 'webgis-mapaction-measurelength';
-
+	config.map = config.map ? config.map : WebGIS.MapAction.map;
+	
 	var map = config.map;
 	var layer = config.layer;
 	var tip;
@@ -70,7 +72,7 @@ WebGIS.MapAction.MeasureLine = function(config) {
 		tip.showAt( [ pixel.x + 5 + el.getLeft(), pixel.y + 5 + el.getTop() ]);
 	};
 
-	this.olcontrol = new OpenLayers.Control.DrawFeature(layer, OpenLayers.Handler.Path, {
+	config.olcontrol = new OpenLayers.Control.DrawFeature(layer, OpenLayers.Handler.Path, {
 		callbacks : {
 		    done :destroyTip,
 		    point :updateTip,
@@ -95,7 +97,9 @@ Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction);
  *            config WebGIS.MapAction config options<br>
  */
 WebGIS.MapAction.MeasureArea = function(config) {
+	config = config ? config : {};
 	config.iconCls = 'webgis-mapaction-measurearea';
+	config.map = config.map ? config.map : WebGIS.MapAction.map;
 
 	var map = config.map;
 	var layer = config.layer;
@@ -136,7 +140,7 @@ WebGIS.MapAction.MeasureArea = function(config) {
 		tip.showAt( [ pixel.x + 5 + el.getLeft(), pixel.y + 5 + el.getTop() ]);
 	};
 
-	this.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, OpenLayers.Handler.Polygon, {
+	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, OpenLayers.Handler.Polygon, {
 		callbacks : {
 		    done :destroyTip,
 		    point :updateTip,

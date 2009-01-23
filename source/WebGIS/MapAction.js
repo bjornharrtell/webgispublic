@@ -35,35 +35,29 @@
 	 *            config.olcontrol optional
 	 */
 	WebGIS.MapAction = function(config) {
-		/**
-		 * @type OpenLayers.Map
-		 * @private
-		 */
-		var map = config.map;
+		config.map = config.map ? config.map : WebGIS.MapAction.map;
 
 		if (config.cls === 'x-btn-text-icon') {
 			config.text = config.text || config.titleText;
 		}
-		config.tooltip = config.tooltip || config.tooltipText;
+		config.tooltip = config.config || config.tooltipText;
 
-		WebGIS.MapAction.superclass.constructor.call(this, config);
-
+		this.map = config.map;
+		this.olcontrol = config.olcontrol;
+		
 		// rest of construction is only for MapActions using a OL control
-		/**
-		 * @type OpenLayers.Control
-		 * @private
-		 */
 		var olcontrol = this.olcontrol;
-		if (!olcontrol) {
+		if (!olcontrol) {	
+			WebGIS.MapAction.superclass.constructor.call(this, config);
 			return;
 		}
 
+		var map = this.map;
+		
 		/**
 		 * function to handle activation of an OpenLayers control, will
 		 * deactivate other controls scope is assumed to be the OpenLayers
 		 * control itself
-		 * 
-		 * @private
 		 */
 		var mapActionHandler = function(object, event) {
 			for ( var i in openLayersControls) {
@@ -92,7 +86,17 @@
 		    enableToggle :true,
 		    toggleGroup :'WebGIS.MapAction'
 		});
+		
+		WebGIS.MapAction.superclass.constructor.call(this, config);
 	};
+	
+	/**
+	 * Optional static map property. 
+	 * 
+	 * Will be used as the map parameter for all MapActions, which
+	 * is useful if only one map instance is used in the application.
+	 */
+	WebGIS.MapAction.map = null;
 
 	Ext.extend(WebGIS.MapAction, Ext.Action);
 
