@@ -6,98 +6,90 @@
  * Author: Björn Harrtell
  */
 
-// need a private closure for this class
-( function() {
+/**
+ * Handle interaction with OpenLayers and can be used as buttons, menu items and
+ * more in an Ext Js GUI. Note that this is because this class extends
+ * Ext.Action<br>
+ * <br>
+ * This class also handles OpenLayers.Control activation.<br>
+ * <br>
+ * OpenLayers can have several controls active, but MapAction restricts to one
+ * MapAction active at one time.<br>
+ * 
+ * @constructor
+ * @base Ext.Action
+ * @param {Object}
+ *            config
+ * @param {OpenLayers.Map}
+ *            config.map required
+ * @param {OpenLayers.Control}
+ *            config.olcontrol optional
+ */
+WebGIS.MapAction = function(config) {
+	config.map = config.map || WebGIS.MapAction.map;
+	var map = config.map;
+	var olcontrol = config.olcontrol;
 
-	/**
-	 * Private static array to manage activation/deactivation of added
-	 * OpenLayers controls
-	 */
-	var openLayersControls = [];
-	
-	/**
-	 * Handle interaction with OpenLayers and can be used as buttons, menu items
-	 * and more in an Ext Js GUI. Note that this is because this class extends
-	 * Ext.Action<br>
-	 * <br>
-	 * This class also handles OpenLayers.Control activation.<br>
-	 * <br>
-	 * OpenLayers can have several controls active, but MapAction restricts to
-	 * one MapAction active at one time.<br>
-	 * 
-	 * @constructor
-	 * @base Ext.Action
-	 * @param {Object}
-	 *            config
-	 * @param {OpenLayers.Map}
-	 *            config.map required
-	 * @param {OpenLayers.Control}
-	 *            config.olcontrol optional
-	 */
-	WebGIS.MapAction = function(config) {
-		config.map = config.map ? config.map : WebGIS.MapAction.map;
+	if (config.cls === 'x-btn-text-icon') {
+		config.text = config.text || config.titleText;
+	}
+	config.tooltip = config.config || config.tooltipText;
 
-		if (config.cls === 'x-btn-text-icon') {
-			config.text = config.text || config.titleText;
-		}
-		config.tooltip = config.config || config.tooltipText;
+	this.map = map;
+	this.olcontrol = olcontrol;
 
-		this.map = config.map;
-		this.olcontrol = config.olcontrol;
-		
-		// rest of construction is only for MapActions using a OL control
-		var olcontrol = this.olcontrol;
-		if (!olcontrol) {	
-			WebGIS.MapAction.superclass.constructor.call(this, config);
-			return;
-		}
-
-		var map = this.map;
-		
-		/**
-		 * function to handle activation of an OpenLayers control, will
-		 * deactivate other controls scope is assumed to be the OpenLayers
-		 * control itself
-		 */
-		var mapActionHandler = function(object, event) {
-			for ( var i in openLayersControls) {
-				var control = openLayersControls[i];
-
-				if (control.deactivate) {
-					control.deactivate();
-				}
-			}
-
-			this.activate();
-
-			// if this action is connected to a button, make sure it's toggled
-			// if pressed twice
-			if (object.toggle) {
-				object.toggle(true);
-			}
-		};
-
-		map.addControl(olcontrol);
-		openLayersControls.push(olcontrol);
-
-		Ext.apply(config, {
-		    handler :mapActionHandler,
-		    scope :olcontrol,
-		    enableToggle :true,
-		    toggleGroup :'WebGIS.MapAction'
-		});
-		
+	// rest of construction is only for MapActions using an OL control
+	if (!olcontrol) {
 		WebGIS.MapAction.superclass.constructor.call(this, config);
-	};
-	
+		return;
+	}
+
 	/**
-	 * Optional static map property. 
+	 * Handles activation of the current OpenLayers control
 	 * 
-	 * Will be used as the map parameter for all MapActions, which
-	 * is useful if only one map instance is used in the application.
+	 * Scope is assumed to be the OpenLayers control itself.
 	 */
-	WebGIS.MapAction.map = null;
+	var handler = function(object, event) {
+		for ( var i = 0; i < WebGIS.MapAction.olcontrols.length; i++) {
+			WebGIS.MapAction.olcontrols[i].deactivate();
+		}
 
-	Ext.extend(WebGIS.MapAction, Ext.Action);
+		this.activate();
 
-})();
+		// if this action is connected to a button, make sure it's toggled
+		// if pressed twice
+		if (object.toggle) {
+			object.toggle(true);
+		}
+	};
+
+	map.addControl(olcontrol);
+	WebGIS.MapAction.olcontrols.push(olcontrol);
+
+	// apply default config for a toggling action
+	Ext.apply(config, {
+	    handler :handler,
+	    scope :olcontrol,
+	    enableToggle :true,
+	    toggleGroup :'WebGIS.MapAction'
+	});
+
+	WebGIS.MapAction.superclass.constructor.call(this, config);
+};
+
+/**
+ * Optional static map property
+ * 
+ * Will be used as the map parameter for all MapActions, useful if only
+ * one map instance is used in the application.
+ */
+WebGIS.MapAction.map = null;
+
+/**
+ * Static array of the OpenLayers.Controls currently handled by MapActions
+ * 
+ * TODO: should be per map not global
+ */
+WebGIS.MapAction.olcontrols = [];
+
+Ext.extend(WebGIS.MapAction, Ext.Action);
