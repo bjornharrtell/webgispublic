@@ -27,11 +27,11 @@ WebGIS.ScaleList = function(config) {
 	var store = new Ext.data.SimpleStore( {
 		fields : [ 'res', 'scale' ]
 	});
+	
 	var map = config.map;
-
 	var significantDigits = config.significantDigits;
 
-	Ext.apply(this, {
+	WebGIS.ScaleList.superclass.constructor.call(this, Ext.apply({
 	    valueField :'zoomlevel',
 	    displayField :'scale',
 	    mode :'local',
@@ -41,9 +41,7 @@ WebGIS.ScaleList = function(config) {
 	    autoWidth :true,
 	    autoHeight :true,
 	    store :store
-	});
-
-	WebGIS.ScaleList.superclass.constructor.apply(this, arguments);
+	}, config));
 
 	/**
 	 * @private
