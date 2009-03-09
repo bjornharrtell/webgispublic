@@ -26,6 +26,7 @@
  *            config.olcontrol optional
  */
 WebGIS.MapAction = function(config) {
+	config = config ? config : {};
 	config.map = config.map || WebGIS.MapAction.map;
 	var map = config.map;
 	var olcontrol = config.olcontrol;
