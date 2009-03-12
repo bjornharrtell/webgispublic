@@ -32,9 +32,9 @@ WebGIS.MapAction = function(config) {
 	var olcontrol = config.olcontrol;
 
 	if (config.cls === 'x-btn-text-icon') {
-		config.text = config.text || config.titleText;
+		config.text = config.text || this.titleText;
 	}
-	config.tooltip = config.config || config.tooltipText;
+	config.tooltip = config.tooltip || this.tooltipText;
 
 	this.map = map;
 	this.olcontrol = olcontrol;
