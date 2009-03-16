@@ -29,18 +29,18 @@ WebGIS.MapAction.DrawFeature = function(config) {
 	if (config.geometryType === 'OpenLayers.Geometry.Point') {
 		handler = OpenLayers.Handler.Point;
 		config.iconCls = 'webgis-mapaction-drawpoint';
-		config.titleText = config.titlePointText;
-		config.tooltipText = config.tooltipPointText;
+		this.titleText = this.titlePointText;
+		this.tooltipText = this.tooltipPointText;
 	} else if (config.geometryType === 'OpenLayers.Geometry.Curve') {
 		handler = OpenLayers.Handler.Path;
 		config.iconCls = 'webgis-mapaction-drawline';
-		config.titleText = config.titleCurveText;
-		config.tooltipText = config.tooltipCurveText;
+		this.titleText = this.titleCurveText;
+		this.tooltipText = this.tooltipCurveText;
 	} else if (config.geometryType === 'OpenLayers.Geometry.Polygon') {
 		handler = OpenLayers.Handler.Polygon;
 		config.iconCls = 'webgis-mapaction-drawpolygon';
-		config.titleText = config.titlePolygonText;
-		config.tooltipText = config.tooltipPolygonText;
+		this.titleText = this.titlePolygonText;
+		this.tooltipText = this.tooltipPolygonText;
 	}
 
 	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, handler);
