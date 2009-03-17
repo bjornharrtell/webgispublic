@@ -8,22 +8,25 @@
  * @namespace
  */
 WebGIS = {
-	version :'1.2.x',
-	/**
-	 * @namespace
-	 */
-	MapAction: {},
-	/**
-	 * @namespace
-	 */
-	OpenLayers : {
-		/**
-		 * @namespace
-		 */
-		Control : {},
-		/**
-		 * @namespace
-		 */
-		Layer : {}
-	}
+    /**
+     * @member WebGIS
+     */
+    version : '1.2.2',
+    /**
+     * @namespace
+     */
+    MapAction : {},
+    /**
+     * @namespace
+     */
+    OpenLayers : {
+        /**
+         * @namespace
+         */
+        Control : {},
+        /**
+         * @namespace
+         */
+        Layer : {}
+    }
 };

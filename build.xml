@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="WebGIS Public release build" default="build" basedir=".">
+
+	<target name="build">
+		<concat destfile="build/webgis.js">
+			<fileset dir="source" includes="WebGIS.js" />
+		</concat>
+		<concat destfile="build/webgis.js" append="true">
+			<fileset dir="source" includes="WebGIS/**/*.js" />
+		</concat>
+		<concat destfile="build/webgis.js" append="true">
+			<fileset dir="resources/locale" includes="en.js" />
+		</concat>
+	</target>
+
+	<target name="minify">
+		<apply executable="java" parallel="false" dest="build">
+			<fileset dir="build" includes="webgis.js" />
+			<arg line="-jar" />
+			<arg path="buildtools/yuicompressor-2.4.2.jar" />
+			<arg line="--charset UTF8 -v " />
+			<srcfile />
+			<arg line="-o" />
+			<mapper type="glob" from="*.js" to="*-min.js" />
+			<targetfile />
+		</apply>
+	</target>
+
+	<target name="deploy_debug" depends="debugpath">
+		<copy todir="${debugpath}/source">
+			<fileset dir="source" />
+		</copy>
+		<copy todir="${debugpath}/resources">
+			<fileset dir="resources" />
+		</copy>
+		<copy todir="${debugpath}">
+			<fileset dir="debug" />
+		</copy>
+	</target>
+
+	<target name="deploy_examples" depends="examplespath">
+		<copy todir="${examplespath}/build">
+			<fileset dir="build" />
+		</copy>
+		<copy todir="${examplespath}/resources">
+			<fileset dir="resources" />
+		</copy>
+		<copy todir="${examplespath}">
+			<fileset dir="examples" />
+		</copy>
+	</target>
+
+	<target name="debugpath">
+		<fail unless="debugpath" message="Property debugpath must be defined to a valid path" />
+		<available property="debugpath.exists" file="${debugpath}">
+		</available>
+		<fail unless="debugpath.exists" message="Cannot find/access ${debugpath}" />
+	</target>
+
+	<target name="examplespath">
+		<fail unless="examplespath" message="Property examplespath must be defined to a valid path" />
+		<available property="examplespath.exists" file="${examplespath}">
+		</available>
+		<fail unless="examplespath.exists" message="Cannot find/access ${examplespath}" />
+	</target>
+
+</project>
