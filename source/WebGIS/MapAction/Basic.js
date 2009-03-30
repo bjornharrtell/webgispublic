@@ -12,7 +12,7 @@
  * Activates interactive zoom in box on map
  * 
  * @constructor
- * @augments WebGIS.MapAction
+ * @base WebGIS.MapAction
  * @param {Object}
  *            config
  */

@@ -5,14 +5,12 @@
  * Licensed under GPLv3
  * http://www.gnu.org/licenses/gpl.html
  * 
- * Author: Albin Lundmark
+ * Authors: Albin Lundmark, Björn Harrtell
  *
  * @fileoverview Measure map tools implemented as WebGIS.MapAction classes
  */
 
 /**
- * Activates measuring line tool on map.<br>
- * <br>
  * The tool presumes the map unit to be meters and presents the result in m or
  * km depending on value. If the tool is used on a WGS84 (or other none-meter)
  * map the resulting value will be invalid.
@@ -23,12 +21,16 @@
  *            config
  */
 WebGIS.MapAction.MeasureLine = function(config) {
-	config = config ? config : {};
-	config.iconCls = 'webgis-mapaction-measurelength';
-	config.map = config.map ? config.map : WebGIS.MapAction.map;
+	var control = new OpenLayers.Control.Measure(OpenLayers.Handler.Path);
 	
-	var map = config.map;
-	var layer = config.layer;
+	WebGIS.MapAction.MeasureLine.superclass.constructor.call(this, Ext.apply( {
+	    iconCls :'webgis-mapaction-measurelength',
+	    olcontrol: control
+	}, config));
+
+	var layer = this.layer;
+	var map = this.map;
+	
 	var tip;
 
 	/**
@@ -41,16 +43,17 @@ WebGIS.MapAction.MeasureLine = function(config) {
 	};
 
 	/**
-	 * will be called in the context of the OpenLayers.Control
-	 * 
 	 * @private
 	 */
-	var updateTip = function(point) {
-		var length = this.handler.line.geometry.getLength(), pixel, el;
-
+	var updateTip = function(event) {
+		var line = event.geometry;
+		
+		var length = line.getLength();
 		if (length === 0) {
 			return;
 		}
+		
+		var point = line.components[line.components.length-1];
 
 		// is not more than 10 km
 		if ((length % 10000) === length) {
@@ -67,26 +70,17 @@ WebGIS.MapAction.MeasureLine = function(config) {
 		    autoHeight :true
 		});
 
-		pixel = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x, point.y));
-		el = Ext.get(map.div);
+		var pixel = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x, point.y));
+		var el = Ext.get(map.div.id);
 		tip.showAt( [ pixel.x + 5 + el.getLeft(), pixel.y + 5 + el.getTop() ]);
 	};
 
-	config.olcontrol = new OpenLayers.Control.DrawFeature(layer, OpenLayers.Handler.Path, {
-		callbacks : {
-		    done :destroyTip,
-		    point :updateTip,
-		    cancel :destroyTip
-		}
-	});
-
-	WebGIS.MapAction.MeasureLine.superclass.constructor.call(this, config);
+	control.events.register('measure', null, destroyTip);
+	control.events.register('measurepartial', null, updateTip);	
 };
 Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction);
 
 /**
- * Activates measuring area tool on map.<br>
- * <br>
  * The tool presumes the map unit to be meters and presents the result in m2 or
  * km2 depending on value. If the tool is used on a WGS84 map the resulting
  * value will be invalid.
@@ -97,12 +91,16 @@ Ext.extend(WebGIS.MapAction.MeasureLine, WebGIS.MapAction);
  *            config WebGIS.MapAction config options<br>
  */
 WebGIS.MapAction.MeasureArea = function(config) {
-	config = config ? config : {};
-	config.iconCls = 'webgis-mapaction-measurearea';
-	config.map = config.map ? config.map : WebGIS.MapAction.map;
+	var control = new OpenLayers.Control.Measure(OpenLayers.Handler.Polygon);
+	
+	WebGIS.MapAction.MeasureArea.superclass.constructor.call(this, Ext.apply( {
+	    iconCls :'webgis-mapaction-measurearea',
+	    olcontrol: control
+	}, config));
 
-	var map = config.map;
-	var layer = config.layer;
+	var layer = this.layer;
+	var map = this.map;
+	
 	var tip;
 
 	/**
@@ -118,12 +116,16 @@ WebGIS.MapAction.MeasureArea = function(config) {
 	 * 
 	 * @private
 	 */
-	var updateTip = function(point) {
-		var area = this.handler.polygon.geometry.getArea(), pixel, el;
+	var updateTip = function(event) {
+		var polygon = event.geometry;
+		var area = polygon.getArea();
 
 		if (area === 0) {
 			return;
 		}
+		
+		var points = polygon.components[0].components;
+		var point = points[points.length-2];
 
 		area = (Math.round(area * 100 / 10000) / 100).toString() + ' ha';
 
@@ -135,19 +137,12 @@ WebGIS.MapAction.MeasureArea = function(config) {
 		    autoHeight :true
 		});
 
-		pixel = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x, point.y));
-		el = Ext.get(map.div);
+		var pixel = map.getViewPortPxFromLonLat(new OpenLayers.LonLat(point.x, point.y));
+		var el = Ext.get(map.div.id);
 		tip.showAt( [ pixel.x + 5 + el.getLeft(), pixel.y + 5 + el.getTop() ]);
 	};
 
-	config.olcontrol = new OpenLayers.Control.DrawFeature(config.layer, OpenLayers.Handler.Polygon, {
-		callbacks : {
-		    done :destroyTip,
-		    point :updateTip,
-		    cancel :destroyTip
-		}
-	});
-
-	WebGIS.MapAction.MeasureArea.superclass.constructor.call(this, config);
+	control.events.register('measure', null, destroyTip);
+	control.events.register('measurepartial', null, updateTip);	
 };
 Ext.extend(WebGIS.MapAction.MeasureArea, WebGIS.MapAction);
