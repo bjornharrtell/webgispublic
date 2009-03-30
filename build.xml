@@ -25,6 +25,17 @@
 			<targetfile />
 		</apply>
 	</target>
+	
+	<target name="jsdocs">
+		<apply executable="java" parallel="false" dir="buildtools/jsdoc_toolkit-2.1.0/jsdoc-toolkit">
+			<fileset dir="build" includes="webgis.js" />
+			<arg line="-jar" />
+			<arg path="buildtools/jsdoc_toolkit-2.1.0/jsdoc-toolkit/jsrun.jar" />
+			<arg line="app/run.js -a -t=templates/jsdoc " />
+			<srcfile />
+			<arg line="-d=${jsdocspath}" />
+		</apply>
+	</target>
 
 	<target name="deploy_debug" depends="debugpath">
 		<copy todir="${debugpath}/source">
