@@ -62,7 +62,7 @@ Ext.extend(WebGIS.MapAction.DrawFeature, WebGIS.MapAction);
  *            [config.options] options passed as options to
  *            OpenLayers.Control.SelectFeature instance
  */
-WebGIS.MapAction.SelectFeature = function(config, options) {
+WebGIS.MapAction.SelectFeature = function(config) {
 	config.iconCls = 'webgis-mapaction-selectfeature';
 
 	var olcontrol = new OpenLayers.Control.SelectFeature(config.layer,
