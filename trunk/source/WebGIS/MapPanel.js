@@ -46,7 +46,7 @@ WebGIS.MapPanel = function(config) {
 
 		this.map = new OpenLayers.Map(this.body.dom, mapOptions);
 
-		this.fireEvent('afterMapRender');
+		this.fireEvent('afterMapRender', this);
 	};
 	this.override( {
 		afterRender :onAfterRender
