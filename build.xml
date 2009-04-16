@@ -14,10 +14,17 @@
 	</target>
 
 	<target name="minify">
+		<get src="http://www.julienlecomte.net/yuicompressor/yuicompressor-2.4.2.zip" dest="yuicompressor-2.4.2.zip" usetimestamp="true"/>
+		<unzip src="yuicompressor-2.4.2.zip" dest="." overwrite="false">
+			<patternset>
+		        <include name="yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar"/>
+		    </patternset>
+			<mapper type="flatten"/>
+		</unzip>
 		<apply executable="java" parallel="false" dest="build">
 			<fileset dir="build" includes="webgis.js" />
 			<arg line="-jar" />
-			<arg path="buildtools/yuicompressor-2.4.2.jar" />
+			<arg path="yuicompressor-2.4.2.jar" />
 			<arg line="--charset UTF8 -v " />
 			<srcfile />
 			<arg line="-o" />
@@ -27,10 +34,12 @@
 	</target>
 	
 	<target name="jsdocs">
-		<apply executable="java" parallel="false" dir="buildtools/jsdoc_toolkit-2.1.0/jsdoc-toolkit">
+		<get src="http://jsdoc-toolkit.googlecode.com/files/jsdoc_toolkit-2.1.0.zip" dest="jsdoc_toolkit-2.1.0.zip" usetimestamp="true"/>
+		<unzip src="jsdoc_toolkit-2.1.0.zip" dest="." overwrite="false"/>
+		<apply executable="java" parallel="false" dir="jsdoc_toolkit-2.1.0/jsdoc-toolkit">
 			<fileset dir="build" includes="webgis.js" />
 			<arg line="-jar" />
-			<arg path="buildtools/jsdoc_toolkit-2.1.0/jsdoc-toolkit/jsrun.jar" />
+			<arg path="jsdoc_toolkit-2.1.0/jsdoc-toolkit/jsrun.jar" />
 			<arg line="app/run.js -a -t=templates/jsdoc " />
 			<srcfile />
 			<arg line="-d=${jsdocspath}" />
