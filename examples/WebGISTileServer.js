@@ -30,11 +30,11 @@ WebGISTileServer.Application = function() {
             
             map = new OpenLayers.Map(panel.body.dom, mapOptions);
             
-        	var layer = new OpenLayers.Layer.WebGISTileServer(
+        	var layer = new WebGIS.OpenLayers.Layer.WebGISTileServer(
     			'WebGISTileServer',
     			'http://www.asp-mapservices.com/WebGISTileServer/PublicServletProxy',
     			provider,
-    			OpenLayers.Layer.WebGISTileServer.GetToken()
+    			token
     		);
             map.addLayer(layer);
 
