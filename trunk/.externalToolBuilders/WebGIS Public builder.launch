@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <launchConfiguration type="org.eclipse.ant.AntBuilderLaunchConfigurationType">
-<stringAttribute key="org.eclipse.ant.ui.ATTR_ANT_AFTER_CLEAN_TARGETS" value="build,minify,"/>
-<stringAttribute key="org.eclipse.ant.ui.ATTR_ANT_MANUAL_TARGETS" value="build,minify,"/>
+<stringAttribute key="org.eclipse.ant.ui.ATTR_ANT_AFTER_CLEAN_TARGETS" value="build,minify,jsdocs,"/>
+<stringAttribute key="org.eclipse.ant.ui.ATTR_ANT_MANUAL_TARGETS" value="build,minify,jsdocs,"/>
 <booleanAttribute key="org.eclipse.ant.ui.ATTR_TARGETS_UPDATED" value="true"/>
 <booleanAttribute key="org.eclipse.ant.ui.DEFAULT_VM_INSTALL" value="false"/>
 <stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${working_set:&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;launchConfigurationWorkingSet editPageId=&quot;org.eclipse.ui.resourceWorkingSetPage&quot; factoryID=&quot;org.eclipse.ui.internal.WorkingSetFactory&quot; label=&quot;working set&quot; name=&quot;working set&quot;&gt;&#10;&lt;item factoryID=&quot;org.eclipse.ui.internal.model.ResourceFactory&quot; path=&quot;/webgispublic/build&quot; type=&quot;2&quot;/&gt;&#10;&lt;/launchConfigurationWorkingSet&gt;}"/>
@@ -17,10 +17,10 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="webgispublic"/>
 <mapAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_PROPERTIES">
 <mapEntry key="eclipse.running" value="true"/>
+<mapEntry key="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse/plugins/org.eclipse.pde.build_3.4.1.R34x_v20081217/scripts/"/>
+<mapEntry key="eclipse.pdebuild.home" value="/C:/Program Files/eclipse/plugins/org.eclipse.pde.build_3.4.1.R34x_v20081217/./"/>
 <mapEntry key="eclipse.home" value="C:\Program Files\eclipse"/>
 <mapEntry key="eclipse.pdebuild.templates" value="/C:/Program Files/eclipse/plugins/org.eclipse.pde.build_3.4.1.R34x_v20081217/templates/"/>
-<mapEntry key="eclipse.pdebuild.home" value="/C:/Program Files/eclipse/plugins/org.eclipse.pde.build_3.4.1.R34x_v20081217/./"/>
-<mapEntry key="eclipse.pdebuild.scripts" value="/C:/Program Files/eclipse/plugins/org.eclipse.pde.build_3.4.1.R34x_v20081217/scripts/"/>
 </mapAttribute>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_PROPERTY_FILES" value="${workspace_loc:/webgispublic/build.properties},"/>
 <booleanAttribute key="org.eclipse.ui.externaltools.ATTR_BUILDER_ENABLED" value="true"/>
