@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="WebGIS Public release build" default="build" basedir=".">
 
+	<available file="jsdoc_toolkit-2.1.0.zip" property="jsdoc">
+	</available>
+	<available file="yuicompressor-2.4.2.zip" property="yui">
+	</available>
+
 	<target name="build">
 		<concat destfile="build/webgis.js">
 			<fileset dir="source" includes="WebGIS.js" />
@@ -13,14 +18,18 @@
 		</concat>
 	</target>
 
-	<target name="minify">
-		<get src="http://www.julienlecomte.net/yuicompressor/yuicompressor-2.4.2.zip" dest="yuicompressor-2.4.2.zip" usetimestamp="true"/>
+	<target name="getyui" unless="jsdoc">
+		<get src="http://www.julienlecomte.net/yuicompressor/yuicompressor-2.4.2.zip" dest="yuicompressor-2.4.2.zip" usetimestamp="true" />
 		<unzip src="yuicompressor-2.4.2.zip" dest="." overwrite="false">
 			<patternset>
-		        <include name="yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar"/>
-		    </patternset>
-			<mapper type="flatten"/>
+				<include name="yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar" />
+			</patternset>
+			<mapper type="flatten" />
 		</unzip>
+	</target>
+
+	<target name="minify">
+		<antcall target="getyui" />
 		<apply executable="java" parallel="false" dest="build">
 			<fileset dir="build" includes="webgis.js" />
 			<arg line="-jar" />
@@ -32,10 +41,14 @@
 			<targetfile />
 		</apply>
 	</target>
-	
+
+	<target name="getjsdoc" unless="jsdoc">
+		<get src="http://jsdoc-toolkit.googlecode.com/files/jsdoc_toolkit-2.1.0.zip" dest="jsdoc_toolkit-2.1.0.zip" usetimestamp="true" />
+		<unzip src="jsdoc_toolkit-2.1.0.zip" dest="." overwrite="false" />
+	</target>
+
 	<target name="jsdocs">
-		<get src="http://jsdoc-toolkit.googlecode.com/files/jsdoc_toolkit-2.1.0.zip" dest="jsdoc_toolkit-2.1.0.zip" usetimestamp="true"/>
-		<unzip src="jsdoc_toolkit-2.1.0.zip" dest="." overwrite="false"/>
+		<antcall target="getjsdoc" />
 		<apply executable="java" parallel="false" dir="jsdoc_toolkit-2.1.0/jsdoc-toolkit">
 			<fileset dir="build" includes="webgis.js" />
 			<arg line="-jar" />
