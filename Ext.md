@@ -1,0 +1,1 @@
+[Ext JS](http://www.extjs.com) is Javascript GUI framework library. It also has data bindning capabilities to its GUI components.

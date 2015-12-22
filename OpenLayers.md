@@ -1,0 +1,1 @@
+[OpenLayers](http://www.openlayers.org) is Javascript library similar to Google Maps, but it's open source and can handle several map providers and OGC standards. It also has quite advanced editing capabilities.
